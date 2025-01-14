@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export const Header = (): JSX.Element => {
   return (
-    <div className="relative w-full h-[87px] bg-[#234014] flex items-center justify-between px-8">
+    <div className="relative w-full h-[87px] flex items-center justify-between px-8">
       {/* Logo */}
       <div className="w-[92px] h-[87px] flex items-center ml-20">
         <Image
