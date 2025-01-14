@@ -1,0 +1,164 @@
+.header {
+  position: relative;
+  width: 100%;
+  height: 87px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+
+.logo {
+  width: 92px;
+  height: 87px;
+  display: flex;
+  align-items: center;
+  margin-left: 5rem;
+}
+
+.headerContainer {
+  flex: 1;
+  height: 87px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navBar {
+  width: 1144px;
+  height: 65px;
+  background-color: rgba(217, 217, 217, 0.5);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5rem;
+}
+
+.navLinks {
+  display: flex;
+  gap: 2rem;
+}
+
+.navLink {
+  font-size: 1.875rem; /* Equivalent to text-3xl */
+  color: white;
+  font-family: "MantraRimba", sans-serif;
+  letter-spacing: normal;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  background-color: rgba(217, 217, 217, 0.7);
+  border: 1px solid white;
+  border-radius: 15px;
+  padding: 0.25rem 1.25rem;
+  width: 300px;
+}
+
+.searchInput {
+  background-color: transparent;
+  color: white;
+  placeholder-color: rgba(
+    255,
+    255,
+    255,
+    0.7
+  ); /* Matches placeholder-gray-400 */
+  outline: none;
+  width: 100%;
+  text-align: left;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.circledMenu {
+  width: 65px;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  margin-right: 5rem;
+}
+
+/* Add Media Queries */
+@media (max-width: 1200px) {
+  .navBar {
+    width: 90%; /* Reduce width for smaller screens */
+  }
+
+  .navLinks {
+    gap: 1.5rem; /* Reduce spacing */
+  }
+
+  .searchBox {
+    width: 250px; /* Reduce width for search box */
+  }
+
+  .icons {
+    gap: 2rem; /* Adjust spacing */
+  }
+
+  .circledMenu {
+    margin-right: 2rem; /* Adjust margin */
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    height: auto;
+    padding: 1rem;
+  }
+
+  .navBar {
+    flex-direction: column;
+    gap: 1rem;
+    height: auto;
+    width: 100%; /* Full width for mobile */
+    padding: 1rem; /* Add padding for spacing */
+  }
+
+  .navLinks {
+    justify-content: center;
+    flex-wrap: wrap; /* Allow wrapping */
+    gap: 1rem; /* Adjust spacing */
+  }
+
+  .searchBox {
+    width: 90%; /* Take full width */
+  }
+
+  .icons {
+    justify-content: center;
+    gap: 1.5rem; /* Adjust spacing */
+  }
+
+  .circledMenu {
+    margin: 1rem 0; /* Centered at the bottom */
+  }
+}
+
+@media (max-width: 480px) {
+  .navLink {
+    font-size: 1.25rem; /* Smaller font size for very small screens */
+  }
+
+  .searchBox {
+    padding: 0.25rem 0.5rem;
+    width: 100%; /* Full width */
+  }
+
+  .icons {
+    gap: 1rem; /* Less spacing */
+  }
+
+  .circledMenu {
+    width: 50px; /* Smaller size */
+    height: 50px;
+  }
+}
