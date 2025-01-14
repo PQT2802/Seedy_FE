@@ -67,8 +67,17 @@ body {
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: "UTMAvo";
+  src: url("./utm-avo.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
 .font-mantra {
   font-family: "MantraRimba", sans-serif;
+}
+.font-utmavo {
+  font-family: "UTMAvo", sans-serif;
 }
 @layer base {
   * {

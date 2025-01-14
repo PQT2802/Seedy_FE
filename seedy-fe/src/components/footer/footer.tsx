@@ -14,24 +14,24 @@ export default function Footer() {
       ></div>
 
       {/* Footer Content */}
-      <div className="container mx-auto relative z-10 py-10">
+      <div className="container mx-auto relative z-10 py-10 mt-80">
         <div className="grid grid-cols-3 items-center">
           {/* Left Section: Social Icons */}
           <div className="flex space-x-4 justify-start text-black">
-            <Image src="/fb-icon.png" alt="Facebook" width={24} height={24} />
-            <Image src="/ig-icon.png" alt="Instagram" width={24} height={24} />
-            <Image src="/tt-icon.png" alt="TikTok" width={24} height={24} />
+            <Image src="/fb-icon.png" alt="Facebook" width={50} height={50} />
+            <Image src="/ig-icon.png" alt="Instagram" width={50} height={50} />
+            <Image src="/tt-icon.png" alt="TikTok" width={50} height={50} />
           </div>
 
           {/* Center Section: Branding */}
-          <div className="text-center text-black">
-            <h2 className="text-2xl font-bold">SEEDY</h2>
-            <p className="text-sm">NATURE EMBRACES YOUR STORIES</p>
+          <div className="text-center text-green-900">
+            <h2 className="text-8xl font-bold font-mantra">SEEDY</h2>
+            <p className="text-6xl font-mantra">NATURE EMBRACES YOUR STORIES</p>
           </div>
 
           {/* Right Section: Copyright Text */}
           <div className="text-right text-black">
-            <p className="text-xs">seedy © all rights reserved</p>
+            <p className="text-xm">seedy © all rights reserved</p>
           </div>
         </div>
       </div>
