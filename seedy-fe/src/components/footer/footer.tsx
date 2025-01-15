@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <div className="relative w-full h-[60vh] overflow-hidden bg-[#234014]">
+    <div className="relative w-full h-[70vh] overflow-hidden">
       {/* Background Wavy Image */}
       <div
         className="absolute top-0 left-0 w-full h-[900px] bg-cover bg-no-repeat"
