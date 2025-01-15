@@ -1,0 +1,35 @@
+.background {
+  @apply relative top-0 left-0 w-full h-[900px] bg-cover bg-no-repeat rounded-[30px] flex flex-col lg:flex-row items-center justify-between px-6 lg:px-12;
+  background-image: linear-gradient(
+      rgba(14, 36, 9, 0.83),
+      rgba(14, 36, 9, 0.83)
+    ),
+    url("/bg-about-2.png");
+  background-position: center;
+  background-blend-mode: multiply;
+}
+
+.text-section {
+  @apply text-left w-full lg:max-w-[50%] text-white space-y-6 p-6 lg:p-0;
+}
+
+.title {
+  @apply font-mantra text-5xl lg:text-9xl font-bold;
+  line-height: 1.2; /* Adjusted for responsiveness */
+}
+
+.description {
+  @apply font-utmavo text-lg lg:text-2xl leading-relaxed;
+}
+
+.button {
+  @apply px-4 py-2 lg:px-6 lg:py-3 bg-transparent border border-white rounded-[15px] text-white text-sm lg:text-lg transition;
+}
+
+.button:hover {
+  @apply bg-white text-green-900;
+}
+
+.image-section {
+  @apply w-full lg:w-auto flex justify-center lg:flex-shrink-0;
+}

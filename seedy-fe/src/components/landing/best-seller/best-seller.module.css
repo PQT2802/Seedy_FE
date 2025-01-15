@@ -1,0 +1,34 @@
+.background {
+  @apply relative top-0 left-0 w-full h-[130vh] bg-cover bg-no-repeat flex flex-col items-center px-6 py-12;
+  background-image: url("/best-seller.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.card-container {
+  @apply flex flex-col lg:flex-row gap-8 items-center justify-between w-full px-6 lg:px-12 pt-[10vh] lg:pt-[20vh];
+}
+
+.card {
+  @apply flex flex-col items-center p-6 max-w-sm;
+}
+
+.card:first-child {
+  @apply ml-0 lg:ml-32 mt-20 lg:mt-60;
+}
+
+.card:last-child {
+  @apply mr-0 lg:mr-32 mt-20;
+}
+
+.text-button-row {
+  @apply flex flex-col lg:flex-row items-center justify-between w-full px-6 lg:px-32;
+}
+
+.card-text {
+  @apply text-xl md:text-2xl font-bold text-[#234014] text-center pb-5;
+}
+
+.card-button {
+  @apply mt-2 px-6 py-2 text-xl bg-[#234014] text-white rounded-full hover:bg-green-700 transition;
+}

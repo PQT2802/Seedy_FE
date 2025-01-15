@@ -1,0 +1,108 @@
+.home-container {
+  min-height: 100vh;
+  background-color: #234014;
+  position: relative;
+}
+
+/* Title Section */
+.section-title {
+  position: relative;
+  z-index: 10;
+  margin-top: 2rem; /* Positive margin for better alignment */
+}
+
+@media (min-width: 640px) {
+  .section-title {
+    margin-top: 3rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .section-title {
+    margin-top: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-title {
+    margin-top: 5rem;
+  }
+}
+
+/* Intro Section */
+.section-intro {
+  position: relative;
+  z-index: 10;
+  padding: 4rem 0; /* Padding for spacing instead of negative margins */
+}
+
+@media (min-width: 768px) {
+  .section-intro {
+    padding: 6rem 0;
+  }
+}
+
+/* Best Seller Section */
+.section-best-seller {
+  position: relative;
+  z-index: 20;
+  padding: 4rem 0;
+}
+
+@media (min-width: 768px) {
+  .section-best-seller {
+    padding: 6rem 0;
+  }
+}
+
+/* About Section */
+.section-about {
+  position: relative;
+  z-index: 30;
+  padding: 4rem 0;
+}
+
+@media (min-width: 768px) {
+  .section-about {
+    padding: 6rem 0;
+  }
+}
+
+/* Mission Section */
+.section-mission {
+  position: relative;
+  z-index: 40;
+  padding: 4rem 0;
+}
+
+@media (min-width: 768px) {
+  .section-mission {
+    padding: 6rem 0;
+  }
+}
+
+/* Feedback Section */
+.section-feedback {
+  position: relative;
+  z-index: 50;
+  padding: 4rem 0;
+}
+
+@media (min-width: 768px) {
+  .section-feedback {
+    padding: 6rem 0;
+  }
+}
+
+/* Footer Section */
+.section-footer {
+  position: relative;
+  z-index: 50;
+  padding: 4rem 0;
+}
+
+@media (min-width: 768px) {
+  .section-footer {
+    padding: 6rem 0;
+  }
+}

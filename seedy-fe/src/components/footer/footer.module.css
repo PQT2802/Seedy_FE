@@ -1,0 +1,96 @@
+.footer {
+  @apply relative w-full h-[70vh] overflow-hidden;
+}
+
+.background {
+  @apply absolute top-0 left-0 w-full h-[900px] bg-cover bg-no-repeat;
+  background-image: url("/footer-bg.png");
+  background-position: center;
+  transform: scale(1.05);
+}
+
+.container {
+  @apply mx-auto relative z-10 py-10 mt-80 w-full max-w-screen-xl px-4;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Default to one column */
+  align-items: center; /* Equivalent to items-center */
+  gap: 2rem; /* Space between grid items */
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(
+      3,
+      1fr
+    ); /* Switch to 3 columns on medium screens */
+  }
+}
+
+.socialIcons {
+  @apply flex space-x-4 justify-center text-black; /* Center icons on smaller screens */
+}
+
+@media (min-width: 768px) {
+  .socialIcons {
+    @apply justify-start; /* Align left on medium and larger screens */
+  }
+}
+
+.branding {
+  @apply text-center text-green-900;
+}
+
+.logo {
+  @apply text-5xl font-bold font-mantra; /* Default smaller size for mobile */
+}
+
+.tagline {
+  @apply text-2xl font-mantra; /* Default smaller size for mobile */
+}
+
+@media (min-width: 768px) {
+  .logo {
+    @apply text-8xl; /* Larger size for medium and larger screens */
+  }
+
+  .tagline {
+    @apply text-6xl; /* Larger size for medium and larger screens */
+  }
+}
+
+.copyright {
+  @apply text-center text-black; /* Center align for smaller screens */
+}
+
+@media (min-width: 768px) {
+  .copyright {
+    @apply text-right; /* Align right on medium and larger screens */
+  }
+}
+
+.floatingButtons {
+  @apply absolute right-5 bottom-5 space-y-3 z-20;
+}
+
+@media (max-width: 640px) {
+  .floatingButtons {
+    @apply right-2 bottom-2; /* Adjust position for smaller screens */
+  }
+}
+
+.button {
+  @apply w-10 h-10 rounded-full bg-[#64E07D] flex items-center justify-center shadow-md;
+}
+
+.buttonText {
+  @apply text-black text-base font-bold; /* Adjust text size for smaller screens */
+}
+
+@media (min-width: 768px) {
+  .buttonText {
+    @apply text-lg; /* Larger text size for medium and larger screens */
+  }
+}

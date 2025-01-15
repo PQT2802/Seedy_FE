@@ -1,0 +1,24 @@
+.background {
+  @apply relative top-0 left-0 w-full h-[150vh] bg-cover bg-no-repeat flex flex-col items-center justify-center px-6;
+  background-image: url("/about-2-new.png");
+  background-position: center;
+  background-blend-mode: multiply;
+}
+
+.mainTitle {
+  @apply text-[12rem] md:text-[15rem] font-bold drop-shadow-lg font-mantra relative leading-none pt-10 pr-14;
+  -webkit-text-stroke: 2px white; /* White outline */
+  -webkit-text-fill-color: #205804; /* Dark green fill */
+}
+
+.seedyTitle {
+  @apply mt-[-20px];
+}
+
+.middleDescription {
+  @apply absolute top-1/2 right-12 transform -translate-y-1/2 text-4xl text-white max-w-sm leading-relaxed drop-shadow-sm text-right pt-40 font-utmavo;
+}
+
+.bottomDescription {
+  @apply absolute bottom-40 left-12 text-3xl text-white max-w-sm leading-relaxed drop-shadow-sm font-utmavo;
+}

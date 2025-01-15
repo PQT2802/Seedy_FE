@@ -1,0 +1,40 @@
+.background {
+  @apply relative top-0 left-0 w-full h-[155vh] bg-cover bg-no-repeat flex flex-col rounded-[25px] items-start px-6 py-12;
+  background-image: url("/feedback-bg.png");
+  background-position: center;
+  background-size: cover;
+}
+
+.formContainer {
+  @apply text-left mb-8 w-full max-w-2xl;
+  transform: translateX(20%) translateY(30%);
+}
+
+.heading {
+  @apply font-mantra text-white text-7xl mb-6;
+}
+
+.form {
+  @apply bg-opacity-100 p-8 text-white;
+}
+
+.inputGroup {
+  @apply mb-6 flex items-center;
+}
+
+.label {
+  @apply text-4xl font-mantra mr-4 w-40;
+}
+
+.input {
+  @apply flex-1 p-1 rounded-[8px] bg-[#92a380] text-white focus:outline-none focus:ring-2 focus:ring-green-500;
+}
+
+.textarea {
+  @apply flex-1 p-3 rounded-[8px] bg-[#92a380] text-white focus:outline-none focus:ring-2 focus:ring-green-500;
+}
+
+.button {
+  @apply w-3/5 bg-green-600 hover:bg-green-700 text-white font-utmavo font-bold py-3 px-6 rounded-[30px] focus:outline-none focus:ring-2 focus:ring-green-500;
+  transform: translateX(50%);
+}

@@ -1,11 +1,12 @@
 import React, { JSX } from "react";
 import Image from "next/image";
+import styles from "./header.module.css";
 
 export const Header = (): JSX.Element => {
   return (
-    <div className="relative w-full h-[87px] flex items-center justify-between px-8">
+    <div className={styles.header}>
       {/* Logo */}
-      <div className="w-[92px] h-[87px] flex items-center ml-20">
+      <div className={styles.logoContainer}>
         <Image
           alt="Logo seedy moi trang"
           src="/logo-seedy-mo-i-tra-ng-1.png"
@@ -15,39 +16,33 @@ export const Header = (): JSX.Element => {
       </div>
 
       {/* Header Container */}
-      <div className="flex-1 h-[87px] flex items-center justify-center">
-        <div className="w-[1144px] h-[65px] bg-[#d9d9d980] rounded-lg flex items-center justify-between px-10">
+      <div className={styles.headerContainer}>
+        <div className={styles.navContainer}>
           {/* Navigation Links */}
-          <div className="flex space-x-8">
-            <span className="text-3xl text-white font-mantra tracking-normal">
-              OUR PRODUCTS
-            </span>
-            <span className="text-3xl text-white font-mantra tracking-normal">
-              OUR ARCHIVES
-            </span>
-            <span className="text-3xl text-white font-mantra tracking-normal">
-              ABOUT US
-            </span>
+          <div className={styles.navLinks}>
+            <span className={styles.navItem}>OUR PRODUCTS</span>
+            <span className={styles.navItem}>OUR ARCHIVES</span>
+            <span className={styles.navItem}>ABOUT US</span>
           </div>
 
           {/* Search Box */}
-          <div className="flex items-center bg-[#d9d9d9b2] border border-white rounded-[15px] px-5 py-1 w-[300px]">
+          <div className={styles.searchBox}>
             <input
               type="text"
               placeholder="Search"
-              className="bg-transparent text-white placeholder-gray-400 focus:outline-none w-full text-left"
+              className={styles.searchInput}
             />
             <Image
               alt="Search Icon"
               src="/search-more.png"
               width={28}
               height={28}
-              className="ml-1"
+              className={styles.searchIcon}
             />
           </div>
 
           {/* Icons */}
-          <div className="flex items-center space-x-10">
+          <div className={styles.icons}>
             <Image
               alt="Earth Icon"
               src="/earth-planet.png"
@@ -66,7 +61,7 @@ export const Header = (): JSX.Element => {
       </div>
 
       {/* Circled Menu */}
-      <div className="w-[65px] h-[65px] flex items-center mr-20 ">
+      <div className={styles.menuIcon}>
         <Image
           alt="Circled menu"
           src="/circled-menu.png"
