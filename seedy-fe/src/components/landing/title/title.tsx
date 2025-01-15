@@ -1,26 +1,21 @@
-import { Header } from "@/components/header/header";
+import Header from "@/components/header/header";
 import Image from "next/image";
 import React from "react";
+import styles from "./title.module.css";
 
 export default function Title() {
   return (
     <div className="">
       {/* Background Wavy Image */}
-      <div
-        className="top-0 left-0 w-full h-[900px] bg-cover bg-no-repeat"
-        style={{
-          backgroundImage: "url('/bg-ld-1.svg')", // Set the background image
-          backgroundPosition: "center",
-        }}
-      >
+      <div className={styles.background}>
         <Header />
-        <div className="flex items-center justify-center h-full pl-20 ml-20">
+        <div className={styles["image-container"]}>
           <Image
             src="/title-ld.png"
             alt="Title"
             width={1000}
             height={1000}
-            className="object-center"
+            className={styles["title-image"]}
           />
         </div>
       </div>

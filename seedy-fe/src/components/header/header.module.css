@@ -1,103 +1,130 @@
 .header {
-  @apply relative w-full h-[87px] flex items-center justify-between px-8;
+  position: relative;
+  width: 100%;
+  height: 87px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Align children to both ends */
+  padding: 0 2rem;
 }
 
-.logoContainer {
-  @apply w-[92px] h-[87px] flex items-center ml-20;
-}
-
-@media (max-width: 768px) {
-  .logoContainer {
-    @apply ml-10 w-[70px] h-[65px];
-  }
+.circledMenu {
+  width: 65px;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem; /* Optional spacing adjustment */
 }
 
 .headerContainer {
-  @apply flex-1 h-[87px] flex items-center justify-center;
+  flex: 1; /* Take remaining space for center alignment */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Align the NavBar to the center */
 }
 
-.navContainer {
-  @apply w-[1144px] h-[65px] bg-[#d9d9d980] rounded-lg flex items-center justify-between px-10;
-}
-
-@media (max-width: 1024px) {
-  .navContainer {
-    @apply w-[900px];
-  }
-}
-
-@media (max-width: 768px) {
-  .navContainer {
-    @apply w-[600px] px-6;
-  }
+.navBar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: #939f82;
+  border-radius: 10px; /* Spacing between links and icons */
 }
 
 .navLinks {
-  @apply flex space-x-8;
+  display: flex;
+  gap: 2rem; /* Spacing between navigation links */
 }
 
-.navItem {
-  @apply text-3xl text-white font-mantra tracking-normal;
-}
-
-@media (max-width: 768px) {
-  .navItem {
-    @apply text-2xl;
-  }
-}
-
-@media (max-width: 640px) {
-  .navItem {
-    @apply text-xl;
-  }
+.navLink {
+  font-size: 1.5rem;
+  color: white;
+  font-family: "MantraRimba", sans-serif;
 }
 
 .searchBox {
-  @apply flex items-center bg-[#d9d9d9b2] border border-white rounded-[15px] px-5 py-1 w-[300px];
-}
-
-@media (max-width: 768px) {
-  .searchBox {
-    @apply w-[250px] px-4;
-  }
-}
-
-@media (max-width: 640px) {
-  .searchBox {
-    @apply w-[200px];
-  }
+  display: flex;
+  align-items: center;
+  background-color: rgba(217, 217, 217, 0.7);
+  border: 1px solid white;
+  border-radius: 15px;
+  padding: 0.5rem 1rem;
+  width: 300px;
 }
 
 .searchInput {
-  @apply bg-transparent text-white placeholder-gray-400 focus:outline-none w-full text-left;
-}
-
-.searchIcon {
-  @apply ml-1;
+  background-color: transparent;
+  color: white;
+  outline: none;
+  width: 100%;
+  text-align: left;
 }
 
 .icons {
-  @apply flex items-center space-x-10;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; /* Spacing between icons */
 }
 
-@media (max-width: 768px) {
+.logo {
+  width: 92px;
+  height: 87px;
+  display: flex;
+  align-items: center;
+}
+
+/* Responsive Adjustments */
+@media (min-width: 768px) {
+  .header {
+    flex-wrap: nowrap; /* Prevent wrapping for larger screens */
+  }
+
+  .navBar {
+    justify-content: center; /* Ensure content stays centered */
+  }
+
+  .navLinks {
+    gap: 1.5rem;
+  }
+
+  .searchBox {
+    width: 250px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .navBar {
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .searchBox {
+    width: 300px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .navBar {
+    gap: 2.5rem;
+  }
+
   .icons {
-    @apply space-x-6;
+    gap: 2.5rem;
   }
 }
 
-.menuIcon {
-  @apply w-[65px] h-[65px] flex items-center mr-20;
-}
-
-@media (max-width: 768px) {
-  .menuIcon {
-    @apply mr-10 w-[50px] h-[50px];
+@media (min-width: 1536px) {
+  .navBar {
+    gap: 3rem;
   }
-}
 
-@media (max-width: 640px) {
-  .menuIcon {
-    @apply mr-5 w-[40px] h-[40px];
+  .searchBox {
+    width: 350px;
+  }
+
+  .icons {
+    gap: 3rem;
   }
 }

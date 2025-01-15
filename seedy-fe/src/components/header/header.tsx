@@ -1,12 +1,12 @@
-import React, { JSX } from "react";
+import React from "react";
 import Image from "next/image";
 import styles from "./header.module.css";
 
-export const Header = (): JSX.Element => {
+export default function Header() {
   return (
     <div className={styles.header}>
       {/* Logo */}
-      <div className={styles.logoContainer}>
+      <div className={styles.logo}>
         <Image
           alt="Logo seedy moi trang"
           src="/logo-seedy-mo-i-tra-ng-1.png"
@@ -17,12 +17,12 @@ export const Header = (): JSX.Element => {
 
       {/* Header Container */}
       <div className={styles.headerContainer}>
-        <div className={styles.navContainer}>
+        <div className={styles.navBar}>
           {/* Navigation Links */}
           <div className={styles.navLinks}>
-            <span className={styles.navItem}>OUR PRODUCTS</span>
-            <span className={styles.navItem}>OUR ARCHIVES</span>
-            <span className={styles.navItem}>ABOUT US</span>
+            <span className={styles.navLink}>OUR PRODUCTS</span>
+            <span className={styles.navLink}>OUR ARCHIVES</span>
+            <span className={styles.navLink}>ABOUT US</span>
           </div>
 
           {/* Search Box */}
@@ -37,7 +37,6 @@ export const Header = (): JSX.Element => {
               src="/search-more.png"
               width={28}
               height={28}
-              className={styles.searchIcon}
             />
           </div>
 
@@ -61,7 +60,7 @@ export const Header = (): JSX.Element => {
       </div>
 
       {/* Circled Menu */}
-      <div className={styles.menuIcon}>
+      <div className={styles.circledMenu}>
         <Image
           alt="Circled menu"
           src="/circled-menu.png"
@@ -71,4 +70,4 @@ export const Header = (): JSX.Element => {
       </div>
     </div>
   );
-};
+}

@@ -13,7 +13,14 @@ export default {
         mantra: ["MantraRimba", "sans-serif"],
         utmavo: ["UTMAvo", "sans-serif"],
       },
-
+      screens: {
+        xs: "320px", // Small phones
+        sm: "640px", // Phones
+        md: "768px", // Tablets
+        lg: "1024px", // Laptops
+        xl: "1280px", // Desktops
+        "2xl": "1536px", // Large screens
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
