@@ -8,7 +8,9 @@ export default function Title() {
     <div className="">
       {/* Background Wavy Image */}
       <div className={styles.background}>
-        <Header />
+        <div className={styles.headerContainer}>
+          <Header />
+        </div>
         <div className={styles["image-container"]}>
           <Image
             src="/title-ld.png"

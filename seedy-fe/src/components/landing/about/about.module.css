@@ -1,24 +1,122 @@
+/* Base Styles */
 .background {
-  @apply relative top-0 left-0 w-full h-[150vh] bg-cover bg-no-repeat flex flex-col items-center justify-center px-6;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 150vh;
+  background-size: cover;
+  background-repeat: no-repeat;
   background-image: url("/about-2-new.png");
   background-position: center;
   background-blend-mode: multiply;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
 }
 
+/* Main Title */
 .mainTitle {
-  @apply text-[12rem] md:text-[15rem] font-bold drop-shadow-lg font-mantra relative leading-none pt-10 pr-14;
-  -webkit-text-stroke: 2px white; /* White outline */
-  -webkit-text-fill-color: #205804; /* Dark green fill */
+  font-size: 8rem;
+  font-weight: bold;
+  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  font-family: "Mantra", sans-serif;
+  line-height: 1;
+  position: relative;
+  padding-top: 20px;
+  padding-right: 30px;
+  -webkit-text-stroke: 2px white;
+  -webkit-text-fill-color: #205804;
+  z-index: 2;
 }
 
 .seedyTitle {
-  @apply mt-[-20px];
+  margin-top: -20px;
 }
 
+/* Middle Description */
 .middleDescription {
-  @apply absolute top-1/2 right-12 transform -translate-y-1/2 text-4xl text-white max-w-sm leading-relaxed drop-shadow-sm text-right pt-40 font-utmavo;
+  position: absolute;
+  top: 60%; /* Default position */
+  right: 3%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  color: white;
+  max-width: 500px;
+  line-height: 1.5;
+  text-align: right;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  font-family: "UTMAvo", sans-serif;
+  z-index: 1;
 }
 
+/* Bottom Description */
 .bottomDescription {
-  @apply absolute bottom-40 left-12 text-3xl text-white max-w-sm leading-relaxed drop-shadow-sm font-utmavo;
+  position: absolute;
+  bottom: 10%;
+  left: 3%;
+  font-size: 1.8rem;
+  color: white;
+  max-width: 500px;
+  line-height: 1.5;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  font-family: "UTMAvo", sans-serif;
 }
+
+/* Responsive Design */
+
+/* Breakpoint for Small Screens (320px - 599px) */
+@media (min-width: 320px) and (max-width: 599px) {
+  .mainTitle {
+    font-size: 4rem;
+    padding-right: 10px;
+    text-align: center; /* Center the title */
+  }
+
+  .middleDescription,
+  .bottomDescription {
+    font-size: 1.2rem;
+    max-width: 90%;
+    text-align: center;
+    left: 50%;
+    transform: translateX(-50%);
+    position: static; /* Remove absolute positioning */
+    margin: 10px 0; /* Add spacing between elements */
+  }
+
+  .middleDescription {
+    margin-top: 20px; /* Add margin below the title */
+  }
+
+  .bottomDescription {
+    margin-top: 10px; /* Spacing below the middleDescription */
+  }
+
+  /* Adjust overall layout padding */
+  .background {
+    padding-top: 20px; /* Add space above the title */
+  }
+}
+
+/* Breakpoint for Medium Screens (600px - 1024px) */
+@media (min-width: 600px) and (max-width: 1478px) {
+  .mainTitle {
+    font-size: 8rem;
+    padding-right: 15px;
+  }
+
+  .middleDescription {
+    top: 70%; /* Push further down */
+    font-size: 2rem;
+    right: 8%;
+  }
+
+  .bottomDescription {
+    font-size: 2rem;
+    left: 5%;
+  }
+}
+
+/* Breakpoint for Large Screens (Over 1024px) */

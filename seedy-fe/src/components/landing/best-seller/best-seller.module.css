@@ -1,34 +1,53 @@
+/* Base Styles */
 .background {
-  @apply relative top-0 left-0 w-full h-[130vh] bg-cover bg-no-repeat flex flex-col items-center px-6 py-12;
-  background-image: url("/best-seller.png");
-  background-position: center;
-  background-size: cover;
+  position: relative;
+  width: auto; /* Full width of the viewport */
+  height: 115vh; /* Full height of the viewport */
+  background-size: cover; /* Ensures the background scales proportionally */
+  background-repeat: no-repeat; /* Prevents background from repeating */
+  background-position: center; /* Centers the background */
+  background-image: url("/best-seller.png"); /* Path to your background image */
+  display: flex; /* Manage children layout */
+  flex-direction: row; /* Default to horizontal layout */
+  align-items: center; /* Center children vertically */
+  justify-content: space-around; /* Space out items horizontally */
+  padding: 20px; /* Optional padding */
 }
 
-.card-container {
-  @apply flex flex-col lg:flex-row gap-8 items-center justify-between w-full px-6 lg:px-12 pt-[10vh] lg:pt-[20vh];
+/* Style for each item */
+.item {
+  display: flex;
+  flex-direction: column; /* Stack image and text vertically */
+  align-items: center;
+  gap: 10px; /* Add space between elements */
+  text-align: center;
+  position: relative;
+  top: 40px;
 }
 
-.card {
-  @apply flex flex-col items-center p-6 max-w-sm;
+.item h1 {
+  font-size: 2rem;
+  color: #234014; /* Customize as needed */
+  font-family: "MantraRimba", sans-serif;
+}
+.item img {
+  width: 100%; /* Set width to take up 100% of the parent container */
+  height: auto; /* Automatically adjust height to maintain aspect ratio */
+  max-width: 20rem; /* Limit the maximum width */
+}
+.item button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #234014; /* Dark green */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.card:first-child {
-  @apply ml-0 lg:ml-32 mt-20 lg:mt-60;
+.item button:hover {
+  background-color: #1a3010; /* Slightly darker green on hover */
 }
 
-.card:last-child {
-  @apply mr-0 lg:mr-32 mt-20;
-}
-
-.text-button-row {
-  @apply flex flex-col lg:flex-row items-center justify-between w-full px-6 lg:px-32;
-}
-
-.card-text {
-  @apply text-xl md:text-2xl font-bold text-[#234014] text-center pb-5;
-}
-
-.card-button {
-  @apply mt-2 px-6 py-2 text-xl bg-[#234014] text-white rounded-full hover:bg-green-700 transition;
-}
+/* Responsive Design */

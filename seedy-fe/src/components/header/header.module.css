@@ -21,8 +21,7 @@
   flex: 1; /* Take remaining space for center alignment */
   display: flex;
   align-items: center;
-  justify-content: center;
-  /* Align the NavBar to the center */
+  justify-content: center; /* Align the NavBar to the center */
 }
 
 .navBar {
@@ -30,12 +29,14 @@
   align-items: center;
   gap: 1rem;
   background-color: #939f82;
-  border-radius: 10px; /* Spacing between links and icons */
+  border-radius: 10px; /* Rounded corners */
+  height: 70px;
 }
 
 .navLinks {
   display: flex;
   gap: 2rem; /* Spacing between navigation links */
+  padding-left: 10px;
 }
 
 .navLink {
@@ -49,7 +50,7 @@
   align-items: center;
   background-color: rgba(217, 217, 217, 0.7);
   border: 1px solid white;
-  border-radius: 15px;
+  border-radius: 20px;
   padding: 0.5rem 1rem;
   width: 300px;
 }
@@ -66,65 +67,123 @@
   display: flex;
   align-items: center;
   gap: 1.5rem; /* Spacing between icons */
+  padding-right: 10px;
 }
 
 .logo {
-  width: 92px;
-  height: 87px;
+  width: max-content;
+  height: max-content;
   display: flex;
   align-items: center;
 }
 
 /* Responsive Adjustments */
-@media (min-width: 768px) {
+@media (min-width: 320px) and (max-width: 599px) {
   .header {
-    flex-wrap: nowrap; /* Prevent wrapping for larger screens */
+    padding: 1vw; /* Scale padding relative to viewport width */
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .logo {
+    width: 7vw; /* Scale logo width based on viewport width */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  .headerContainer {
+    flex: 1;
+    justify-content: center; /* Center align the NavBar */
+    gap: 1vw; /* Dynamic spacing */
   }
 
   .navBar {
-    justify-content: center; /* Ensure content stays centered */
+    gap: 1vw; /* Spacing between navigation items scales with width */
+    height: 6vw;
+    width: 75vw; /* NavBar height scales with width */
+    border-radius: 1vw; /* Rounded corners scale dynamically */
   }
 
   .navLinks {
-    gap: 1.5rem;
+    gap: 2vw; /* Spacing between links scales with width */
+  }
+
+  .navLink {
+    font-size: 2vw; /* Font size scales dynamically */
   }
 
   .searchBox {
-    width: 250px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .navBar {
-    justify-content: center;
-    gap: 2rem;
+    width: 15vw; /* Search box scales with viewport width */
+    border-radius: 2vw;
+    height: 1.5vw; /* Dynamic rounded corners */
   }
 
-  .searchBox {
-    width: 300px;
+  .searchInput {
+    font-size: 0.8vw; /* Scale font size in search input */
   }
-}
 
-@media (min-width: 1280px) {
-  .navBar {
-    gap: 2.5rem;
+  .circledMenu {
+    /* Align logo to the top-left */
+    width: 6vw; /* Scale logo width based on viewport width */
+    height: auto; /* Maintain aspect ratio */
   }
 
   .icons {
-    gap: 2.5rem;
+    gap: 2.5vw; /* Scale spacing between icons */
+    width: 18vw;
   }
 }
 
-@media (min-width: 1536px) {
+@media (min-width: 600px) and (max-width: 1024px) {
+  .header {
+    padding: 2vw; /* Scale padding relative to viewport width */
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .logo {
+    width: 8vw; /* Scale logo width based on viewport width */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  .headerContainer {
+    flex: 1;
+    justify-content: center; /* Center align the NavBar */
+    gap: 2vw; /* Dynamic spacing */
+  }
+
   .navBar {
-    gap: 3rem;
+    gap: 1vw; /* Spacing between navigation items scales with width */
+    height: 6vw; /* NavBar height scales with width */
+    border-radius: 1vw; /* Rounded corners scale dynamically */
+  }
+
+  .navLinks {
+    gap: 2vw; /* Spacing between links scales with width */
+  }
+
+  .navLink {
+    font-size: 2vw; /* Font size scales dynamically */
   }
 
   .searchBox {
-    width: 350px;
+    width: 20vw; /* Search box scales with viewport width */
+    border-radius: 2vw;
+    height: 4vw; /* Dynamic rounded corners */
+  }
+
+  .searchInput {
+    font-size: 1vw; /* Scale font size in search input */
+  }
+
+  .circledMenu {
+    /* Align logo to the top-left */
+    width: 7vw; /* Scale logo width based on viewport width */
+    height: auto; /* Maintain aspect ratio */
   }
 
   .icons {
-    gap: 3rem;
+    gap: 2vw; /* Scale spacing between icons */
+    width: 20vw;
+    height: 10vh;
   }
 }
