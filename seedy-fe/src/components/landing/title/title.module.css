@@ -30,3 +30,8 @@
   height: auto;
   padding: 60px 0px 0px 60px;
 }
+@media (max-width: 599px) {
+  .background {
+    height: 100vh;
+  }
+}

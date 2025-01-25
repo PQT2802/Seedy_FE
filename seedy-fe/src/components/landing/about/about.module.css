@@ -19,10 +19,10 @@
 
 /* Main Title */
 .mainTitle {
-  font-size: 8rem;
+  font-size: 16rem;
   font-weight: bold;
   text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-  font-family: "Mantra", sans-serif;
+  font-family: "MantraRimba", sans-serif;
   line-height: 1;
   position: relative;
   padding-top: 20px;
@@ -69,19 +69,23 @@
 
 /* Breakpoint for Small Screens (320px - 599px) */
 @media (min-width: 320px) and (max-width: 599px) {
+  .background {
+    height: 100vh;
+  }
   .mainTitle {
-    font-size: 4rem;
+    font-size: 7rem;
     padding-right: 10px;
     text-align: center; /* Center the title */
   }
 
   .middleDescription,
   .bottomDescription {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     max-width: 90%;
     text-align: center;
     left: 50%;
-    transform: translateX(-50%);
+    color: darkgreen;
+    transform: translateY(10%);
     position: static; /* Remove absolute positioning */
     margin: 10px 0; /* Add spacing between elements */
   }
@@ -103,18 +107,21 @@
 /* Breakpoint for Medium Screens (600px - 1024px) */
 @media (min-width: 600px) and (max-width: 1478px) {
   .mainTitle {
-    font-size: 8rem;
+    font-size: 10rem;
     padding-right: 15px;
   }
 
   .middleDescription {
     top: 70%; /* Push further down */
     font-size: 2rem;
+    color: darkgreen;
     right: 8%;
   }
 
   .bottomDescription {
     font-size: 2rem;
+    color: darkgreen;
+
     left: 5%;
   }
 }

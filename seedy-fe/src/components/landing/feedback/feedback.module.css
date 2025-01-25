@@ -1,40 +1,119 @@
 .background {
-  @apply relative top-0 left-0 w-full h-[155vh] bg-cover bg-no-repeat flex flex-col rounded-[25px] items-start px-6 py-12;
-  background-image: url("/feedback-bg.png");
-  background-position: center;
-  background-size: cover;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 155vh;
+  background: url("/feedback-bg.png") center / cover no-repeat;
+  display: flex;
+  flex-direction: column;
+  border-radius: 25px;
+  align-items: flex-start;
+  padding: 3rem 1.5rem;
 }
 
 .formContainer {
-  @apply text-left mb-8 w-full max-w-2xl;
+  text-align: left;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 42rem;
   transform: translateX(20%) translateY(30%);
 }
 
 .heading {
-  @apply font-mantra text-white text-7xl mb-6;
+  font-family: "MantraRimba", sans-serif;
+  color: white;
+  font-size: 4rem; /* Adjusted for Tailwind's text-7xl */
+  margin-bottom: 1.5rem;
 }
 
 .form {
-  @apply bg-opacity-100 p-8 text-white;
+  background-opacity: 1;
+  padding: 2rem;
+  color: white;
 }
 
 .inputGroup {
-  @apply mb-6 flex items-center;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
 }
 
 .label {
-  @apply text-4xl font-mantra mr-4 w-40;
+  font-size: 2rem; /* Adjusted for Tailwind's text-4xl */
+  font-family: "MantraRimba", sans-serif;
+  margin-right: 1rem;
+  width: 10rem;
 }
 
 .input {
-  @apply flex-1 p-1 rounded-[8px] bg-[#92a380] text-white focus:outline-none focus:ring-2 focus:ring-green-500;
+  flex: 1;
+  padding: 0.25rem;
+  border-radius: 8px;
+  background-color: #92a380;
+  color: white;
+  outline: none;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.input:focus {
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.5); /* Focus ring with green color */
 }
 
 .textarea {
-  @apply flex-1 p-3 rounded-[8px] bg-[#92a380] text-white focus:outline-none focus:ring-2 focus:ring-green-500;
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background-color: #92a380;
+  color: white;
+  outline: none;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.textarea:focus {
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.5); /* Focus ring with green color */
 }
 
 .button {
-  @apply w-3/5 bg-green-600 hover:bg-green-700 text-white font-utmavo font-bold py-3 px-6 rounded-[30px] focus:outline-none focus:ring-2 focus:ring-green-500;
+  width: 60%;
+  background-color: #16a34a;
+  color: white;
+  font-family: "UTM Avo", sans-serif;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
+  text-align: center;
+  transition: background-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   transform: translateX(50%);
+  outline: none;
+}
+
+.button:hover {
+  background-color: #15803d; /* Darker green on hover */
+}
+
+.button:focus {
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.5); /* Focus ring with green color */
+}
+@media (max-width: 599px) {
+  .background {
+    height: 70vh;
+  }
+  .formContainer {
+    transform: translateX(-2%);
+  }
+  .textarea {
+    margin-left: -3rem;
+  }
+}
+@media (max-width: 829px) {
+  .formContainer {
+    transform: translateX(4%);
+  }
+  .background {
+    height: 90vh;
+  }
+  .textarea {
+    margin-left: -3rem;
+  }
 }
