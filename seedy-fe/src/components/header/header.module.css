@@ -6,6 +6,7 @@
   align-items: center;
   justify-content: space-between; /* Align children to both ends */
   padding: 0 2rem;
+  padding-top: 7rem;
 }
 
 .circledMenu {
@@ -182,8 +183,11 @@
   }
 
   .icons {
-    gap: 2vw; /* Scale spacing between icons */
-    width: 20vw;
-    height: 10vh;
+    gap: 1rem; /* Less spacing */
+  }
+
+  .circledMenu {
+    width: 50px; /* Smaller size */
+    height: 50px;
   }
 }
