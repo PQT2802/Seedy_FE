@@ -1,0 +1,53 @@
+/* Base Styles */
+.background {
+  position: relative;
+  width: auto; /* Full width of the viewport */
+  height: 115vh; /* Full height of the viewport */
+  background-size: cover; /* Ensures the background scales proportionally */
+  background-repeat: no-repeat; /* Prevents background from repeating */
+  background-position: center; /* Centers the background */
+  background-image: url("/best-seller.png"); /* Path to your background image */
+  display: flex; /* Manage children layout */
+  flex-direction: row; /* Default to horizontal layout */
+  align-items: center; /* Center children vertically */
+  justify-content: space-around; /* Space out items horizontally */
+  padding: 20px; /* Optional padding */
+}
+
+/* Style for each item */
+.item {
+  display: flex;
+  flex-direction: column; /* Stack image and text vertically */
+  align-items: center;
+  gap: 10px; /* Add space between elements */
+  text-align: center;
+  position: relative;
+  top: 40px;
+}
+
+.item h1 {
+  font-size: 2rem;
+  color: #234014; /* Customize as needed */
+  font-family: "MantraRimba", sans-serif;
+}
+.item img {
+  width: 100%; /* Set width to take up 100% of the parent container */
+  height: auto; /* Automatically adjust height to maintain aspect ratio */
+  max-width: 20rem; /* Limit the maximum width */
+}
+.item button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #234014; /* Dark green */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.item button:hover {
+  background-color: #1a3010; /* Slightly darker green on hover */
+}
+
+/* Responsive Design */

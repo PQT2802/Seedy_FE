@@ -1,0 +1,36 @@
+.container {
+  background-color: #065f46; /* bg-green-900 */
+}
+
+.title {
+  z-index: 10;
+}
+
+.intro {
+  margin-top: -5rem; /* -mt-20 */
+  z-index: 10;
+}
+
+.bestSeller {
+  margin-top: -8rem; /* -mt-32 */
+  z-index: 20;
+}
+
+.about {
+  margin-top: -11rem; /* -mt-44 */
+  z-index: 10;
+}
+
+.feedback {
+  margin-top: -6rem; /* -mt-24 */
+  z-index: 10;
+}
+
+.footer {
+  margin-top: -8rem; /* -mt-32 */
+}
+@media (min-width: 830px) {
+  .footer {
+    margin-top: -25rem;
+  }
+}

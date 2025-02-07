@@ -1,20 +1,37 @@
 import Footer from "@/components/footer/footer";
-import Intro from "@/components/landing/intro";
-import Title from "@/components/landing/title";
+import About from "@/components/landing/about/about";
+import BestSeller from "@/components/landing/best-seller/best-seller";
+import Intro from "@/components/landing/intro/intro";
+import Mission from "@/components/landing/mission/mission";
+import Title from "@/components/landing/title/title";
+import styles from "./home.module.css";
+import Header from "@/components/header/header";
+import Feedback from "./../components/landing/feedback/feedback";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[#234014] relative">
-      {/* Header */}
-      <Title />
-      <div className="relative -mt-20 z-10">
+    <div className={styles.container}>
+      <div className={styles.title}>
+        <Title />
+      </div>
+      <div className={styles.intro}>
         <Intro />
       </div>
-      {/* Content */}
-      <div className="flex justify-center items-center text-white text-2xl h-[calc(100vh-87px)]">
-        Welcome to the Homepage!
+      <div className={styles.bestSeller}>
+        <BestSeller />
       </div>
-      <Footer />
+      <div className={styles.about}>
+        <About />
+      </div>
+      <div>
+        <Mission />
+      </div>
+      <div className={styles.feedback}>
+        <Feedback />
+      </div>
+      <div className={styles.footer}>
+        <Footer />
+      </div>
     </div>
   );
 }

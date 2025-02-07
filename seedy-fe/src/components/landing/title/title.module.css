@@ -1,0 +1,37 @@
+.background {
+  position: relative;
+  width: 100%;
+  min-height: 100vh; /* Dynamic height for scaling */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url("/bg-ld-1.svg");
+  display: flex; /* Add this to manage children layout */
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center children horizontally */
+}
+.headerContainer {
+  width: 100%; /* Ensure it spans the entire width */
+  display: flex; /* Use flexbox for layout if needed */
+  justify-content: center; /* Center the header horizontally */
+  z-index: 10; /* Keep the header above other elements */
+  position: relative; /* Ensure proper layering with .background */
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.title-image {
+  object-fit: contain;
+  max-width: 100%;
+  height: auto;
+  padding: 60px 0px 0px 60px;
+}
+@media (max-width: 599px) {
+  .background {
+    height: 100vh;
+  }
+}
