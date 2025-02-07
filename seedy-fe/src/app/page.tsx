@@ -5,7 +5,6 @@ import Intro from "@/components/landing/intro/intro";
 import Mission from "@/components/landing/mission/mission";
 import Title from "@/components/landing/title/title";
 import styles from "./home.module.css";
-import Header from "@/components/header/header";
 import Feedback from "./../components/landing/feedback/feedback";
 
 export default function Home() {
