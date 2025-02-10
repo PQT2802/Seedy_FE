@@ -1,0 +1,42 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    color: #234014;
+    margin-bottom: 1.5rem;
+  }
+  
+  .tldrawWrapper {
+    width: 500px; /* Kích thước canvas */
+    height: 500px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    background: white;
+    margin-bottom: 1.5rem;
+  }
+  
+  .downloadButton {
+    background-color: #234014;
+    color: white;
+    font-family: "UTMAvo", sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .downloadButton:hover {
+    background-color: #1a3011;
+  }
+  
