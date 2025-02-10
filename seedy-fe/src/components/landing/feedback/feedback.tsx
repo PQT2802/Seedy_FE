@@ -9,7 +9,7 @@ export default function Feedback() {
         <form className={`${styles.form}`}>
           <div className={`${styles.inputGroup}`}>
             <label htmlFor="name" className={`${styles.label}`}>
-              Name
+              Tên
             </label>
             <input type="text" id="name" className={`${styles.input}`} />
           </div>
@@ -21,7 +21,7 @@ export default function Feedback() {
           </div>
           <div className={`${styles.inputGroup}`}>
             <label htmlFor="message" className={`${styles.label}`}>
-              Message
+              Lời Nhắn
             </label>
             <textarea
               id="message"

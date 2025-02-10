@@ -20,7 +20,7 @@ export default function Header() {
         <div className={styles.navBar}>
           {/* Navigation Links */}
           <div className={styles.navLinks}>
-            <span className={styles.navLink}>OUR PRODUCTS</span>
+            <span className={styles.navLink}>Sản phẩm</span>
             <span className={styles.navLink}>OUR ARCHIVES</span>
             <span className={styles.navLink}>ABOUT US</span>
           </div>
