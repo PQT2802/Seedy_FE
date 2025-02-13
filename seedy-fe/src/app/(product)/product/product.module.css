@@ -1,147 +1,171 @@
 .container {
   background-color: #234014;
   padding: 20px;
-  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  width: 100%;
 }
 
 .item {
+  height: 120vh;
   background-color: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  max-width: 70vw;
-  height: 100vh;
-  margin: auto;
+  border-radius: 30px;
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  transform: translateY(15vh);
 }
 
 .productInfo {
   display: flex;
-  gap: 20px;
+  gap: 40px;
+  margin-bottom: 60px;
 }
 
 .carouselContainer {
-  flex: 1;
+  flex: 1.2;
+  transform: translateX(3vw) translateY(7vh);
 }
 
 .detailsContainer {
-  flex: 1;
+  flex: 0.8;
+  padding-top: 20px;
+  transform: translateX(-5vw) translateY(7vh);
 }
 
 .title {
-  font-size: 24px;
+  font-size: 32px;
   font-weight: bold;
-  margin-bottom: 10px;
-  font-family: "MantraRimba", sans-serif;
+  margin-bottom: 20px;
+  color: #234014;
+  font-family: var(--font-mantra);
 }
 
 .price {
-  color: #28a745;
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
+  color: #234014;
+  font-size: 24px;
+  margin-bottom: 15px;
 }
 
 .note {
-  color: #6c757d;
+  color: #666;
   font-size: 14px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .buttonsContainer {
-  display: flex;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 15px;
 }
 
 .sizeButton,
 .buyButton,
 .cartButton,
 .shareButton {
-  padding: 10px 15px;
+  padding: 12px 24px;
   border: none;
-  border-radius: 4px;
-  font-size: 14px;
+  border-radius: 8px;
+  font-size: 16px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-mantra);
 }
 
 .sizeButton {
-  background-color: #007bff;
+  background-color: #234014;
   color: white;
 }
 
 .buyButton {
-  background-color: #28a745;
+  background-color: #234014;
   color: white;
 }
 
 .cartButton {
-  background-color: #ffc107;
-  color: black;
+  background-color: white;
+  color: #234014;
+  border: 2px solid #234014;
 }
 
 .shareButton {
-  background-color: #6c757d;
-  color: white;
+  background-color: white;
+  color: #234014;
+  border: 2px solid #234014;
 }
 
 .descriptionSection {
   background-image: url("/Mask group.png");
-  margin-top: 20px;
-  border-radius: 20px;
-  width: 96%;
-  height: 45vh;
-  transform: translateX(27px) translateY(10vh);
-  display: flex;
+  margin: 40px -40px -40px;
+  width: 70vw;
+  transform: translateX(4.5vw) translateY(6vh);
+  padding: 40px;
+  border-radius: 30px;
   position: relative;
-  padding: 20px;
-  align-items: center; /* Centers items vertically */
+  overflow: hidden;
+  min-height: 400px;
+  overflow: visible;
 }
 
 .descriptionTitle {
-  font-size: 60px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: green;
-  transform: translateX(3vw) translateY(5vh);
-  width: 26vw;
+  font-size: 48px;
+  color: #234014;
+  margin-bottom: 20px;
+  max-width: 400px;
 }
 
 .descriptionText {
-  font-size: 20px;
-  color: #205804;
-  width: 26vw;
-  transform: translateX(4vw) translateY(6vh);
+  font-size: 18px;
+  line-height: 1.6;
+  color: #234014;
+  max-width: 400px;
+  margin-bottom: 30px;
 }
+
 .descriptionImage {
   position: absolute;
-  right: 20px; /* Aligns it to the right inside .descriptionSection */
-  bottom: 10px; /* Adjust positioning as needed */
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px; /* Spacing between images */
-  max-width: 40%; /* Limits width inside descriptionSection */
+  gap: 20px;
 }
 
 .descriptionImage img {
-  max-width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 10px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
 .relatedProductsSection {
-  margin-top: 40px;
+  margin-top: 60px;
+  padding: 0 40px;
 }
 
 .relatedTitle {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  font-family: "MantraRimba", sans-serif;
+  font-size: 32px;
+  color: white;
+  margin-bottom: 30px;
+  text-align: center;
 }
-.grass {
-  transform: translateY(2.5vh) translateX(-5vw);
-  z-index: 10;
-}
+
+.grass,
 .bush {
-  transform: translateY(-11vh) translateX(5vw);
-  z-index: -20;
+  position: absolute;
+  pointer-events: none;
+}
+
+.grass {
+  left: -7vw;
+  bottom: 0;
+  opacity: 0.8;
+  z-index: 2;
+  transform: translateY(9vh);
+}
+
+.bush {
+  left: -7vw;
+  bottom: 0;
+  opacity: 0.8;
+  z-index: 1;
+  transform: translateX(11vw) translateY(3vh);
 }

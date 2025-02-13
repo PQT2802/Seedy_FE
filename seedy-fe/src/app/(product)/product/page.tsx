@@ -1,5 +1,6 @@
 import { CarouselSize } from "@/components/carousel-list-items/carousel-list-items";
 import { CarouselPlugin } from "@/components/carousel-plugin/carousel-plugin";
+
 import React from "react";
 import styles from "./product.module.css";
 import Header from "@/components/header/header";
@@ -9,6 +10,7 @@ export default function Product() {
   return (
     <div className={styles.container}>
       <Header />
+
       <div className={styles.item}>
         <div className={styles.productInfo}>
           <div className={styles.carouselContainer}>

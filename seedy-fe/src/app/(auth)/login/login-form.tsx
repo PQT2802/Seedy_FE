@@ -63,7 +63,7 @@ export default function LoginForm() {
       console.log("API Endpoint:", envConfig.NEXT_PUBLIC_API_ENDPOINT);
 
       const response = await fetch(
-        `${envConfig.NEXT_PUBLIC_API_ENDPOINT}/api/Auth/sign-in`,
+        `https://seedbe-cdhggmh7h0hef3ff.eastasia-01.azurewebsites.net/api/Auth/sign-in`,
         {
           method: "POST",
           headers: {
@@ -145,7 +145,7 @@ export default function LoginForm() {
                       <LockIcon className={styles.icon} />
                       <FormControl>
                         <Input
-                          type="password"
+                          type={showPassword ? "text" : "password"}
                           className={styles.input}
                           placeholder="Enter Your Password"
                           {...field}
@@ -153,6 +153,7 @@ export default function LoginForm() {
                       </FormControl>
                       <EyeOffIcon
                         className={`${styles.iconRight} right-4 cursor-pointer`}
+                        onClick={() => setShowPassword(!showPassword)}
                       />
                       <FormMessage />
                     </FormItem>
@@ -182,8 +183,12 @@ export default function LoginForm() {
                 </div>
 
                 <div className={styles.buttonContainer}>
-                  <Button type="submit" className={styles.loginButton}>
-                    LOGIN
+                  <Button
+                    type="submit"
+                    className={styles.loginButton}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Logging in..." : "LOGIN"}
                   </Button>
                 </div>
 

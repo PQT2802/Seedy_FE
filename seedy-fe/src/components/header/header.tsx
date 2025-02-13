@@ -1,8 +1,12 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import styles from "./header.module.css";
+import { useRouter } from "next/navigation"; // ✅ Correct import for App Router
 
 export default function Header() {
+  const router = useRouter();
+
   return (
     <div className={styles.header}>
       {/* Logo */}
@@ -66,6 +70,7 @@ export default function Header() {
           src="/circled-menu.png"
           width={65}
           height={65}
+          onClick={() => router.push("/information")}
         />
       </div>
     </div>

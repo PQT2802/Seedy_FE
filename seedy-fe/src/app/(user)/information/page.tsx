@@ -1,10 +1,83 @@
 "use client";
 
 import Header from "@/components/header/header";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./information.module.css";
+import envConfig from "@/config";
+import { useRouter } from "next/navigation";
 
 export default function UserProfile() {
+  const [userData, setUserData] = useState({
+    userName: "Guest",
+    email: "Not provided",
+    phoneNumber: "N/A",
+    address: "No address available",
+    avatar: "/avatar.png",
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      setLoading(true);
+      const token = localStorage.getItem("accessToken");
+
+      if (!token) {
+        setError("No authentication token found");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `https://seedbe-cdhggmh7h0hef3ff.eastasia-01.azurewebsites.net/api/User/user-infor`,
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Failed to fetch user data");
+        }
+
+        const result = await response.json();
+        const data = result?.extensions?.data;
+
+        if (!data) {
+          throw new Error("User data not found in response");
+        }
+
+        setUserData({
+          userName: data.userName || "Guest",
+          email: data.email || "Not provided",
+          phoneNumber: data.phoneNumber || "N/A",
+          address: data.address || "No address available",
+          avatar: data.avatar || "/avatar.png",
+        });
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        setError((error as Error).message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (envConfig.NEXT_PUBLIC_API_ENDPOINT) {
+      fetchUserData();
+    }
+  }, []); // Empty dependency array to run only once on mount
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    router.push("/login");
+  };
+
   return (
     <div className={styles.pageContainer}>
       <Header />
@@ -12,12 +85,13 @@ export default function UserProfile() {
         <div className={styles.card}>
           {/* Left Section */}
           <div className={styles.leftSection}>
-            <h1 className={styles.greeting}>Hi, Sharon</h1>
+            <h1 className={styles.greeting}>Hi, {userData.userName}</h1>
             <div className={styles.avatarWrapper}>
               <img
-                src="/avatar.png"
-                alt="Female Avatar"
+                src={userData.avatar}
+                alt="User Avatar"
                 className={styles.avatar}
+                loading="lazy"
               />
             </div>
             <div className={styles.infoTabs}>
@@ -27,52 +101,63 @@ export default function UserProfile() {
               <p className={styles.tab}>Your Order</p>
             </div>
           </div>
-          {/* Right Section dfsdfdsfsdf*/}
+          {/* Right Section */}
           <div className={styles.rightSection}>
-            <h2 className={styles.title}>Personal Information</h2>
-            <div className={styles.form}>
-              {/* Full Name */}
-              <div className={styles.fullWidth}>
-                <label className={styles.label}>Full Name</label>
-                <input type="text" className={styles.input} />
-              </div>
-              {/* Date of Birth & Gender */}
-              <div className={styles.row}>
-                <div className={styles.inputContainer}>
-                  <label className={styles.label}>Date of Birth</label>
-                  <input type="date" className={styles.input} />
+            {loading ? (
+              <p>Loading user data...</p>
+            ) : error ? (
+              <p className={styles.error}>{error}</p>
+            ) : (
+              <>
+                <h2 className={styles.title}>Personal Information</h2>
+                <div className={styles.form}>
+                  <div className={styles.fullWidth}>
+                    <label className={styles.label}>Full Name</label>
+                    <input
+                      type="text"
+                      className={styles.input}
+                      value={userData.userName}
+                      readOnly
+                    />
+                  </div>
+                  <div className={styles.fullWidth}>
+                    <label className={styles.label}>Phone Number</label>
+                    <input
+                      type="text"
+                      className={styles.input}
+                      value={userData.phoneNumber}
+                      readOnly
+                    />
+                  </div>
+                  <div className={styles.fullWidth}>
+                    <label className={styles.label}>Email</label>
+                    <input
+                      type="text"
+                      className={styles.input}
+                      value={userData.email}
+                      readOnly
+                    />
+                  </div>
+                  <div className={styles.fullWidth}>
+                    <label className={styles.label}>Home Address</label>
+                    <input
+                      type="text"
+                      className={styles.input}
+                      value={userData.address}
+                      readOnly
+                    />
+                  </div>
+                  <div className={styles.row}>
+                    <button
+                      className={styles.logoutButton}
+                      onClick={handleLogout}
+                    >
+                      LOG OUT
+                    </button>
+                  </div>
                 </div>
-                <div className={styles.inputContainer}>
-                  <label className={styles.label}>Gender</label>
-                  <input type="text" className={styles.input} />
-                </div>
-              </div>
-              {/* Phone Number & Country/Religion */}
-              <div className={styles.row}>
-                <div className={styles.inputLarge}>
-                  <label className={styles.label}>Phone Number</label>
-                  <input type="text" className={styles.input} />
-                </div>
-                <div className={styles.inputSmall}>
-                  <label className={styles.label}>Country/Religion</label>
-                  <input type="text" className={styles.input} />
-                </div>
-              </div>
-              {/* Home Address */}
-              <div className={styles.fullWidth}>
-                <label className={styles.label}>Home Address</label>
-                <input type="text" className={styles.input} />
-              </div>
-              {/* Language & Log Out */}
-              <div className={styles.row}>
-                <div className={styles.languageContainer}>
-                  <label className={styles.label}>Language</label>
-                  <input type="text" className={styles.input} />
-                </div>
-                <div className={styles.spacer}></div>
-                <button className={styles.logoutButton}>LOG OUT</button>
-              </div>
-            </div>
+              </>
+            )}
           </div>
         </div>
       </div>

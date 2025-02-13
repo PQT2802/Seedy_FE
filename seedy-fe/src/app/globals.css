@@ -33,6 +33,10 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --font-wolfers: var(--font-wolfers);
+
+    --font-mantra: var(--font-mantra);
+    --font-utamAvo: var(--font-utamAvo);
   }
   .dark {
     --background: 222.2 84% 4.9%;
@@ -59,31 +63,5 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-  }
-}
-@font-face {
-  font-family: "MantraRimba";
-  src: url("./MantraRimba-nRqDM.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "UTMAvo";
-  src: url("./utm-avo.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-.font-mantra {
-  font-family: "MantraRimba", sans-serif;
-}
-.font-utmavo {
-  font-family: "UTMAvo", sans-serif;
-}
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
   }
 }
