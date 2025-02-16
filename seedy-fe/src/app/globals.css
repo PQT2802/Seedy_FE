@@ -73,7 +73,7 @@ body {
   }
 
   .scrollbar-custom::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.4); /* Màu thanh cuộn (mờ) */
+    background-color: rgba(0, 122, 51, 0.199); /* Màu thanh cuộn (mờ) */
     border-radius: 10px; /* Bo góc thanh cuộn */
   }
 
