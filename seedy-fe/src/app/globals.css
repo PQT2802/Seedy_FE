@@ -65,3 +65,23 @@ body {
     --chart-5: 340 75% 55%;
   }
 }
+
+@layer components {
+  /* Tùy chỉnh scrollbar */
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 6px; /* Độ rộng của scrollbar */
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.4); /* Màu thanh cuộn (mờ) */
+    border-radius: 10px; /* Bo góc thanh cuộn */
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.6); /* Màu khi hover */
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background: transparent; /* Nền phía sau thanh cuộn */
+  }
+}
