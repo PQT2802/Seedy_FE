@@ -2,7 +2,7 @@ import Header from "@/components/header/header";
 import React from "react";
 import CartItem from "./cart-item";
 import Link from "next/link";
-
+import styles from './cart.module.css';
 const cartItems = [
   {
     imageSrc: "/cart/cart-list/flower.png",
@@ -36,15 +36,15 @@ const cartItems = [
 
 export default function page() {
   return (
-    <div className="bg-black">
+    <div className={styles.container}>
       <Header />
-      <div className="flex flex-col rounded-none justify-center items-center">
-        <div className="flex flex-col items-end px-20 pt-12 pb-[86px] w-[80%] bg-white rounded-[33px] mb-[30px] max-md:px-5 max-md:pb-24 max-md:max-w-full">
-          <h1 className="font-mantra self-start text-6xl text-headerGreen my-[20px] max-md:text-4xl">
+      <div className={styles.cartWrapper}>
+        <div className={`${styles.cartBox} ${styles['cartBox.maxMd']}`}>
+          <h1 className= {`${styles.title} font-mantra text-headerGreen ${styles['title.maxMd']}`}>
             YOUR CART
           </h1>
 
-          <div className="max-h-[500px] w-[100%] overflow-y-auto scrollbar-custom">
+          <div className={`${styles.cartList} overflow-y-auto scrollbar-custom`}>
             {cartItems.map((item, index) => (
               <div
                 key={index}
@@ -56,16 +56,16 @@ export default function page() {
               </div>
             ))}
           </div>
-          <div className="flex flex-wrap gap-3 mt-7 -mb-6 max-md:mb-2.5">
-            <div className="flex flex-auto gap-10 px-6 py-3 text-black rounded-2xl bg-lime-950 max-md:px-5">
+          <div className={`${styles.totalWrapper} ${styles['totalWrapper.maxMd']}`}>
+            <div className={`${styles.totalBox} ${styles['totalBox.maxMd']} bg-lime-950 `}>
               <div className="text-4xl text-white">TOTAL:</div>
-              <div className="self-start justify-center items-center text-3xl font-bold basis-auto text-customGreen">
+              <div className= {`${styles.totalAmount} text-customGreen`}>
                 699.000 VND
               </div>
             </div>
             <Link
               href="/checkout"
-              className="grow px-16 py-3 text-4xl text-black rounded-2xl border-4 border-solid border-lime-950 w-fit max-md:px-5"
+              className={`${styles.checkoutButton} ${styles['checkoutButton.maxMd']} border-lime-950`}
             >
               CHECK OUT
             </Link>
