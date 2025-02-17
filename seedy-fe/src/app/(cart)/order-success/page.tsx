@@ -18,7 +18,7 @@ export default function page() {
               You will receive a confirmation email within the next 24 hours.
             </p>
             <p className="self-stretch text-3xl font-bold tracking-tight leading-7 text-center max-md:max-w-full">
-              If you have any questions, please don't hesitate to contact us.
+              If you have any questions, please dont hesitate to contact us.
             </p>
             <button className="px-6 py-3 mt-20 max-w-full text-4xl rounded-2xl border-4 border-solid border-lime-950 w-[309px] max-md:px-5 max-md:mt-10">
               CONTINUE SHOPPING
