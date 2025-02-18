@@ -63,7 +63,8 @@ export default function LoginForm() {
       console.log("API Endpoint:", envConfig.NEXT_PUBLIC_API_ENDPOINT);
 
       const response = await fetch(
-        `https://seedbe-cdhggmh7h0hef3ff.eastasia-01.azurewebsites.net/api/Auth/sign-in`,
+        // `https://seedbe-cdhggmh7h0hef3ff.eastasia-01.azurewebsites.net/api/Auth/sign-in`,
+        `https://localhost:7179/api/Auth/sign-in`,
         {
           method: "POST",
           headers: {
