@@ -11,6 +11,7 @@ export default function Page() {
   const [checkoutItems, setCheckoutItems] = useState<Record<string, any>>({});
   const [checkoutTotal, setCheckoutTotal] = useState<number>(0);
   const [selectedPayment, setSelectedPayment] = useState<string>("cod");
+  const [shippingFee, setShippingFee] = useState<number | null>(null);
 
   useEffect(() => {
     const storedCart = localStorage.getItem("checkoutCart");
@@ -27,15 +28,19 @@ export default function Page() {
   return (
     <div className="bg-black">
       <Header />
-      <div className="flex flex-col rounded-none justify-center items-center ">
+      <div className="flex flex-col rounded-none justify-center items-center">
         <div className="px-12 py-12 w-[80%] mb-10 bg-white rounded-[33px] max-md:px-5 max-md:max-w-full">
           <div className="flex gap-5 max-md:flex-col">
             <div className="flex flex-col w-2/5 max-md:ml-0 max-md:w-full">
               <div className="flex flex-col grow max-md:mt-10 max-md:max-w-full">
-                <h1 className=" font-mantra text-headerGreen self-start text-6xl max-md:text-4xl">
+                <h1 className="font-mantra text-headerGreen self-start text-6xl max-md:text-4xl">
                   CHECK OUT
                 </h1>
-                <ShippingInformation />
+                <ShippingInformation
+                  total={checkoutTotal}
+                  selectedPaymentMethod={selectedPayment}
+                  setShippingFee={setShippingFee} // ✅ Truyền setShippingFee xuống ShippingInformation
+                />
               </div>
             </div>
             <div className="flex flex-col ml-5 w-3/5 max-md:ml-0 max-md:w-full">
@@ -49,6 +54,7 @@ export default function Page() {
                 <TotalSummary
                   total={checkoutTotal}
                   selectedPaymentMethod={selectedPayment}
+                  shippingFee={shippingFee} // ✅ Truyền phí ship sang TotalSummary
                 />
               </div>
             </div>

@@ -8,11 +8,13 @@ import { useRouter } from "next/navigation";
 interface TotalSummaryProps {
   total: number;
   selectedPaymentMethod: string;
+  shippingFee: number | null;
 }
 
 export default function TotalSummary({
   total,
   selectedPaymentMethod,
+  shippingFee,
 }: TotalSummaryProps) {
   const [showQR, setShowQR] = useState(false);
   const [isCheckingPayment, setIsCheckingPayment] = useState(false);
@@ -93,10 +95,14 @@ export default function TotalSummary({
         </div>
         <div className="flex flex-col">
           <div className="flex flex-col pr-px pl-2.5">
-            <div>50.000 VND</div>
+            <div>
+              {shippingFee ? `${shippingFee.toLocaleString()} VND` : "N/A"}
+            </div>
             <div className="self-end mt-2.5 max-md:mr-2.5">0 VND</div>
           </div>
-          <div className="mt-3">{(total + 50000).toLocaleString()} VND</div>
+          <div className="mt-3">
+            {(total + (shippingFee || 0)).toLocaleString()} VND
+          </div>
           <div className="self-center mt-3.5">+ 69 </div>
         </div>
       </div>
