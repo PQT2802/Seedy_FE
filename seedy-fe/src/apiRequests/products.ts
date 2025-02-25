@@ -8,20 +8,8 @@ export interface Product {
   imageUrl: string;
 }
 
-interface ProductResponse {
-  status: number;
-  payload: {
-    extensions: {
-      message: string;
-      data?: Product[];
-    };
-  };
-}
-
 const productApiRequest = {
-  getAllProducts: async (): Promise<ProductResponse> => {
-    return await http.get<ProductResponse>(`api/Product/all`);
-  },
+  getAllProducts: () => http.get(`api/Product/all`),
 };
 
 export default productApiRequest;
