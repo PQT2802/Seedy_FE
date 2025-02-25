@@ -14,7 +14,7 @@ export default function Category() {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 150000]);
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const itemsPerPage = 8;
+  const itemsPerPage = 9;
 
   useEffect(() => {
     const fetchProducts = async () => {
