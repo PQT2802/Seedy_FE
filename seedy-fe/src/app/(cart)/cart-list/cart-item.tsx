@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
+import styles from "./cart-Item.module.css";
 
 interface CartItemProps {
   imageSrc: string;
@@ -7,6 +10,7 @@ interface CartItemProps {
   title: string;
   price: string;
   quantity: number;
+  onQuantityChange: (newQuantity: number) => void;
 }
 
 export default function CartItem({
@@ -15,39 +19,54 @@ export default function CartItem({
   title,
   price,
   quantity,
+  onQuantityChange,
 }: CartItemProps) {
+  const [itemQuantity, setItemQuantity] = useState(quantity);
+
+  const increaseQuantity = () => {
+    const newQuantity = itemQuantity + 1;
+    setItemQuantity(newQuantity);
+    onQuantityChange(newQuantity);
+  };
+
+  const decreaseQuantity = () => {
+    const newQuantity = itemQuantity > 1 ? itemQuantity - 1 : 1;
+    setItemQuantity(newQuantity);
+    onQuantityChange(newQuantity);
+  };
+
   return (
-    <div className="flex gap-2 max-md:flex-col">
-      <div className="flex flex-col w-[18%] max-md:ml-0 max-md:w-full">
-        <div className="flex flex-col grow px-2.5 w-full bg-white rounded-2xl max-md:mt-10">
+    <div className={styles.container}>
+      <div className={styles.imageContainer}>
+        <div className={styles.imageWrapper}>
           <Image
             width={300}
             height={300}
             src={imageSrc}
             alt={altText}
-            className="object-contain z-10 aspect-square w-[194px]"
+            className={styles.image}
           />
         </div>
       </div>
-      <div className="flex  ml-5 w-[82%] max-md:ml-0 max-md:w-full">
-        <div className="flex justify-between text-white items-start mt-3.5 w-full max-md:mt-10 max-md:max-w-full">
-          <div className="flex flex-col gap-20">
-            <div className="text-4xl">{title}</div>
-            <div className="mt-2.5 ml-3 text-3xl font-bold max-md:ml-2.5">
-              {price}
-            </div>
+      <div className={styles.detailsContainer}>
+        <div className={styles.details}>
+          <div className={styles.boxprice}>
+            <div className={styles.title}>{title}</div>
+            <div className={styles.price}>{price}</div>
           </div>
-          <div className="flex gap-10 items-start self-center mt-6 text-4xl tracking-tighter leading-loose text-black bg-white px-5 rounded-lg whitespace-nowrap">
+          <div className={styles.quantityControl}>
             <button
               aria-label="Decrease quantity"
               className="focus:outline-none"
+              onClick={decreaseQuantity}
             >
               -
             </button>
-            <div className="self-stretch">{quantity}</div>
+            <div className="self-stretch">{itemQuantity}</div>
             <button
               aria-label="Increase quantity"
               className="focus:outline-none"
+              onClick={increaseQuantity}
             >
               +
             </button>

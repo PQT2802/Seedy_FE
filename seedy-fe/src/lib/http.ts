@@ -69,9 +69,9 @@ const request = async <Response>(
           "Content-Type": "application/json",
         };
   if (isClient()) {
-    const sessionToken = localStorage.getItem("sessionToken");
-    if (sessionToken) {
-      baseHeaders.Authorization = `Bearer ${sessionToken}`;
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      baseHeaders.Authorization = `Bearer ${accessToken}`;
     }
   }
   // Nếu không truyền baseUrl (hoặc baseUrl = undefined) thì lấy từ envConfig.NEXT_PUBLIC_API_ENDPOINT

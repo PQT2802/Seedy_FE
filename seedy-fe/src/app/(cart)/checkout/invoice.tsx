@@ -1,14 +1,11 @@
 import Image from "next/image";
 import React from "react";
 
-interface InvoiceItemProps {
-  imageSrc: string;
-  title: string;
-  price: string;
-  amount: number;
+interface InvoiceProps {
+  items: Record<string, any>;
 }
 
-function InvoiceItem({ imageSrc, title, price, amount }: InvoiceItemProps) {
+function InvoiceItem({ imageSrc, title, price, amount }: any) {
   return (
     <div className="flex gap-4 px-3 py-1.5 mt-2.5 rounded-2xl bg-lime-950 ">
       <div className="flex justify-center px-2.5 py-3 bg-white rounded-2xl max-h-[100px]">
@@ -30,53 +27,20 @@ function InvoiceItem({ imageSrc, title, price, amount }: InvoiceItemProps) {
   );
 }
 
-export default function Invoice() {
-  const invoiceItems = [
-    {
-      imageSrc: "/cart/cart-list/flower.png",
-      title: "MAKE-PLANT BOX SET",
-      price: "499.000 VND",
-      amount: 1,
-    },
-    {
-      imageSrc: "/cart/cart-list/flower.png",
-      title: "MAKE-PLANT BOX SET",
-      price: "499.000 VND",
-      amount: 1,
-    },
-    {
-      imageSrc: "/cart/cart-list/flower.png",
-      title: "MAKE-PLANT BOX SET",
-      price: "499.000 VND",
-      amount: 1,
-    },
-    {
-      imageSrc: "/cart/cart-list/flower.png",
-      title: "MAKE-PLANT BOX SET",
-      price: "499.000 VND",
-      amount: 1,
-    },
-    {
-      imageSrc: "/cart/cart-list/flower.png",
-      title: "MAKE-PLANT BOX SET",
-      price: "499.000 VND",
-      amount: 1,
-    },
-    
-   
-  ];
-
+export default function Invoice({ items }: InvoiceProps) {
   return (
     <div className="flex flex-col ml-5 w-[44%] max-md:ml-0 max-md:w-full">
-      <div className="flex flex-col w-full max-md:mt-2">
-        <h2 className="self-start text-5xl text-black max-md:text-4xl">
-          Invoice
-        </h2>
-        <div className=" max-h-[320px]  overflow-y-auto scrollbar-custom">
-          {invoiceItems.map((item, index) => (
-            <InvoiceItem key={index} {...item} />
-          ))}
-        </div>
+      <h2 className="text-5xl text-black max-md:text-4xl">Invoice</h2>
+      <div className="max-h-[320px] overflow-y-auto scrollbar-custom">
+        {Object.entries(items).map(([id, item]) => (
+          <InvoiceItem
+            key={id}
+            imageSrc={item.productImageUrl}
+            title={item.productName}
+            price={`${item.productPrice.toLocaleString()} VND`}
+            amount={item.quantity}
+          />
+        ))}
       </div>
     </div>
   );
