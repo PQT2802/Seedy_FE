@@ -21,6 +21,7 @@ export default function Page() {
       try {
         const response = await cartApiRequest.getDetail();
         if (response.status === 200) {
+          console.log(response);
           setCartData(response.payload);
           setCartItems(response.payload?.extensions.data.cartItems ?? {});
         } else {

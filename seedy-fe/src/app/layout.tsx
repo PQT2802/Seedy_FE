@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { mantraRimba, wolfers, utamAvo } from "@/lib/fonts";
+import { mantraRimba, wolfer, utamAvo, utmAvoItalic } from "@/lib/fonts";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${mantraRimba.variable} ${wolfers.variable} ${utamAvo.variable}  antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${mantraRimba.variable} ${wolfer.variable} ${utamAvo.variable} ${utmAvoItalic.variable}  antialiased`}
       >
         {children}
       </body>

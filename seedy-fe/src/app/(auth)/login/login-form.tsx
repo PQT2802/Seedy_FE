@@ -1,5 +1,5 @@
 "use client";
-
+import { useRouter } from "next/navigation"; // or "next/router" in older Next.js versions
 import * as React from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -25,8 +25,8 @@ import {
   UserIcon,
 } from "lucide-react";
 import styles from "./login.module.css";
-import envConfig from "./../../../config";
-import { useState } from "react";
+import authApiRequest from "@/apiRequests/auth";
+// Import the fixed API request functions
 
 const socialLoginOptions = [
   { icon: Apple, alt: "Apple login" },
@@ -42,9 +42,9 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -54,52 +54,34 @@ export default function LoginForm() {
       rememberMe: false,
     },
   });
-
+  const router = useRouter();
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     setError("");
 
     try {
-      console.log("API Endpoint:", envConfig.NEXT_PUBLIC_API_ENDPOINT);
+      const response = await authApiRequest.login({
+        email: values.email,
+        password: values.password,
+      });
 
-      const response = await fetch(
-        // `https://seedbe-cdhggmh7h0hef3ff.eastasia-01.azurewebsites.net/api/Auth/sign-in`,
-        `https://localhost:7179/api/Auth/sign-in`,
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: values.email,
-            password: values.password,
-          }),
-        }
+      console.log(response);
+
+      if (
+        !response.payload.extensions.data ||
+        !response.payload.extensions.data.accessToken
+      ) {
+        throw new Error("Login failed: Invalid response from server");
+      }
+
+      // Store token
+      localStorage.setItem(
+        "accessToken",
+        response.payload.extensions.data.accessToken
       );
-
-      console.log("Response Status:", response.status);
-      console.log("Response Headers:", response.headers);
-
-      const responseBody = await response.json();
-      console.log("Response Body:", responseBody);
-
-      if (!response.ok) {
-        throw new Error(
-          `Login failed: ${response.status} - ${
-            responseBody.message || response.statusText
-          }`
-        );
-      }
-
-      // If the login is successful (status 200), store the accessToken and redirect to home page
-      if (responseBody.statusCode === 200) {
-        localStorage.setItem(
-          "accessToken",
-          responseBody.extensions.data.accessToken
-        );
-        window.location.href = "/"; // Redirect to home page
-      }
+      console.log(response.payload.extensions.data.accessToken);
+      // ✅ Use Next.js router instead of window.location.href
+      router.push("/");
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "An unexpected error occurred"
@@ -120,6 +102,7 @@ export default function LoginForm() {
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-6"
               >
+                {/* Email Input */}
                 <FormField
                   control={form.control}
                   name="email"
@@ -129,7 +112,7 @@ export default function LoginForm() {
                       <FormControl>
                         <Input
                           className={styles.input}
-                          placeholder="Enter Your Email/Phone Number"
+                          placeholder="Enter Your Email"
                           {...field}
                         />
                       </FormControl>
@@ -138,6 +121,7 @@ export default function LoginForm() {
                   )}
                 />
 
+                {/* Password Input */}
                 <FormField
                   control={form.control}
                   name="password"
@@ -161,12 +145,13 @@ export default function LoginForm() {
                   )}
                 />
 
+                {/* Remember Me */}
                 <div className={styles.rememberContainer}>
                   <FormField
                     control={form.control}
                     name="rememberMe"
                     render={({ field }) => (
-                      <React.Fragment>
+                      <>
                         <Checkbox
                           id="remember"
                           checked={field.value}
@@ -178,11 +163,12 @@ export default function LoginForm() {
                         >
                           Remember me
                         </label>
-                      </React.Fragment>
+                      </>
                     )}
                   />
                 </div>
 
+                {/* Submit Button */}
                 <div className={styles.buttonContainer}>
                   <Button
                     type="submit"
@@ -193,6 +179,7 @@ export default function LoginForm() {
                   </Button>
                 </div>
 
+                {/* Sign Up Link */}
                 <p className={styles.signUpText}>
                   <span className="text-[#234014]">No account yet?</span>{" "}
                   <button className="font-bold text-[#4c6f29] underline">
@@ -200,6 +187,7 @@ export default function LoginForm() {
                   </button>
                 </p>
 
+                {/* Social Login */}
                 <div className={styles.socialLoginContainer}>
                   <p className={styles.socialLoginText}>Or login with:</p>
                   <div className="flex justify-center gap-6">

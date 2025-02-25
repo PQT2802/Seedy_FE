@@ -1,0 +1,16 @@
+.categoryButton {
+  padding: 0.5rem 1rem;
+  background: white;
+  border: 2px solid #2c5110;
+  color: #2c5110;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.categoryButton.selected,
+.categoryButton:hover {
+  background: #2c5110;
+  color: white;
+}

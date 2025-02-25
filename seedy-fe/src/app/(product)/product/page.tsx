@@ -1,3 +1,4 @@
+"use client";
 import { CarouselSize } from "@/components/carousel-list-items/carousel-list-items";
 import { CarouselPlugin } from "@/components/carousel-plugin/carousel-plugin";
 
@@ -5,6 +6,7 @@ import React from "react";
 import styles from "./product.module.css";
 import Header from "@/components/header/header";
 import Image from "next/image";
+import NumberCounter from "@/components/ui/number-counter";
 
 export default function Product() {
   return (
@@ -27,6 +29,7 @@ export default function Product() {
               <button className={styles.buyButton}>Buy Now</button>
               <button className={styles.cartButton}>Add to Cart</button>
               <button className={styles.shareButton}>Share</button>
+              <NumberCounter />
             </div>
           </div>
         </div>

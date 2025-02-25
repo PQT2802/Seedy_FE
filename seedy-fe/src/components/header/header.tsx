@@ -24,6 +24,7 @@ export default function Header() {
           src="/logo-seedy-mo-i-tra-ng-1.png"
           width={92}
           height={87}
+          onClick={() => router.push("/")}
         />
       </div>
 
@@ -32,7 +33,12 @@ export default function Header() {
         <div className={styles.navBar}>
           {/* Navigation Links */}
           <div className={styles.navLinks}>
-            <span className={styles.navLink}>Sản phẩm</span>
+            <span
+              className={styles.navLink}
+              onClick={() => router.push("/category")}
+            >
+              Sản phẩm
+            </span>
             <span className={styles.navLink}>OUR ARCHIVES</span>
             <span className={styles.navLink}>ABOUT US</span>
           </div>
