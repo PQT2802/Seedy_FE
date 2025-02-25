@@ -1,0 +1,118 @@
+.productCard {
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-family: inherit;
+  background: white;
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.productCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Image Container */
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Green Highlight Background */
+.greenHighlight {
+  position: absolute;
+  background-color: #7fd46b;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  clip-path: polygon(
+    30% 0%,
+    70% 0%,
+    100% 30%,
+    100% 70%,
+    70% 100%,
+    30% 100%,
+    0% 70%,
+    0% 30%
+  );
+}
+/* Product Image */
+.productImage {
+  position: relative;
+  z-index: 2;
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain; /* Ensures the full image is visible */
+}
+
+/* Product Name */
+.productName {
+  margin: 1rem 0 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+  color: #2c5110;
+  font-weight: bold;
+}
+
+/* Product Price */
+.productPrice {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  color: #444;
+}
+
+/* Add to Cart Button */
+.addToCartButton {
+  background-color: #2c5110;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: inherit;
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+.addToCartButton:hover {
+  background-color: #3b7015;
+  transform: scale(1.05);
+}
+
+/* Cart Icon */
+.cartIcon {
+  position: relative;
+  display: inline-block;
+}
+
+/* Cart Badge */
+.cartBadge {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background-color: #7fd46b;
+  color: #2c5110;
+  font-size: 0.75rem;
+  font-weight: bold;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}

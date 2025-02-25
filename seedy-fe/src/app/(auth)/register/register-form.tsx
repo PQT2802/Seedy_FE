@@ -108,7 +108,7 @@ export default function RegisterForm() {
       console.log("📦 Request Body:", JSON.stringify(requestBody, null, 2));
 
       const response = await fetch(
-        `https://seedbe-cdhggmh7h0hef3ff.eastasia-01.azurewebsites.net/api/Auth/sign-up`,
+        `${envConfig.NEXT_PUBLIC_API_ENDPOINT}/api/Auth/sign-up`,
         {
           method: "POST",
           headers: {
