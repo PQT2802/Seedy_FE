@@ -23,24 +23,54 @@ export default function TotalSummary({
   const bankAccount = "09314448754"; // Số tài khoản ngân hàng
   const bankName = "Tpbank";
   const uniqueDescription = `PAY${Date.now()}`; // Tạo mô tả giao dịch duy nhất
-  const qrCodeUrl = `https://qr.sepay.vn/img?acc=${bankAccount}&bank=${bankName}&amount=${total}&des=${encodeURIComponent(
+  const totalAmount = total + (shippingFee || 0);
+  const qrCodeUrl = `https://qr.sepay.vn/img?acc=${bankAccount}&bank=${bankName}&amount=${totalAmount}&des=${encodeURIComponent(
     uniqueDescription
   )}`;
+  // Lấy dữ liệu từ localStorage hoặc props
+  const checkoutItems = JSON.parse(
+    localStorage.getItem("checkoutCart") || "{}"
+  );
+  const shippingInfo = JSON.parse(localStorage.getItem("shippingInfo") || "{}"); // Giả sử lưu từ ShippingInformation
+
+  // Tạo orderData từ thông tin hiện tại
+  const orderData = {
+    accountNumber: bankAccount,
+    amount: totalAmount,
+    description: uniqueDescription,
+    shippingFee: shippingFee || 0,
+    items: Object.entries(checkoutItems).map(([id, item]: [string, any]) => ({
+      productId: item.productId, // Sửa: Lấy từ item.productId thay vì id
+      quantity: item.quantity,
+      price: item.productPrice,
+    })),
+    receiver: {
+      fullName: shippingInfo.fullName || "",
+      address: shippingInfo.address || "",
+      phone: shippingInfo.phoneNumber || "",
+      email: shippingInfo.email || "",
+      wardId: shippingInfo.wardId || 0,
+      districtId: shippingInfo.districtId || 0,
+      provinceId: shippingInfo.provinceId || 0,
+    },
+  };
 
   const checkPaymentStatus = async () => {
     try {
       console.log("Checking payment status...");
 
-      const response = await paymentApiRequest.checkPayment(
-        bankAccount,
-        total,
-        uniqueDescription
+      // Sử dụng createOrderAndCheckPayment thay vì checkPayment
+      const response = await paymentApiRequest.createOrderAndCheckPayment(
+        orderData
       );
 
       console.log("Full API Response:", response);
 
       if (response.status !== 200) {
-        console.log("Payment not found:", response.payload.payload.message);
+        console.log(
+          "Payment not found or order creation failed:",
+          response.payload.payload.message
+        );
         return;
       }
 
@@ -50,10 +80,11 @@ export default function TotalSummary({
         return;
       }
 
-      console.log("✅ Payment successful:", paymentData);
+      console.log("✅ Payment successful and order created:", paymentData);
       setIsCheckingPayment(false);
       setShowQR(false);
-      router.push("/order-success");
+
+      await router.push("/order-success");
     } catch (error) {
       console.error("Error calling API", error);
     }
@@ -63,8 +94,14 @@ export default function TotalSummary({
     if (selectedPaymentMethod === "online-banking") {
       setShowQR(true);
       setIsCheckingPayment(true);
+      checkPaymentStatus(); // Gọi ngay lập tức để tạo đơn hàng và kiểm tra thanh toán
     } else {
-      router.push("/order-success");
+      // Xử lý COD: gửi đơn hàng lên backend mà không cần kiểm tra thanh toán
+      paymentApiRequest.createOrderCOD(orderData).then((response) => {
+        if (response.status === 200) {
+          router.push("/order-success");
+        }
+      });
     }
   };
 
@@ -100,9 +137,8 @@ export default function TotalSummary({
             </div>
             <div className="self-end mt-2.5 max-md:mr-2.5">0 VND</div>
           </div>
-          <div className="mt-3">
-            {(total + (shippingFee || 0)).toLocaleString()} VND
-          </div>
+          <div className="mt-3">{totalAmount.toLocaleString()} VND</div>{" "}
+          {/* Hiển thị totalAmount */}
           <div className="self-center mt-3.5">+ 69 </div>
         </div>
       </div>

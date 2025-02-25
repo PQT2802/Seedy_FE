@@ -7,6 +7,14 @@ import { useRouter } from "next/navigation"; // ✅ Correct import for App Route
 export default function Header() {
   const router = useRouter();
 
+  const handleCartClick = () => {
+    router.push("/cart-list");
+  };
+
+  const handleUserClick = () => {
+    router.push("/information");
+  };
+
   return (
     <div className={styles.header}>
       {/* Logo */}
@@ -57,8 +65,17 @@ export default function Header() {
               src="/shopping-cart.png"
               width={45}
               height={45}
+              onClick={handleCartClick} // Navigate to /cart-list
+              style={{ cursor: "pointer" }} // Optional: Change cursor to pointer
             />
-            <Image alt="User Icon" src="/user.png" width={45} height={45} />
+            <Image
+              alt="User Icon"
+              src="/user.png"
+              width={45}
+              height={45}
+              onClick={handleUserClick} // Navigate to /information
+              style={{ cursor: "pointer" }} // Optional: Change cursor to pointer
+            />
           </div>
         </div>
       </div>
