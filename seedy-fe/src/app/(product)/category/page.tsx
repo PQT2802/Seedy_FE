@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import styles from "./category.module.css";
 import productApiRequest, { Product } from "@/apiRequests/products";
 import CategoryFilter from "@/components/category/category-filter/categoryFilter";
@@ -23,6 +22,7 @@ export default function Category() {
         console.log("API Response:", response);
 
         if (response.status === 200 && response.payload.extensions.data) {
+          console.log(response);
           setProducts(response.payload.extensions.data);
         } else {
           console.error(

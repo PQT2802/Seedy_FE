@@ -5,7 +5,11 @@ interface ViettelPostResponse<T> {
   statusCode: number;
   title: string;
   type: string;
-  payload: { Data: { $values: T } }; // ✅ Fix: Lấy dữ liệu từ `$values`
+  extensions: {
+    data: {
+      data: T;
+    };
+  };
 }
 
 // ✅ Kiểu dữ liệu cho Province, District, Ward
@@ -63,7 +67,7 @@ const getToken = (): string | undefined => {
 // ✅ API Requests for ViettelPost
 const viettelPostApi = {
   // 🔹 Gọi API login
-  login: async (): Promise<string | null> => {
+  login: async (): Promise<string | undefined> => {
     try {
       const response = await http.post<
         ViettelPostResponse<{ userId: number; token: string }>
@@ -72,8 +76,12 @@ const viettelPostApi = {
         password: "T0931444875.",
       });
 
-      // 🛠 Fix: Lấy token từ `payload`
-      const token = response.payload?.token;
+      console.log("Response:", response);
+
+      // 🛠 Fix: Lấy token từ `extensions.data.data.token`
+      const token = response.payload?.extensions?.data?.data?.token;
+      console.log("Extracted Token:", token);
+
       if (token) {
         saveToken(token);
         return token;
@@ -81,7 +89,7 @@ const viettelPostApi = {
     } catch (error) {
       console.error("Login failed:", error);
     }
-    return null;
+    return undefined;
   },
 
   // 🔹 Gọi API lấy danh sách tỉnh
@@ -101,8 +109,7 @@ const viettelPostApi = {
         "/api/ViettelPost/provinces",
         { headers: { Token: token } }
       );
-
-      return response.payload.Data.$values ?? [];
+      return response.payload.extensions.data.data ?? [];
     } catch (error) {
       console.error("Error fetching provinces:", error);
       return [];
@@ -127,7 +134,7 @@ const viettelPostApi = {
         { headers: { Token: token } }
       );
 
-      return response.payload.Data.$values ?? [];
+      return response.payload.extensions.data.data ?? [];
     } catch (error) {
       console.error("Error fetching districts:", error);
       return [];
@@ -152,7 +159,7 @@ const viettelPostApi = {
         { headers: { Token: token } }
       );
 
-      return response.payload.Data.$values ?? [];
+      return response.payload.extensions.data.data ?? [];
     } catch (error) {
       console.error("Error fetching wards:", error);
       return [];
@@ -179,9 +186,9 @@ const viettelPostApi = {
         data,
         { headers: { Token: token } }
       );
-      console.log("Shipping Price API Response:", response); // ✅ Debug API response
+      console.log("Shipping Price API Response:", response);
 
-      return response.payload.RESULT.$values ?? [];
+      return response.payload.extensions.data.data ?? [];
     } catch (error) {
       console.error("Error fetching shipping price:", error);
       return [];

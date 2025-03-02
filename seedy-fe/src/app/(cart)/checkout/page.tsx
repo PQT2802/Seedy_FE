@@ -26,7 +26,16 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="bg-black">
+    <div
+      className=""
+      style={{
+        backgroundColor: "#234014", // Fixed: Added quotes around the color value
+        backgroundImage: 'url("/Group131.png")',
+        backgroundSize: "cover", // Optional: Adjust background size
+        backgroundPosition: "center", // Optional: Adjust background position
+        backgroundRepeat: "no-repeat", // Optional: Prevent repeating
+      }}
+    >
       <Header />
       <div className="flex flex-col rounded-none justify-center items-center">
         <div className="px-12 py-12 w-[80%] mb-10 bg-white rounded-[33px] max-md:px-5 max-md:max-w-full">
