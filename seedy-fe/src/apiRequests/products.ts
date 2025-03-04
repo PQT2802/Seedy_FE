@@ -1,4 +1,4 @@
-import http from "@/lib/http";
+import http from "@/lib/https";
 
 export interface Product {
   id: string;
@@ -9,7 +9,7 @@ export interface Product {
 }
 
 const productApiRequest = {
-  getAllProducts: () => http.get(`api/Product/all`),
+  getAllProducts: () => http.get<Product[]>(`api/Product/all`),
 };
 
 export default productApiRequest;

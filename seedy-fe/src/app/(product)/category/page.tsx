@@ -21,13 +21,13 @@ export default function Category() {
         const response = await productApiRequest.getAllProducts();
         console.log("API Response:", response);
 
-        if (response.status === 200 && response.payload.extensions.data) {
+        if (response.statusCode === 200 && response.extensions.data) {
           console.log(response);
-          setProducts(response.payload.extensions.data);
+          setProducts(response.extensions.data);
         } else {
           console.error(
             "Error fetching products:",
-            response.payload.extensions.message
+            response.extensions.message
           );
         }
       } catch (error) {

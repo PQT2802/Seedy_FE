@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./information.module.css";
 import envConfig from "@/config";
 import { useRouter } from "next/navigation";
+import userApiRequest from "@/apiRequests/user";
 
 export default function UserProfile() {
   const [userData, setUserData] = useState({
@@ -21,8 +22,8 @@ export default function UserProfile() {
   useEffect(() => {
     const fetchUserData = async () => {
       setLoading(true);
-      const token = localStorage.getItem("accessToken");
 
+      const token = localStorage.getItem("accessToken");
       if (!token) {
         setError("No authentication token found");
         setLoading(false);
@@ -30,28 +31,8 @@ export default function UserProfile() {
       }
 
       try {
-        const response = await fetch(
-          `https://seedbe-cdhggmh7h0hef3ff.eastasia-01.azurewebsites.net/api/User/user-infor`,
-          {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Failed to fetch user data");
-        }
-
-        const result = await response.json();
-        const data = result?.extensions?.data;
-
-        if (!data) {
-          throw new Error("User data not found in response");
-        }
+        const response = await userApiRequest.getUserInfo();
+        const data = response.extensions.data;
 
         setUserData({
           userName: data.userName || "Guest",
@@ -62,7 +43,7 @@ export default function UserProfile() {
         });
       } catch (error) {
         console.error("Error fetching user data:", error);
-        setError((error as Error).message);
+        setError((error as Error).message || "Failed to fetch user data");
       } finally {
         setLoading(false);
       }
@@ -71,11 +52,20 @@ export default function UserProfile() {
     if (envConfig.NEXT_PUBLIC_API_ENDPOINT) {
       fetchUserData();
     }
-  }, []); // Empty dependency array to run only once on mount
+  }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("accessToken");
     router.push("/login");
+  };
+
+  // Hàm xử lý khi nhấn vào tab "Your Order"
+  const handleViewOrders = () => {
+    router.push(
+      `/order?userName=${encodeURIComponent(
+        userData.userName
+      )}&avatar=${encodeURIComponent(userData.avatar)}`
+    );
   };
 
   return (
@@ -98,7 +88,9 @@ export default function UserProfile() {
               <p className={`${styles.tab} ${styles.activeTab}`}>
                 Personal Information
               </p>
-              <p className={styles.tab}>Your Order</p>
+              <p className={styles.tab} onClick={handleViewOrders}>
+                Your Order
+              </p>
             </div>
           </div>
           {/* Right Section */}

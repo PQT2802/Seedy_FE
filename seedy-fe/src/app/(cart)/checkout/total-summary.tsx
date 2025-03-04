@@ -18,7 +18,19 @@ export default function TotalSummary({
 }: TotalSummaryProps) {
   const [showQR, setShowQR] = useState(false);
   const [isCheckingPayment, setIsCheckingPayment] = useState(false);
+  const [checkoutItems, setCheckoutItems] = useState<Record<string, any>>({});
+  const [shippingInfo, setShippingInfo] = useState<Record<string, any>>({});
   const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedCart = localStorage.getItem("checkoutCart");
+      const storedShipping = localStorage.getItem("shippingInfo");
+
+      if (storedCart) setCheckoutItems(JSON.parse(storedCart));
+      if (storedShipping) setShippingInfo(JSON.parse(storedShipping));
+    }
+  }, []);
 
   const bankAccount = "09314448754"; // Số tài khoản ngân hàng
   const bankName = "Tpbank";
@@ -27,31 +39,26 @@ export default function TotalSummary({
   const qrCodeUrl = `https://qr.sepay.vn/img?acc=${bankAccount}&bank=${bankName}&amount=${totalAmount}&des=${encodeURIComponent(
     uniqueDescription
   )}`;
-  // Lấy dữ liệu từ localStorage hoặc props
-  const checkoutItems = JSON.parse(
-    localStorage.getItem("checkoutCart") || "{}"
-  );
-  const shippingInfo = JSON.parse(localStorage.getItem("shippingInfo") || "{}"); // Giả sử lưu từ ShippingInformation
 
   // Tạo orderData từ thông tin hiện tại
   const orderData = {
-    accountNumber: bankAccount,
-    amount: totalAmount,
-    description: uniqueDescription,
-    shippingFee: shippingFee || 0,
-    items: Object.entries(checkoutItems).map(([id, item]: [string, any]) => ({
-      productId: item.productId, // Sửa: Lấy từ item.productId thay vì id
-      quantity: item.quantity,
-      price: item.productPrice,
+    AccountNumber: bankAccount,
+    Amount: totalAmount,
+    Description: uniqueDescription,
+    ShippingFee: shippingFee || 0,
+    Items: Object.entries(checkoutItems).map(([id, item]: [string, any]) => ({
+      ProductId: item.productId, // Sửa: Lấy từ item.productId thay vì id
+      Quantity: item.quantity,
+      Price: item.productPrice,
     })),
-    receiver: {
-      fullName: shippingInfo.fullName || "",
-      address: shippingInfo.address || "",
-      phone: shippingInfo.phoneNumber || "",
-      email: shippingInfo.email || "",
-      wardId: shippingInfo.wardId || 0,
-      districtId: shippingInfo.districtId || 0,
-      provinceId: shippingInfo.provinceId || 0,
+    Receiver: {
+      FullName: shippingInfo.fullName || "",
+      Address: shippingInfo.address || "",
+      Phone: shippingInfo.phoneNumber || "",
+      Email: shippingInfo.email || "",
+      WardId: shippingInfo.wardId || 0,
+      DistrictId: shippingInfo.districtId || 0,
+      ProvinceId: shippingInfo.provinceId || 0,
     },
   };
 
@@ -66,15 +73,15 @@ export default function TotalSummary({
 
       console.log("Full API Response:", response);
 
-      if (response.status !== 200) {
+      if (response.statusCode !== 200) {
         console.log(
           "Payment not found or order creation failed:",
-          response.payload.payload.message
+          response.extensions.message
         );
         return;
       }
 
-      const paymentData = response.payload.payload.data;
+      const paymentData = response.extensions.data;
       if (!paymentData) {
         console.log("No transaction data found.");
         return;
@@ -98,7 +105,7 @@ export default function TotalSummary({
     } else {
       // Xử lý COD: gửi đơn hàng lên backend mà không cần kiểm tra thanh toán
       paymentApiRequest.createOrderCOD(orderData).then((response) => {
-        if (response.status === 200) {
+        if (response.statusCode === 200) {
           router.push("/order-success");
         }
       });

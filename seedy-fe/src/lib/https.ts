@@ -1,45 +1,64 @@
 import envConfig from "@/config";
 import { normalizePath } from "@/lib/utils";
-import { LoginResType } from "@/schemaValidations/auth.schema";
 import { redirect } from "next/navigation";
 
 type CustomOptions = Omit<RequestInit, "method"> & {
   baseUrl?: string | undefined;
 };
 
-const ENTITY_ERROR_STATUS = 422;
+// Định nghĩa các status code lỗi phổ biến
+const BAD_REQUEST_STATUS = 400;
 const AUTHENTICATION_ERROR_STATUS = 401;
+const VALIDATION_ERROR_STATUS = 422;
 
-type EntityErrorPayload = {
-  message: string;
-  errors: {
-    field: string;
-    message: string;
+// Định nghĩa payload cho lỗi chung
+export type ErrorPayload = {
+  type: string;
+  title: string;
+  status: number;
+  errors?: {
+    code: string;
+    description: string;
+    type: string;
   }[];
 };
 
+// Định nghĩa payload cho response thành công (Thêm export)
+export type SuccessPayload<T> = {
+  statusCode: number;
+  title: string;
+  type: string;
+  extensions: {
+    message: string;
+    data: T;
+  };
+};
+
+// Lớp lỗi chung
 export class HttpError extends Error {
   status: number;
-  payload: {
-    message: string;
-    [key: string]: unknown;
-  };
-  constructor({ status, payload }: { status: number; payload: any }) {
-    super("Http Error");
+  payload: ErrorPayload;
+  constructor({ status, payload }: { status: number; payload: ErrorPayload }) {
+    super(payload.title || "Http Error");
     this.status = status;
     this.payload = payload;
   }
 }
 
-export class EntityError extends HttpError {
-  status: 422;
-  payload: EntityErrorPayload;
+// Lớp lỗi validation
+export class ValidationError extends HttpError {
+  status: number;
+  payload: ErrorPayload & {
+    errors: { code: string; description: string; type: string }[];
+  };
   constructor({
     status,
     payload,
   }: {
-    status: 422;
-    payload: EntityErrorPayload;
+    status: number;
+    payload: ErrorPayload & {
+      errors: { code: string; description: string; type: string }[];
+    };
   }) {
     super({ status, payload });
     this.status = status;
@@ -49,6 +68,7 @@ export class EntityError extends HttpError {
 
 let clientLogoutRequest: null | Promise<any> = null;
 export const isClient = () => typeof window !== "undefined";
+
 const request = async <Response>(
   method: "GET" | "POST" | "PUT" | "DELETE",
   url: string,
@@ -60,22 +80,21 @@ const request = async <Response>(
   } else if (options?.body) {
     body = JSON.stringify(options.body);
   }
-  const baseHeaders: {
-    [key: string]: string;
-  } =
+
+  const baseHeaders: { [key: string]: string } =
     body instanceof FormData
       ? {}
       : {
           "Content-Type": "application/json",
+          Accept: "*/*",
         };
+
   if (isClient()) {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       baseHeaders.Authorization = `Bearer ${accessToken}`;
     }
   }
-  // Nếu không truyền baseUrl (hoặc baseUrl = undefined) thì lấy từ envConfig.NEXT_PUBLIC_API_ENDPOINT
-  // Nếu truyền baseUrl thì lấy giá trị truyền vào, truyền vào '' thì đồng nghĩa với việc chúng ta gọi API đến Next.js Server
 
   const baseUrl =
     options?.baseUrl === undefined
@@ -95,20 +114,21 @@ const request = async <Response>(
     body,
     method,
   });
-  const payload: Response = await res.json();
+
+  const payload = await res.json();
   const data = {
     status: res.status,
     payload,
   };
-  // Interceptor là nời chúng ta xử lý request và response trước khi trả về cho phía component
+
   if (!res.ok) {
-    if (res.status === ENTITY_ERROR_STATUS) {
-      throw new EntityError(
-        data as {
-          status: 422;
-          payload: EntityErrorPayload;
-        }
-      );
+    if (res.status === BAD_REQUEST_STATUS) {
+      throw new ValidationError({
+        status: res.status,
+        payload: data.payload as ErrorPayload & {
+          errors: { code: string; description: string; type: string }[];
+        },
+      });
     } else if (res.status === AUTHENTICATION_ERROR_STATUS) {
       if (isClient()) {
         if (!clientLogoutRequest) {
@@ -122,39 +142,42 @@ const request = async <Response>(
           try {
             await clientLogoutRequest;
           } catch (error) {
+            console.error("Logout failed:", error);
           } finally {
-            localStorage.removeItem("sessionToken");
-            localStorage.removeItem("sessionTokenExpiresAt");
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("reNewToken");
             clientLogoutRequest = null;
             location.href = "/login";
           }
         }
       } else {
-        const sessionToken = (options?.headers as any)?.Authorization.split(
+        const sessionToken = (options?.headers as any)?.Authorization?.split(
           "Bearer "
         )[1];
         redirect(`/logout?sessionToken=${sessionToken}`);
       }
     } else {
-      throw new HttpError(data);
+      throw new HttpError({
+        status: res.status,
+        payload: data.payload as ErrorPayload,
+      });
     }
   }
-  // Đảm bảo logic dưới đây chỉ chạy ở phía client (browser)
+
   if (isClient()) {
-    if (
-      ["auth/login", "auth/register"].some(
-        (item) => item === normalizePath(url)
-      )
-    ) {
-      const { token, expiresAt } = (payload as LoginResType).data;
-      localStorage.setItem("sessionToken", token);
-      localStorage.setItem("sessionTokenExpiresAt", expiresAt);
-    } else if ("auth/logout" === normalizePath(url)) {
-      localStorage.removeItem("sessionToken");
-      localStorage.removeItem("sessionTokenExpiresAt");
+    if (normalizePath(url) === "api/Auth/sign-in") {
+      const { accessToken, reNewToken } = (
+        payload as SuccessPayload<{ accessToken: string; reNewToken: string }>
+      ).extensions.data;
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("reNewToken", reNewToken);
+    } else if (normalizePath(url) === "api/auth/logout") {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("reNewToken");
     }
   }
-  return data;
+
+  return data.payload as SuccessPayload<Response>;
 };
 
 const http = {
@@ -182,7 +205,7 @@ const http = {
     url: string,
     options?: Omit<CustomOptions, "body"> | undefined
   ) {
-    return request<Response>("DELETE", url, { ...options });
+    return request<Response>("DELETE", url, options);
   },
 };
 

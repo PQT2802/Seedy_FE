@@ -61,25 +61,22 @@ export default function LoginForm() {
 
     try {
       const response = await authApiRequest.login({
-        email: values.email,
-        password: values.password,
+        Email: values.email,
+        Password: values.password,
       });
 
       console.log(response);
 
-      if (
-        !response.payload.extensions.data ||
-        !response.payload.extensions.data.accessToken
-      ) {
+      if (!response.extensions.data?.accessToken) {
         throw new Error("Login failed: Invalid response from server");
       }
 
       // Store token
       localStorage.setItem(
         "accessToken",
-        response.payload.extensions.data.accessToken
+        response.extensions.data.accessToken
       );
-      console.log(response.payload.extensions.data.accessToken);
+      console.log(response.extensions.data.accessToken);
       // ✅ Use Next.js router instead of window.location.href
       router.push("/");
     } catch (err) {

@@ -1,82 +1,44 @@
 import Image from "next/image";
 import React from "react";
+import { Order } from "@/apiRequests/order";
 
-interface CartItemProps {
-  imageSrc: string;
-  altText: string;
-  title: string;
-  price: string;
-  quantity: number;
+interface OrderItemProps {
+  order: Order;
 }
-const cartItems = [
-  {
-    imageSrc: "/cart/cart-list/flower.png",
-    altText: "KHỞI SET product image",
-    title: '"KHỞI" SET',
-    price: "200.000 VND",
-    time:"7:30",
-    quantity: 1,
-  },
-  {
-    imageSrc: "/cart/cart-list/box.png",
-    altText: "MAKE-PLANT BOX SET product image",
-    title: "MAKE-PLANT BOX SET",
-    price: "499.000 VND",
-    time:"7:30",
-    quantity: 1,
-  },
-  {
-    imageSrc: "/cart/cart-list/box.png",
-    altText: "MAKE-PLANT BOX SET product image",
-    title: "MAKE-PLANT BOX SET",
-    price: "499.000 VND",
-    time:"7:30",
-    quantity: 1,
-  },
-  {
-    imageSrc: "/cart/cart-list/box.png",
-    altText: "MAKE-PLANT BOX SET product image",
-    title: "MAKE-PLANT BOX SET",
-    price: "499.000 VND",
-    time:"7:30",
-    quantity: 1,
-  },
-];
-export default function OrderItem({
-  imageSrc,
-  altText,
-  title,
-  price,
-  quantity,
-}: CartItemProps) {
+
+export default function OrderItem({ order }: OrderItemProps) {
   return (
     <>
-      {/* list item*/}
-      <div className="w-[440px]  mt-4 overflow-y-auto scrollbar-custom ">
-        {cartItems.map((item, index) => (
+      {/* list item */}
+      <div className="w-[440px] mt-4 overflow-y-auto scrollbar-custom">
+        {order.orderItems.map((item, index) => (
           <div
             key={index}
-            className="flex w-[90%] gap-4 px-3 py-1.5   mb-4 rounded-lg bg-lime-950 "
+            className="flex w-[90%] gap-4 px-3 py-1.5 mb-4 rounded-lg bg-lime-950"
           >
             <div className="flex px-2.5 py-3 bg-white rounded-2xl max-h-[70px]">
               <Image
                 width={300}
                 height={300}
                 loading="lazy"
-                src={item.imageSrc}
+                src={item.productImageUrl}
                 className="object-contain aspect-[1.65] w-[71px]"
-                alt={item.title}
+                alt={item.productName}
               />
             </div>
-            <div className="flex flex-col text-white items-start self-start text-lg ">
-              <div className="self-stretch text-xl">{item.title}</div>
-              <div className="self-stretch text-sm">Tiem of order: {item.time}</div>
+            <div className="flex flex-col text-white items-start self-start text-lg">
+              <div className="self-stretch text-xl">{item.productName}</div>
+
+              <div className="self-stretch text-sm">
+                Quantity:{item.quantity}
+              </div>
+              <div className="self-stretch text-sm">Price:{item.price}</div>
             </div>
           </div>
         ))}
       </div>
-      {/* button item*/}
-      <div className="flex flex-col justify-start items-start mt-4 ">
+      {/* button item */}
+      <div className="flex flex-col justify-start items-start mt-4">
         <div className="bg-green-950 text-white p-3 rounded-lg">
           TRACKING YOUR ORDER
         </div>

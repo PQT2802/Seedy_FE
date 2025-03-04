@@ -2,27 +2,36 @@
 import React, { useEffect, useState } from "react";
 import viettelPostApi from "@/apiRequests/viettelpost";
 
+// Cập nhật interface để khớp với BE và viettelpost.ts
 interface Province {
-  PROVINCE_ID: number;
-  PROVINCE_CODE: string;
-  PROVINCE_NAME: string;
+  provinceId: number;
+  provinceCode: string;
+  provinceName: string;
 }
 
 interface District {
-  DISTRICT_ID: number;
-  DISTRICT_NAME: string;
+  districtId: number;
+  districtName: string;
+  provinceId: number; // Không dùng trong UI nhưng giữ để khớp BE
 }
 
 interface Ward {
-  WARDS_ID: number;
-  WARDS_NAME: string;
+  wardId: number;
+  wardName: string;
+  districtId: number; // Không dùng trong UI nhưng giữ để khớp BE
 }
 
 interface ShippingService {
-  MA_DV_CHINH: string;
-  TEN_DICHVU: string;
-  GIA_CUOC: number;
-  THOI_GIAN: string;
+  maDvChinh: string;
+  tenDichVu: string;
+  giaCuoc: number;
+  thoiGian: string;
+  exchangeWeight: number;
+  extraServices: Array<{
+    serviceCode: string;
+    serviceName: string;
+    description: string | null;
+  }>;
 }
 
 export default function ShippingInformation({
@@ -55,14 +64,11 @@ export default function ShippingInformation({
   // Gọi API lấy danh sách tỉnh
   useEffect(() => {
     viettelPostApi.getProvinces().then((data) => {
-      const formattedData = data.map((item: any) => ({
-        PROVINCE_ID: item.provincE_ID,
-        PROVINCE_CODE: item.provincE_CODE,
-        PROVINCE_NAME: item.provincE_NAME,
-      }));
-      setProvinces(formattedData);
+      console.log("Provinces Data:", data);
+      setProvinces(data); // Dữ liệu đã khớp với interface, không cần map lại
     });
   }, []);
+
   useEffect(() => {
     if (formData.provinceId) {
       viettelPostApi.getDistricts(formData.provinceId).then(setDistricts);
@@ -87,6 +93,7 @@ export default function ShippingInformation({
       [id]: id.includes("Id") ? (value ? Number(value) : null) : value,
     }));
   };
+
   // Xử lý tính phí vận chuyển
   const handleCalculateShipping = async () => {
     if (!formData.provinceId || !formData.districtId || !formData.wardId) {
@@ -101,14 +108,14 @@ export default function ShippingInformation({
     const finalTotal = total || 0;
 
     const receiverWard = wards.find(
-      (ward) => ward.WARDS_ID === formData.wardId
-    )?.WARDS_NAME;
+      (ward) => ward.wardId === formData.wardId
+    )?.wardName;
     const receiverDistrict = districts.find(
-      (district) => district.DISTRICT_ID === formData.districtId
-    )?.DISTRICT_NAME;
+      (district) => district.districtId === formData.districtId
+    )?.districtName;
     const receiverProvince = provinces.find(
-      (province) => province.PROVINCE_ID === formData.provinceId
-    )?.PROVINCE_NAME;
+      (province) => province.provinceId === formData.provinceId
+    )?.provinceName;
 
     if (!receiverWard || !receiverDistrict || !receiverProvince) {
       alert("Lỗi lấy thông tin địa chỉ.");
@@ -135,15 +142,13 @@ export default function ShippingInformation({
 
     try {
       const response = await viettelPostApi.getShippingPrice(data);
-
       console.log("API Response for Shipping Price:", response);
       if (response.length > 0) {
         setServices(response);
-        setSelectedService(response[0].MA_DV_CHINH);
-        setLocalShippingFee(response[0].GIA_CUOC);
-        setShippingFee(response[0].GIA_CUOC);
+        setSelectedService(response[0].maDvChinh); // Dùng camelCase
+        setLocalShippingFee(response[0].giaCuoc); // Dùng camelCase
+        setShippingFee(response[0].giaCuoc); // Dùng camelCase
 
-        // Lưu thông tin giao hàng vào localStorage
         localStorage.setItem(
           "shippingInfo",
           JSON.stringify({
@@ -170,7 +175,6 @@ export default function ShippingInformation({
         Shipping Information
       </h2>
       <form>
-        {/* Full Name */}
         <label htmlFor="fullName" className="sr-only">
           Full Name
         </label>
@@ -183,7 +187,6 @@ export default function ShippingInformation({
           onChange={handleInputChange}
         />
 
-        {/* Email */}
         <label htmlFor="email" className="sr-only">
           Email
         </label>
@@ -196,7 +199,6 @@ export default function ShippingInformation({
           onChange={handleInputChange}
         />
 
-        {/* Phone Number */}
         <label htmlFor="phoneNumber" className="sr-only">
           Phone Number
         </label>
@@ -209,7 +211,6 @@ export default function ShippingInformation({
           onChange={handleInputChange}
         />
 
-        {/* Address */}
         <label htmlFor="address" className="sr-only">
           Address
         </label>
@@ -222,7 +223,6 @@ export default function ShippingInformation({
           onChange={handleInputChange}
         />
 
-        {/* Province Selection */}
         <label htmlFor="provinceId" className="sr-only">
           Province
         </label>
@@ -233,18 +233,13 @@ export default function ShippingInformation({
           onChange={handleInputChange}
         >
           <option value="">Select Province</option>
-
-          {provinces.map((province, index) => (
-            <option
-              key={province.PROVINCE_ID || index}
-              value={province.PROVINCE_ID}
-            >
-              {province.PROVINCE_NAME}
+          {provinces.map((province) => (
+            <option key={province.provinceId} value={province.provinceId}>
+              {province.provinceName}
             </option>
           ))}
         </select>
 
-        {/* District Selection */}
         <label htmlFor="districtId" className="sr-only">
           District
         </label>
@@ -257,13 +252,12 @@ export default function ShippingInformation({
         >
           <option value="">Select District</option>
           {districts.map((district) => (
-            <option key={district.DISTRICT_ID} value={district.DISTRICT_ID}>
-              {district.DISTRICT_NAME}
+            <option key={district.districtId} value={district.districtId}>
+              {district.districtName}
             </option>
           ))}
         </select>
 
-        {/* Ward Selection */}
         <label htmlFor="wardId" className="sr-only">
           Ward
         </label>
@@ -276,13 +270,12 @@ export default function ShippingInformation({
         >
           <option value="">Select Ward</option>
           {wards.map((ward) => (
-            <option key={ward.WARDS_ID} value={ward.WARDS_ID}>
-              {ward.WARDS_NAME}
+            <option key={ward.wardId} value={ward.wardId}>
+              {ward.wardName}
             </option>
           ))}
         </select>
 
-        {/* Button để lấy phí ship */}
         <button
           type="button"
           className="px-5 py-2 mt-4 bg-white rounded-xl w-full"
@@ -291,7 +284,6 @@ export default function ShippingInformation({
           Calculate Shipping Fee
         </button>
 
-        {/* Select dịch vụ vận chuyển */}
         {services.length > 0 && (
           <select
             id="shippingService"
@@ -299,17 +291,17 @@ export default function ShippingInformation({
             value={selectedService}
             onChange={(e) => {
               const selected = services.find(
-                (s) => s.MA_DV_CHINH === e.target.value
+                (s) => s.maDvChinh === e.target.value
               );
               setSelectedService(e.target.value);
-              setLocalShippingFee(selected?.GIA_CUOC || 0);
-              setShippingFee(selected?.GIA_CUOC || 0);
+              setLocalShippingFee(selected?.giaCuoc || 0);
+              setShippingFee(selected?.giaCuoc || 0);
             }}
           >
             {services.map((service) => (
-              <option key={service.MA_DV_CHINH} value={service.MA_DV_CHINH}>
-                {service.TEN_DICHVU} - {service.GIA_CUOC.toLocaleString()} VND (
-                {service.THOI_GIAN})
+              <option key={service.maDvChinh} value={service.maDvChinh}>
+                {service.tenDichVu} - {service.giaCuoc.toLocaleString()} VND (
+                {service.thoiGian})
               </option>
             ))}
           </select>

@@ -14,14 +14,16 @@ export default function Page() {
   const [shippingFee, setShippingFee] = useState<number | null>(null);
 
   useEffect(() => {
-    const storedCart = localStorage.getItem("checkoutCart");
-    const storedTotal = localStorage.getItem("checkoutTotal");
+    if (typeof window !== "undefined") {
+      const storedCart = localStorage.getItem("checkoutCart");
+      const storedTotal = localStorage.getItem("checkoutTotal");
 
-    if (storedCart) {
-      setCheckoutItems(JSON.parse(storedCart));
-    }
-    if (storedTotal) {
-      setCheckoutTotal(JSON.parse(storedTotal));
+      if (storedCart) {
+        setCheckoutItems(JSON.parse(storedCart));
+      }
+      if (storedTotal) {
+        setCheckoutTotal(JSON.parse(storedTotal));
+      }
     }
   }, []);
 

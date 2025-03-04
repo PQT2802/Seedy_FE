@@ -15,7 +15,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import {
-  EyeIcon,
   EyeOffIcon,
   LockIcon,
   MailIcon,
@@ -25,8 +24,9 @@ import {
   MapPinIcon,
 } from "lucide-react";
 import styles from "./register.module.css";
-import envConfig from "./../../../config";
 import { useState } from "react";
+import authApiRequest from "@/apiRequests/auth"; // Import authApiRequest
+import { RegisterBodyType } from "@/schemaValidations/auth.schema";
 
 // Form validation schema
 const formSchema = z
@@ -83,67 +83,42 @@ export default function RegisterForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("🚀 onSubmit function called"); // Check if function executes
-    console.log(form.formState.errors);
-    console.log("Form submitted with values:", values);
-
     setIsLoading(true);
     setError("");
-    console.log("API Endpoint:", envConfig.NEXT_PUBLIC_API_ENDPOINT);
-    try {
-      console.log("✅ Form values submitted:", values); // Check form values
 
-      const requestBody = {
-        userName: values.userName,
-        email: values.email,
-        password: values.password,
-        fullName: values.fullName,
-        phoneNumber: values.phoneNumber || "0914725555",
-        address: values.address || "Test1",
-        dateOfBirth: values.dateOfBirth
+    try {
+      // Tạo requestBody từ values, không bao gồm confirmPassword
+      const requestBody: RegisterBodyType = {
+        UserName: values.userName,
+        Email: values.email,
+        Password: values.password,
+        FullName: values.fullName,
+        PhoneNumber: values.phoneNumber,
+        Address: values.address,
+        DateOfBirth: values.dateOfBirth
           ? new Date(values.dateOfBirth).toISOString()
           : "2000-02-10T18:28:29.450Z",
       };
 
-      console.log("📦 Request Body:", JSON.stringify(requestBody, null, 2));
+      
+      // Gọi API register thông qua authApiRequest
+      const response = await authApiRequest.register(requestBody);
 
-      const response = await fetch(
-        `${envConfig.NEXT_PUBLIC_API_ENDPOINT}/api/Auth/sign-up`,
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
-        }
-      );
+      console.log("Register Response:", response);
 
-      console.log("📡 Response Status:", response.status);
-
-      const responseBody = await response.json();
-      console.log("📜 Response Body:", responseBody);
-
-      if (!response.ok) {
-        throw new Error(
-          `Registration failed: ${response.status} - ${
-            responseBody.message || response.statusText
-          }`
-        );
-      }
-
-      if (responseBody.statusCode === 200) {
+      // Kiểm tra response từ SuccessPayload
+      if (response.statusCode === 200) {
         console.log("✅ Registration successful! Redirecting...");
         window.location.href = "/login";
+      } else {
+        throw new Error("Registration failed: Invalid response from server");
       }
     } catch (err) {
-      console.error("❌ Error occurred:", err);
       setError(
         err instanceof Error ? err.message : "An unexpected error occurred"
       );
     } finally {
       setIsLoading(false);
-      console.log("🔄 Request completed.");
     }
   }
 

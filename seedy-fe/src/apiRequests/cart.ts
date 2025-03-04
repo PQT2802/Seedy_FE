@@ -1,4 +1,4 @@
-import http from "@/lib/http";
+import http from "@/lib/https";
 
 const cartApiRequest = {
   getDetail: () => http.get("api/Cart/details"),
