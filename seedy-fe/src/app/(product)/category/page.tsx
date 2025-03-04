@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+
 import styles from "./category.module.css";
 import productApiRequest, { Product } from "@/apiRequests/products";
 import CategoryFilter from "@/components/category/category-filter/categoryFilter";
