@@ -10,7 +10,22 @@ import NumberCounter from "@/components/ui/number-counter";
 import { Share2, ShoppingCart } from "lucide-react";
 import Footer from "@/components/footer/footer";
 
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import productApiRequest, { ProductDetail } from "@/apiRequests/products";
+
 export default function Product() {
+  const { id } = useParams();
+  const [product, setProduct] = useState<ProductDetail | null>(null);
+
+  useEffect(() => {
+    if (id) {
+      productApiRequest.getProductDetail(id as string).then((data) => {
+        setProduct(data); // ✅ Fix: Extract correct data
+      });
+    }
+  }, [id]);
+
   return (
     <div className={styles.container}>
       <Header />
@@ -21,11 +36,9 @@ export default function Product() {
             <CarouselPlugin />
           </div>
           <div className={styles.detailsContainer}>
-            <h1 className={styles.title}>Flower Bloom &quot;Khơi&quot; Set</h1>
-            <p className={styles.price}>200,000 VND</p>
-            <p className={styles.note}>
-              Note: This product requires a 1-5 day pre-order.
-            </p>
+            <h1 className={styles.title}>{product?.name}</h1>
+            <p className={styles.price}>{product?.price}</p>
+            <p className={styles.note}>Note: {product?.note}</p>
             <div className={styles.buttonsContainer}>
               <button className={styles.sizeButton}>One Size</button>
               <NumberCounter />
@@ -41,12 +54,8 @@ export default function Product() {
         </div>
 
         <div className={styles.descriptionSection}>
-          <h2 className={styles.descriptionTitle}>&quot;Khơi&quot;</h2>
-          <p className={styles.descriptionText}>
-            Peach blossom: The symbol of spring and beginnings. &quot;Khơi&quot;
-            carries the meaning of a start, where ideas bloom, bringing hope and
-            new promises.
-          </p>
+          <h2 className={styles.descriptionTitle}>{product?.name}</h2>
+          <p className={styles.descriptionText}>{product?.description}</p>
           <Image
             src="/grass.png"
             alt=""

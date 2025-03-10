@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { wolfer } from "@/lib/fonts";
 
 const NumberCounter = () => {
   const [count, setCount] = useState(1);
@@ -7,17 +8,19 @@ const NumberCounter = () => {
   const decrement = () => setCount((prev) => Math.max(1, prev - 1));
 
   return (
-    <div className="inline-flex items-center rounded-lg bg-[#1a3420] text-white shadow-sm">
+    <div className="inline-flex items-center rounded-lg bg-[#234014] text-white shadow-sm w-32">
       <button
         onClick={decrement}
-        className="px-3 py-2 hover:bg-black/10 transition rounded-l-lg"
+        className="px-4 py-3 text-2xl font-bold hover:bg-green-900 transition rounded-l-lg"
       >
         -
       </button>
-      <span className="px-3 py-2 text-center min-w-[2rem]">{count}</span>
+      <span className="px-4 py-3 text-center min-w-[3rem] text-2xl font-bold">
+        {count}
+      </span>
       <button
         onClick={increment}
-        className="px-3 py-2 hover:bg-black/10 transition rounded-r-lg"
+        className="px-4 py-3 text-2xl font-bold hover:bg-green-900 transition rounded-r-lg"
       >
         +
       </button>

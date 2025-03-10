@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import styles from "./login.module.css";
 import authApiRequest from "@/apiRequests/auth";
+import Notice from "@/components/pop-up/notification";
 // Import the fixed API request functions
 
 const socialLoginOptions = [
@@ -45,7 +46,11 @@ export default function LoginForm() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
-
+  const [notice, setNotice] = React.useState({
+    isOpen: false,
+    type: "",
+    message: "",
+  });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -72,138 +77,154 @@ export default function LoginForm() {
       }
 
       // Store token
-      localStorage.setItem(
-        "accessToken",
-        response.extensions.data.accessToken
-      );
-      console.log(response.extensions.data.accessToken);
-      // ✅ Use Next.js router instead of window.location.href
-      router.push("/");
+      localStorage.setItem("accessToken", response.extensions.data.accessToken);
+      setNotice({
+        isOpen: true,
+        type: "success",
+        message: "Login successful!",
+      });
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "An unexpected error occurred"
       );
+      setNotice({
+        isOpen: true,
+        type: "fail",
+        message: "Login failed. Please try again.",
+      });
+      console.error("Login Error:", error);
     } finally {
       setIsLoading(false);
     }
   }
 
   return (
-    <Tabs defaultValue="account">
-      <TabsContent value="account" className={styles.tabsContent}>
-        <Card className={styles.card}>
-          <CardContent className={styles.cardContent}>
-            <h1 className={styles.title}>LOGIN</h1>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6"
-              >
-                {/* Email Input */}
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem className={styles.inputContainer}>
-                      <UserIcon className={styles.icon} />
-                      <FormControl>
-                        <Input
-                          className={styles.input}
-                          placeholder="Enter Your Email"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Password Input */}
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem className={styles.inputContainer}>
-                      <LockIcon className={styles.icon} />
-                      <FormControl>
-                        <Input
-                          type={showPassword ? "text" : "password"}
-                          className={styles.input}
-                          placeholder="Enter Your Password"
-                          {...field}
-                        />
-                      </FormControl>
-                      <EyeOffIcon
-                        className={`${styles.iconRight} right-4 cursor-pointer`}
-                        onClick={() => setShowPassword(!showPassword)}
-                      />
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Remember Me */}
-                <div className={styles.rememberContainer}>
+    <>
+      <Notice
+        isOpen={notice.isOpen}
+        onClose={() => setNotice({ ...notice, isOpen: false })}
+        type={notice.type}
+        message={notice.message}
+      />
+      <Tabs defaultValue="account">
+        <TabsContent value="account" className={styles.tabsContent}>
+          <Card className={styles.card}>
+            <CardContent className={styles.cardContent}>
+              <h1 className={styles.title}>LOGIN</h1>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-6"
+                >
+                  {/* Email Input */}
                   <FormField
                     control={form.control}
-                    name="rememberMe"
+                    name="email"
                     render={({ field }) => (
-                      <>
-                        <Checkbox
-                          id="remember"
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                        <label
-                          htmlFor="remember"
-                          className={styles.rememberLabel}
-                        >
-                          Remember me
-                        </label>
-                      </>
+                      <FormItem className={styles.inputContainer}>
+                        <UserIcon className={styles.icon} />
+                        <FormControl>
+                          <Input
+                            className={styles.input}
+                            placeholder="Enter Your Email"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
                     )}
                   />
-                </div>
 
-                {/* Submit Button */}
-                <div className={styles.buttonContainer}>
-                  <Button
-                    type="submit"
-                    className={styles.loginButton}
-                    disabled={isLoading}
-                  >
-                    {isLoading ? "Logging in..." : "LOGIN"}
-                  </Button>
-                </div>
+                  {/* Password Input */}
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem className={styles.inputContainer}>
+                        <LockIcon className={styles.icon} />
+                        <FormControl>
+                          <Input
+                            type={showPassword ? "text" : "password"}
+                            className={styles.input}
+                            placeholder="Enter Your Password"
+                            {...field}
+                          />
+                        </FormControl>
+                        <EyeOffIcon
+                          className={`${styles.iconRight} right-4 cursor-pointer`}
+                          onClick={() => setShowPassword(!showPassword)}
+                        />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                {/* Sign Up Link */}
-                <p className={styles.signUpText}>
-                  <span className="text-[#234014]">No account yet?</span>{" "}
-                  <button className="font-bold text-[#4c6f29] underline">
-                    Sign up
-                  </button>
-                </p>
-
-                {/* Social Login */}
-                <div className={styles.socialLoginContainer}>
-                  <p className={styles.socialLoginText}>Or login with:</p>
-                  <div className="flex justify-center gap-6">
-                    {socialLoginOptions.map((Social, index) => (
-                      <button
-                        key={index}
-                        className={styles.socialLoginButton}
-                        aria-label={Social.alt}
-                      >
-                        <Social.icon className="w-6 h-6 text-[#234014]" />
-                      </button>
-                    ))}
+                  {/* Remember Me */}
+                  <div className={styles.rememberContainer}>
+                    <FormField
+                      control={form.control}
+                      name="rememberMe"
+                      render={({ field }) => (
+                        <>
+                          <Checkbox
+                            id="remember"
+                            checked={field.value}
+                            onCheckedChange={field.onChange}
+                          />
+                          <label
+                            htmlFor="remember"
+                            className={styles.rememberLabel}
+                          >
+                            Remember me
+                          </label>
+                        </>
+                      )}
+                    />
                   </div>
-                </div>
-              </form>
-            </Form>
-          </CardContent>
-        </Card>
-      </TabsContent>
-    </Tabs>
+
+                  {/* Submit Button */}
+                  <div className={styles.buttonContainer}>
+                    <Button
+                      type="submit"
+                      className={styles.loginButton}
+                      disabled={isLoading}
+                    >
+                      {isLoading ? "Logging in..." : "LOGIN"}
+                    </Button>
+                  </div>
+
+                  {/* Sign Up Link */}
+                  <p className={styles.signUpText}>
+                    <span className="text-[#234014]">No account yet?</span>{" "}
+                    <button className="font-bold text-[#4c6f29] underline">
+                      Sign up
+                    </button>
+                  </p>
+
+                  {/* Social Login */}
+                  <div className={styles.socialLoginContainer}>
+                    <p className={styles.socialLoginText}>Or login with:</p>
+                    <div className="flex justify-center gap-6">
+                      {socialLoginOptions.map((Social, index) => (
+                        <button
+                          key={index}
+                          className={styles.socialLoginButton}
+                          aria-label={Social.alt}
+                        >
+                          <Social.icon className="w-6 h-6 text-[#234014]" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </form>
+              </Form>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+    </>
   );
 }

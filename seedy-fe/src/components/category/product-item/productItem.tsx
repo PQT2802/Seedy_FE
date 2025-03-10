@@ -3,6 +3,9 @@ import Image from "next/image";
 import styles from "./productItem.module.css";
 import { Product } from "@/apiRequests/products";
 import cartApiRequest from "@/apiRequests/cart";
+import { ShoppingCart } from "lucide-react";
+import ProductBackGround from "@/components/background/product-background";
+import Link from "next/link";
 
 interface ProductItemProps {
   product: Product;
@@ -10,9 +13,8 @@ interface ProductItemProps {
 
 export default function ProductItem({ product }: ProductItemProps) {
   const { id, name, price, imageUrl } = product;
-  const [showPopup, setShowPopup] = useState(false);
-  const [quantity, setQuantity] = useState(1);
   const [token, setToken] = useState("");
+  const [animating, setAnimating] = useState(false);
 
   useEffect(() => {
     const storedToken = localStorage.getItem("accessToken");
@@ -23,64 +25,62 @@ export default function ProductItem({ product }: ProductItemProps) {
     return `${price.toLocaleString("vi-VN")} VND`;
   };
 
-  const handleAddToCart = (): void => {
-    setShowPopup(true);
-  };
-
-  const handleConfirmAddToCart = async () => {
-    if (quantity < 1) {
-      alert("Số lượng phải lớn hơn 0");
-      return;
-    }
-
+  const handleAddToCart = async () => {
     if (!token) {
       alert("Bạn chưa đăng nhập!");
       return;
     }
 
+    setAnimating(true);
+
     try {
-      await cartApiRequest.addToCart(id, quantity, token);
-      alert("Sản phẩm đã được thêm vào giỏ hàng!");
-      setShowPopup(false);
+      await cartApiRequest.addToCart(id, 1, token);
     } catch (error) {
       console.error("Error adding to cart:", error);
       alert("Thêm vào giỏ hàng thất bại.");
     }
+
+    setTimeout(() => {
+      setAnimating(false);
+    }, 1000);
   };
 
   return (
     <div className={styles.productCard}>
-      <div className={styles.imageContainer}>
-        <div className={styles.greenHighlight}></div>
-        <div className={styles.productImage}>
-          <Image
-            src={imageUrl}
-            alt={name}
-            width={150}
-            height={150}
-            layout="responsive"
-          />
+      <Link href={`/products/${id}`} passHref>
+        <div className={styles.imageContainer}>
+          <div className={styles.svgHighlight}>
+            <ProductBackGround />
+          </div>
+          <div className={styles.productImage}>
+            <Image
+              src={imageUrl}
+              alt={name}
+              width={150}
+              height={150}
+              layout="intrinsic"
+              className={animating ? styles.animateImage : ""}
+            />
+          </div>
         </div>
-      </div>
+      </Link>
+
       <h3 className={styles.productName}>{name}</h3>
       <p className={styles.productPrice}>{formatPrice(price)}</p>
       <button className={styles.addToCartButton} onClick={handleAddToCart}>
-        Thêm vào giỏ
+        <span>Thêm vào giỏ</span>
+        <ShoppingCart />
       </button>
 
-      {showPopup && (
-        <div className={styles.popup}>
-          <div className={styles.popupContent}>
-            <h3>Chọn số lượng</h3>
-            <input
-              type="number"
-              value={quantity}
-              min={1}
-              onChange={(e) => setQuantity(Number(e.target.value))}
-            />
-            <button onClick={handleConfirmAddToCart}>Xác nhận</button>
-            <button onClick={() => setShowPopup(false)}>Hủy</button>
-          </div>
+      {animating && (
+        <div className={styles.flyingImageContainer}>
+          <Image
+            src={imageUrl}
+            alt={name}
+            width={50}
+            height={50}
+            className={styles.flyingImage}
+          />
         </div>
       )}
     </div>

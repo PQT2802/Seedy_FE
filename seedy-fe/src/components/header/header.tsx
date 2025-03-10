@@ -35,7 +35,7 @@ export default function Header() {
           <div className={styles.navLinks}>
             <span
               className={styles.navLink}
-              onClick={() => router.push("/category")}
+              onClick={() => router.push("/products")}
             >
               Sản phẩm
             </span>
