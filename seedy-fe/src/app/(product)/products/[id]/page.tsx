@@ -37,7 +37,12 @@ export default function Product() {
           </div>
           <div className={styles.detailsContainer}>
             <h1 className={styles.title}>{product?.name}</h1>
-            <p className={styles.price}>{product?.price}</p>
+            <p className={styles.price}>
+              {product?.price
+                ? new Intl.NumberFormat("vi-VN").format(product.price)
+                : ""}{" "}
+              VND
+            </p>
             <p className={styles.note}>Note: {product?.note}</p>
             <div className={styles.buttonsContainer}>
               <button className={styles.sizeButton}>One Size</button>
@@ -70,29 +75,6 @@ export default function Product() {
             height={300}
             className={styles["bush"]}
           />
-          <div className={styles.descriptionImage}>
-            <Image
-              src="/post 1 1.png"
-              alt=""
-              width={200}
-              height={300}
-              className={styles[""]}
-            />
-            <Image
-              src="/Render_Mockup_1920_1920_2024-11-05 2.png"
-              alt=""
-              width={200}
-              height={300}
-              className={styles[""]}
-            />
-            <Image
-              src="/IMG_3962 1.png"
-              alt=""
-              width={200}
-              height={300}
-              className={styles["bush"]}
-            />
-          </div>
         </div>
       </div>
 
