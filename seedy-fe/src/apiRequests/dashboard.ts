@@ -22,11 +22,24 @@ interface User {
   email: string;
   role: string;
 }
+interface Payment {
+  id: string;
+  userId: string;
+  email: string;
+  transactionId: string;
+  bankBrandName: string;
+  accountNumber: string;
+  amount: number;
+  transactionContent: string;
+  transactionDate: string;
+  referenceNumber: string;
+}
 
 const dashboardApiRequest = {
   getOrders: () => http.get<Order[]>(`api/Admin/orders`),
   getProducts: () => http.get<Product[]>(`api/Admin/products`),
   getUsers: () => http.get<User[]>(`api/Admin/users`),
+  getPayments: () => http.get<Payment[]>(`api/Admin/payments`),
 };
 
 export default dashboardApiRequest;
