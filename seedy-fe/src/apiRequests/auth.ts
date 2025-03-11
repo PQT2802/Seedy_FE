@@ -32,6 +32,14 @@ const authApiRequest = {
       {},
       { headers: { Authorization: `Bearer ${sessionToken}` } }
     ),
+  forgetPassword: (email: string) =>
+    http.post<{ message: string }>("/api/Auth/forget-password", { email }),
+
+  resetPassword: (body: {
+    email: string;
+    token: string;
+    newPassword: string;
+  }) => http.post<{ message: string }>("/api/Auth/reset-password", body),
 };
 
 export default authApiRequest;

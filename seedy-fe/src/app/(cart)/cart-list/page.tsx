@@ -33,16 +33,28 @@ interface CartResponse {
 
 export default function Page() {
   const router = useRouter();
-  const [cartItems, setCartItems] = useState<CartItem[]>([]); // Use array of CartItem
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
+    // Kiểm tra token trong localStorage (hoặc bất kỳ cơ chế nào bạn dùng)
+    const token = localStorage.getItem("accessToken"); // Giả định token được lưu với key "token"
+    if (!token) {
+      setError("You need to log in to view your cart.");
+      setLoading(false);
+      setIsAuthenticated(false);
+      return;
+    }
+
+    setIsAuthenticated(true);
+
     async function fetchCartDetails() {
       try {
-        const response = (await cartApiRequest.getDetail()) as CartResponse; // Type the response
+        const response = (await cartApiRequest.getDetail()) as CartResponse;
         if (response.statusCode === 200) {
-          const items = Object.values(response.extensions.data.cartItems); // Convert Record to array
+          const items = Object.values(response.extensions.data.cartItems);
           setCartItems(items);
         } else {
           setError("Failed to load cart data");
@@ -66,13 +78,39 @@ export default function Page() {
   };
 
   const handleCheckout = () => {
+    if (!isAuthenticated) {
+      router.push("/login");
+      return;
+    }
     localStorage.setItem("checkoutCart", JSON.stringify(cartItems));
     localStorage.setItem("checkoutTotal", JSON.stringify(totalAmount));
     router.push("/checkout");
   };
 
+  const handleLoginRedirect = () => {
+    router.push("/login");
+  };
+
   if (loading) return <div className="text-center text-white">Loading...</div>;
-  if (error) return <div className="text-center text-red-500">{error}</div>;
+
+  if (error) {
+    return (
+      <div className={styles.container}>
+        <Header />
+        <div className="text-center text-red-500 py-6">{error}</div>
+        {!isAuthenticated && (
+          <div className="text-center">
+            <button
+              onClick={handleLoginRedirect}
+              className="mt-4 px-6 py-2 bg-customGreen text-white rounded-lg hover:bg-lime-700"
+            >
+              LOGIN
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   const totalAmount = cartItems.reduce(
     (sum, item) => sum + item.productPrice * item.quantity,
@@ -96,7 +134,7 @@ export default function Page() {
             {cartItems.length > 0 ? (
               cartItems.map((item) => (
                 <div
-                  key={item.productId} // Use productId as the key
+                  key={item.productId}
                   className="py-3 pr-20 pl-6 mt-7 rounded-2xl bg-lime-950 w-[85%] max-md:px-5 mb-4"
                 >
                   <CartItem

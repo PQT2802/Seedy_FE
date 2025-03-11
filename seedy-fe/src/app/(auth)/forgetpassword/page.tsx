@@ -8,12 +8,48 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { EyeIcon, EyeOffIcon, LockIcon } from "lucide-react";
 import styles from "./password.module.css";
+import authApiRequest from "@/apiRequests/auth";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function ForgetPassword() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState("");
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
+  const token = searchParams.get("token");
+
+  async function handleResetPassword() {
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+    if (!email || !token) {
+      setError("Invalid reset link");
+      return;
+    }
+
+    setIsLoading(true);
+    setError("");
+    try {
+      const response = await authApiRequest.resetPassword({
+        email,
+        token,
+        newPassword: password,
+      });
+      alert("Password reset successfully!");
+      router.push("/login"); // Redirect to login page
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to reset password");
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <>
@@ -25,9 +61,7 @@ export default function ForgetPassword() {
               <Card className={styles.card}>
                 <CardContent className={styles.cardContent}>
                   <h1 className={styles.title}>RESET PASSWORD</h1>
-
                   <div className="space-y-6">
-                    {/* Nhập mật khẩu mới */}
                     <div className={styles.inputContainer}>
                       <LockIcon className={styles.icon} />
                       <Input
@@ -44,8 +78,6 @@ export default function ForgetPassword() {
                         {showPassword ? <EyeIcon /> : <EyeOffIcon />}
                       </div>
                     </div>
-
-                    {/* Xác nhận mật khẩu mới */}
                     <div className={styles.inputContainer}>
                       <LockIcon className={styles.icon} />
                       <Input
@@ -64,18 +96,26 @@ export default function ForgetPassword() {
                         {showConfirmPassword ? <EyeIcon /> : <EyeOffIcon />}
                       </div>
                     </div>
-
+                    {error && (
+                      <p className="text-red-500 text-center">{error}</p>
+                    )}
                     <div className={styles.buttonContainer}>
-                      <Button className={styles.resetButton}>
-                        RESET PASSWORD
+                      <Button
+                        className={styles.resetButton}
+                        onClick={handleResetPassword}
+                        disabled={isLoading}
+                      >
+                        {isLoading ? "Resetting..." : "RESET PASSWORD"}
                       </Button>
                     </div>
-
                     <p className={styles.signInText}>
                       <span className="text-[#234014]">
                         Remember your password?
                       </span>{" "}
-                      <button className="font-bold text-[#4c6f29] underline">
+                      <button
+                        className="font-bold text-[#4c6f29] underline"
+                        onClick={() => router.push("/login")}
+                      >
                         Sign in
                       </button>
                     </p>

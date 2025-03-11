@@ -1,3 +1,4 @@
+"use client";
 import Header from "@/components/header/header";
 import styles from "./login.module.css";
 import LoginForm from "@/app/(auth)/login/login-form";

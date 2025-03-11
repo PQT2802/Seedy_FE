@@ -1,8 +1,12 @@
+"use client";
 import Header from "@/components/header/header";
 import React from "react";
 import styles from "./order-success.module.css";
 
 export default function page() {
+  const handleContinueShopping = () => {
+    window.location.href = "/"; // Chuyển hướng về homepage
+  };
   return (
     <div className={styles.pageContainer}>
       <Header />
@@ -17,7 +21,12 @@ export default function page() {
             <p className={styles.contactMessage}>
               If you have any questions, please don’t hesitate to contact us.
             </p>
-            <button className={styles.continueButton}>CONTINUE SHOPPING</button>
+            <button
+              className={styles.continueButton}
+              onClick={handleContinueShopping} // Thêm sự kiện onClick
+            >
+              CONTINUE SHOPPING
+            </button>
           </div>
         </div>
       </div>
