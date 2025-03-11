@@ -47,7 +47,7 @@ export default function TotalSummary({
     Description: uniqueDescription,
     ShippingFee: shippingFee || 0,
     Items: Object.entries(checkoutItems).map(([id, item]: [string, any]) => ({
-      ProductId: item.productId, // Sửa: Lấy từ item.productId thay vì id
+      ProductId: item.productId,
       Quantity: item.quantity,
       Price: item.productPrice,
     })),
@@ -57,8 +57,11 @@ export default function TotalSummary({
       Phone: shippingInfo.phoneNumber || "",
       Email: shippingInfo.email || "",
       WardId: shippingInfo.wardId || 0,
+      WardName: shippingInfo.wardName || "",
       DistrictId: shippingInfo.districtId || 0,
+      DistrictName: shippingInfo.districtName || "",
       ProvinceId: shippingInfo.provinceId || 0,
+      ProvinceName: shippingInfo.provinceName || "",
     },
   };
 

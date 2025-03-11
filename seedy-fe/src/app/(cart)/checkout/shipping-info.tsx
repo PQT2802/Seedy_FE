@@ -149,6 +149,17 @@ export default function ShippingInformation({
         setLocalShippingFee(response[0].giaCuoc); // Dùng camelCase
         setShippingFee(response[0].giaCuoc); // Dùng camelCase
 
+        const receiverWard =
+          wards.find((ward) => ward.wardId === formData.wardId)?.wardName || "";
+        const receiverDistrict =
+          districts.find(
+            (district) => district.districtId === formData.districtId
+          )?.districtName || "";
+        const receiverProvince =
+          provinces.find(
+            (province) => province.provinceId === formData.provinceId
+          )?.provinceName || "";
+
         localStorage.setItem(
           "shippingInfo",
           JSON.stringify({
@@ -157,8 +168,11 @@ export default function ShippingInformation({
             phoneNumber: formData.phoneNumber,
             address: formData.address,
             wardId: formData.wardId,
+            wardName: receiverWard,
             districtId: formData.districtId,
+            districtName: receiverDistrict,
             provinceId: formData.provinceId,
+            provinceName: receiverProvince,
           })
         );
       } else {

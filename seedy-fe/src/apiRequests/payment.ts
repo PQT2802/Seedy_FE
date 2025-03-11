@@ -20,8 +20,11 @@ interface OrderRequest {
     Phone: string;
     Email: string;
     WardId: number;
+    WardName: string;
     DistrictId: number;
+    DistrictName: string;
     ProvinceId: number;
+    ProvinceName: string;
   };
 }
 
