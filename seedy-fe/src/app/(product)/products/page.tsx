@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-
+import { Filter } from "lucide-react";
 import styles from "./category.module.css";
 import productApiRequest, { Product } from "@/apiRequests/products";
 import CategoryFilter from "@/components/category/category-filter/categoryFilter";
@@ -74,7 +74,6 @@ export default function Category() {
   return (
     <div className={styles.container}>
       <Header />
-
       <main className={styles.main}>
         <div className={styles.categoryNav}>
           {categories.map((category) => (
@@ -92,7 +91,11 @@ export default function Category() {
 
         <div className={styles.layout}>
           <aside className={styles.sidebar}>
-            <h3 className={styles.filterTitle}>Filter</h3>
+            <div className={styles.filterContainer}>
+              <Filter />
+              <h3 className={styles.filterTitle}>Filter</h3>
+            </div>
+
             <PriceFilter
               min={0}
               max={150000}
@@ -116,21 +119,18 @@ export default function Category() {
 
         {/* Pagination Controls */}
         <div className={styles.pagination}>
-          <button
-            disabled={currentPage === 1}
-            onClick={() => handlePageChange(currentPage - 1)}
-          >
-            Previous
-          </button>
-          <span>
-            Page {currentPage} of {totalPages}
-          </span>
-          <button
-            disabled={currentPage === totalPages}
-            onClick={() => handlePageChange(currentPage + 1)}
-          >
-            Next
-          </button>
+          {Array.from({ length: totalPages }, (_, index) => {
+            const page = index + 1;
+            return (
+              <span
+                key={page}
+                className={`${styles.dot} ${
+                  currentPage === page ? styles.active : ""
+                }`}
+                onClick={() => handlePageChange(page)}
+              ></span>
+            );
+          })}
         </div>
       </main>
     </div>

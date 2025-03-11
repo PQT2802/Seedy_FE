@@ -191,3 +191,8 @@
     height: 50px;
   }
 }
+.navLink:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: 0.2s ease-in-out;
+}
