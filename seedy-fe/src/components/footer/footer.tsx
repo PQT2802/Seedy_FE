@@ -20,12 +20,14 @@ export default function Footer() {
           {/* Center Section: Branding */}
           <div className={styles.branding}>
             <h2 className={styles.logo}>SEEDY</h2>
-            <p className={styles.tagline}>NATURE EMBRACES YOUR STORIES</p>
+            <p className={styles.tagline}>
+              Thiên nhiên ôm ấp câu chuyện của bạn
+            </p>
           </div>
 
           {/* Right Section: Copyright Text */}
           <div className={styles.copyright}>
-            <p>seedy © all rights reserved</p>
+            <p>seedy © tất cả các quyền được bảo lưu</p>
           </div>
         </div>
       </div>
