@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import { Order } from "@/apiRequests/order";
-
+import Link from "next/link"; // Thêm Link để điều hướng
 interface OrderItemProps {
   order: Order;
 }
@@ -42,9 +42,12 @@ export default function OrderItem({ order }: OrderItemProps) {
         <div className="bg-green-950 text-white p-3 rounded-lg">
           TRACKING YOUR ORDER
         </div>
-        <button className="bg-white p-3 mt-3 rounded-lg text-green-950 w-[220px]">
-          VIEW ORDER DETAILS
-        </button>
+
+        <Link href={`/order-detail?orderId=${order.id}`} legacyBehavior>
+          <button className="bg-white p-3 mt-3 rounded-lg text-green-950 w-[220px]">
+            VIEW ORDER DETAILS
+          </button>
+        </Link>
       </div>
     </>
   );
