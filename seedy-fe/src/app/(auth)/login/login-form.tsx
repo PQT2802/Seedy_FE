@@ -92,7 +92,7 @@ export default function LoginForm() {
       );
       setNotice({
         isOpen: true,
-        type: "fail",
+        type: "error",
         message: "Login failed. Please try again.",
       });
       console.error("Login Error:", error);
@@ -106,7 +106,7 @@ export default function LoginForm() {
       <Notice
         isOpen={notice.isOpen}
         onClose={() => setNotice({ ...notice, isOpen: false })}
-        type={notice.type}
+        type={notice.type as "success" | "error"}
         message={notice.message}
       />
       <Tabs defaultValue="account">

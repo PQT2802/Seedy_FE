@@ -10,6 +10,9 @@ interface Order {
   totalPrice: number;
   receiverFullName: string;
   receiverAddress: string;
+  provinceName: string;
+  districtName: string;
+  wardName: string;
 }
 
 export default function OrdersPage() {
