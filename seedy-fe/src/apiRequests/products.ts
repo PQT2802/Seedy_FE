@@ -12,11 +12,13 @@ export interface ProductDetail {
   id: string;
   name: string;
   price: number;
+  occasionName: string;
   productCategoryId: string;
   occasionId: string;
-  imageUrl: string;
+  imageStream: string;
   note: string;
   description: string;
+  productImageUrls: [];
 }
 
 const productApiRequest = {

@@ -10,7 +10,7 @@
 }
 
 .item {
-  height: 63rem;
+  height: 45rem;
   background-color: #ffffff;
   border-radius: 30px;
   padding: 40px;
@@ -18,6 +18,11 @@
   margin: 0 auto;
   position: relative;
   transform: translateY(15vh);
+}
+.arrow:hover {
+  cursor: pointer;
+  transform: scale(1.03);
+  transition: 0.2s ease-in-out;
 }
 
 .productInfo {
@@ -43,6 +48,15 @@
   color: #234014;
   font-family: var(--font-mantra);
 }
+.occasionName {
+  font-size: 2.5rem;
+  font-weight: bold;
+  font-family: var(--font-mantra);
+  margin-bottom: -0.5rem;
+  background: linear-gradient(45deg, #234014, #4a8c24);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* Makes the gradient visible */
+}
 
 .price {
   color: #234014;
@@ -59,7 +73,7 @@
 
 .buttonsContainer {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto;
   gap: 15px;
 }
 
@@ -170,4 +184,31 @@
 }
 .customfooter {
   transform: translateY(30%);
+}
+.flyingImageContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+  z-index: 1000;
+  animation: flyToCart 1s ease-in-out forwards;
+}
+
+.flyingImage {
+  width: 5rem;
+  height: 5rem;
+}
+
+@keyframes flyToCart {
+  0% {
+    opacity: 1;
+    transform: scale(2) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.5) translate(-5rem, -5rem);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1) translate(20vw, -40vh);
+  }
 }

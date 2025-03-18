@@ -61,12 +61,14 @@ export default function Header() {
           {/* Icons */}
           <div className={styles.icons}>
             <Image
+              className={styles.icon}
               alt="Earth Icon"
               src="/earth-planet.png"
               width={45}
               height={45}
             />
             <Image
+              className={styles.icon}
               alt="Shopping Cart Icon"
               src="/shopping-cart.png"
               width={45}
@@ -75,6 +77,7 @@ export default function Header() {
               style={{ cursor: "pointer" }} // Optional: Change cursor to pointer
             />
             <Image
+              className={styles.icon}
               alt="User Icon"
               src="/user.png"
               width={45}

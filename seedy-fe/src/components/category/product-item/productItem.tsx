@@ -65,7 +65,7 @@ export default function ProductItem({ product }: ProductItemProps) {
         </div>
       </Link>
 
-      <h3 className={styles.productName}>{name}</h3>
+      <h3 className={styles.productName}>{name} </h3>
       <p className={styles.productPrice}>{formatPrice(price)}</p>
       <button className={styles.addToCartButton} onClick={handleAddToCart}>
         <span>Thêm vào giỏ</span>

@@ -39,12 +39,25 @@
 .productImage {
   position: relative;
   z-index: 2;
-  display: flex; /* Ensure it's displayed */
+  display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 90%;
-  max-height: 90%;
+  width: 100%; /* Allow width to adjust naturally */
+  height: auto; /* Allow height to adjust naturally */
+  max-width: 65%; /* Increase for horizontal images */
+  max-height: 12vh; /* Keep vertical images balanced */
   object-fit: contain;
+  aspect-ratio: 16 / 9; /* Adjust to prioritize width */
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+.productImage img {
+  width: 100%;
+  height: auto;
+  max-width: 100%; /* Make sure images are responsive */
+  object-fit: contain;
+  aspect-ratio: auto;
+  border: 1px solid #7fd46b; /* Remove fixed aspect ratio */
 }
 
 /* Product Name */
