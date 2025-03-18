@@ -3,36 +3,67 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import styles from "./cart-Item.module.css";
+import cartApiRequest from "@/apiRequests/cart";
+import { Trash2 } from "lucide-react";
 
 interface CartItemProps {
+  cartItemId: string; // Thêm cartItemId để xác định sản phẩm trong giỏ hàng
   imageSrc: string;
   altText: string;
   title: string;
   price: string;
   quantity: number;
+  token: string; // Thêm token để xác thực API
   onQuantityChange: (newQuantity: number) => void;
+  onRemove: () => void; // Callback để thông báo xóa sản phẩm
 }
 
 export default function CartItem({
+  cartItemId,
   imageSrc,
   altText,
   title,
   price,
   quantity,
+  token,
   onQuantityChange,
+  onRemove,
 }: CartItemProps) {
   const [itemQuantity, setItemQuantity] = useState(quantity);
 
-  const increaseQuantity = () => {
+  const increaseQuantity = async () => {
     const newQuantity = itemQuantity + 1;
     setItemQuantity(newQuantity);
     onQuantityChange(newQuantity);
+    try {
+      await cartApiRequest.updateCartItem(cartItemId, newQuantity, token);
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+      setItemQuantity(quantity); // Hoàn nguyên nếu lỗi
+      onQuantityChange(quantity);
+    }
   };
 
-  const decreaseQuantity = () => {
+  const decreaseQuantity = async () => {
     const newQuantity = itemQuantity > 1 ? itemQuantity - 1 : 1;
     setItemQuantity(newQuantity);
     onQuantityChange(newQuantity);
+    try {
+      await cartApiRequest.updateCartItem(cartItemId, newQuantity, token);
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+      setItemQuantity(quantity); // Hoàn nguyên nếu lỗi
+      onQuantityChange(quantity);
+    }
+  };
+
+  const handleRemove = async () => {
+    try {
+      await cartApiRequest.removeCartItem(cartItemId, token);
+      onRemove(); // Gọi callback để cập nhật danh sách giỏ hàng
+    } catch (error) {
+      console.error("Error removing item:", error);
+    }
   };
 
   return (
@@ -71,6 +102,13 @@ export default function CartItem({
               +
             </button>
           </div>
+          <button
+            aria-label="Remove item"
+            className="text-red-500 focus:outline-none ml-4"
+            onClick={handleRemove}
+          >
+            <Trash2 size={30} color="white" />
+          </button>
         </div>
       </div>
     </div>

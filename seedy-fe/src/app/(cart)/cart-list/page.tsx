@@ -9,6 +9,7 @@ import cartApiRequest from "@/apiRequests/cart";
 
 // Define the cart item type based on the API response structure
 interface CartItem {
+  cartItemId: string; // Thêm cartItemId
   productId: string;
   productName: string;
   productPrice: number;
@@ -26,23 +27,29 @@ interface CartResponse {
     data: {
       cartID: string;
       userID: string;
-      cartItems: Record<string, CartItem>;
+      cartItems: Record<string, CartItem>; // Key là cartItemId
     };
   };
 }
 
 export default function Page() {
   const router = useRouter();
-  const [cartItems, setCartItems] = useState<CartItem[]>([]); // Use array of CartItem
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const token = localStorage.getItem("accessToken"); // Thay bằng cách lấy token thực tế (localStorage, context, etc.)
 
   useEffect(() => {
     async function fetchCartDetails() {
       try {
-        const response = (await cartApiRequest.getDetail()) as CartResponse; // Type the response
+        const response = (await cartApiRequest.getDetail()) as CartResponse;
         if (response.statusCode === 200) {
-          const items = Object.values(response.extensions.data.cartItems); // Convert Record to array
+          const items = Object.entries(response.extensions.data.cartItems).map(
+            ([cartItemId, item]) => ({
+              ...item,
+              cartItemId, // Thêm cartItemId vào dữ liệu
+            })
+          );
           setCartItems(items);
         } else {
           setError("Failed to load cart data");
@@ -59,9 +66,21 @@ export default function Page() {
 
   const updateQuantity = (id: string, newQuantity: number) => {
     setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.productId === id ? { ...item, quantity: newQuantity } : item
-      )
+      prevItems.map((item) => {
+        console.log(
+          item.productId === id ? { ...item, quantity: newQuantity } : item
+        );
+
+        return item.productId === id
+          ? { ...item, quantity: newQuantity }
+          : item;
+      })
+    );
+  };
+
+  const removeItem = (cartItemId: string) => {
+    setCartItems((prevItems) =>
+      prevItems.filter((item) => item.cartItemId !== cartItemId)
     );
   };
 
@@ -96,18 +115,21 @@ export default function Page() {
             {cartItems.length > 0 ? (
               cartItems.map((item) => (
                 <div
-                  key={item.productId} // Use productId as the key
+                  key={item.cartItemId} // Sử dụng cartItemId làm key
                   className="py-3 pr-20 pl-6 mt-7 rounded-2xl bg-lime-950 w-[85%] max-md:px-5 mb-4"
                 >
                   <CartItem
+                    cartItemId={item.cartItemId}
                     imageSrc={item.productImageUrl}
                     altText={item.productName}
                     title={item.productName}
                     price={`${item.productPrice.toLocaleString()} VND`}
                     quantity={item.quantity}
+                    token={token ?? ""}
                     onQuantityChange={(newQuantity) =>
                       updateQuantity(item.productId, newQuantity)
                     }
+                    onRemove={() => removeItem(item.cartItemId)}
                   />
                 </div>
               ))

@@ -20,7 +20,7 @@ export default function Header() {
       {/* Logo */}
       <div className={styles.logo}>
         <Image
-          alt="Logo seedy moi trang"
+          alt="Logo Seedy"
           src="/logo-seedy-mo-i-tra-ng-1.png"
           width={92}
           height={87}
@@ -39,19 +39,19 @@ export default function Header() {
             >
               Sản phẩm
             </span>
-            <span className={styles.navLink}>OUR ARCHIVES</span>
-            <span className={styles.navLink}>ABOUT US</span>
+            <span className={styles.navLink}>Lưu trữ</span>
+            <span className={styles.navLink}>Về chúng tôi</span>
           </div>
 
           {/* Search Box */}
           <div className={styles.searchBox}>
             <input
               type="text"
-              placeholder="Search"
+              placeholder="Tìm kiếm"
               className={styles.searchInput}
             />
             <Image
-              alt="Search Icon"
+              alt="Biểu tượng tìm kiếm"
               src="/search-more.png"
               width={28}
               height={28}
@@ -73,8 +73,8 @@ export default function Header() {
               src="/shopping-cart.png"
               width={45}
               height={45}
-              onClick={handleCartClick} // Navigate to /cart-list
-              style={{ cursor: "pointer" }} // Optional: Change cursor to pointer
+              onClick={handleCartClick}
+              style={{ cursor: "pointer" }}
             />
             <Image
               className={styles.icon}
@@ -82,8 +82,8 @@ export default function Header() {
               src="/user.png"
               width={45}
               height={45}
-              onClick={handleUserClick} // Navigate to /information
-              style={{ cursor: "pointer" }} // Optional: Change cursor to pointer
+              onClick={handleUserClick}
+              style={{ cursor: "pointer" }}
             />
           </div>
         </div>
@@ -92,7 +92,7 @@ export default function Header() {
       {/* Circled Menu */}
       <div className={styles.circledMenu}>
         <Image
-          alt="Circled menu"
+          alt="Menu tròn"
           src="/circled-menu.png"
           width={65}
           height={65}
