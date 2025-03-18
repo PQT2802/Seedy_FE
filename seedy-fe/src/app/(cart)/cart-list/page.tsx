@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import Header from "@/components/header/header";
 import CartItem from "./cart-item";
@@ -7,9 +6,8 @@ import { useRouter } from "next/navigation";
 import styles from "./cart.module.css";
 import cartApiRequest from "@/apiRequests/cart";
 
-// Define the cart item type based on the API response structure
 interface CartItem {
-  cartItemId: string; // Thêm cartItemId
+  cartItemId: string;
   productId: string;
   productName: string;
   productPrice: number;
@@ -18,7 +16,6 @@ interface CartItem {
   productStockQuantity: number;
 }
 
-// Define the full response type for the API
 interface CartResponse {
   title: string;
   statusCode: number;
@@ -27,7 +24,7 @@ interface CartResponse {
     data: {
       cartID: string;
       userID: string;
-      cartItems: Record<string, CartItem>; // Key là cartItemId
+      cartItems: Record<string, CartItem>;
     };
   };
 }
@@ -37,7 +34,13 @@ export default function Page() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const token = localStorage.getItem("accessToken"); // Thay bằng cách lấy token thực tế (localStorage, context, etc.)
+  const [token, setToken] = useState<string | null>(null); // Store token in state
+
+  // Fetch token on the client side
+  useEffect(() => {
+    const storedToken = localStorage.getItem("accessToken");
+    setToken(storedToken);
+  }, []);
 
   useEffect(() => {
     async function fetchCartDetails() {
@@ -47,7 +50,7 @@ export default function Page() {
           const items = Object.entries(response.extensions.data.cartItems).map(
             ([cartItemId, item]) => ({
               ...item,
-              cartItemId, // Thêm cartItemId vào dữ liệu
+              cartItemId,
             })
           );
           setCartItems(items);
@@ -66,15 +69,9 @@ export default function Page() {
 
   const updateQuantity = (id: string, newQuantity: number) => {
     setCartItems((prevItems) =>
-      prevItems.map((item) => {
-        console.log(
-          item.productId === id ? { ...item, quantity: newQuantity } : item
-        );
-
-        return item.productId === id
-          ? { ...item, quantity: newQuantity }
-          : item;
-      })
+      prevItems.map((item) =>
+        item.productId === id ? { ...item, quantity: newQuantity } : item
+      )
     );
   };
 
@@ -108,14 +105,13 @@ export default function Page() {
           >
             YOUR CART
           </h1>
-
           <div
             className={`${styles.cartList} overflow-y-auto scrollbar-custom`}
           >
             {cartItems.length > 0 ? (
               cartItems.map((item) => (
                 <div
-                  key={item.cartItemId} // Sử dụng cartItemId làm key
+                  key={item.cartItemId}
                   className="py-3 pr-20 pl-6 mt-7 rounded-2xl bg-lime-950 w-[85%] max-md:px-5 mb-4"
                 >
                   <CartItem
@@ -139,7 +135,6 @@ export default function Page() {
               </div>
             )}
           </div>
-
           <div
             className={`${styles.totalWrapper} ${styles["totalWrapper.maxMd"]}`}
           >

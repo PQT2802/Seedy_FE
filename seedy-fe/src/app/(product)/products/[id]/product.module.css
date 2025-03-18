@@ -73,7 +73,7 @@
 
 .buttonsContainer {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto auto auto;
   gap: 15px;
 }
 

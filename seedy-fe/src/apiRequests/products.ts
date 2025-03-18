@@ -23,6 +23,8 @@ export interface ProductDetail {
 
 const productApiRequest = {
   getAllProducts: () => http.get<Product[]>(`api/Product/all`),
+  getRelateProducts: (data: { OccasionId: string; MaxProducts: number }) =>
+    http.post<Product[]>(`api/Product/sorted`, data),
 
   getProductDetail: async (id: string): Promise<ProductDetail> => {
     const res = await http.get<{ extensions: { data: ProductDetail } }>(

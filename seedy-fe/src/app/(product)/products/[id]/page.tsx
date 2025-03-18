@@ -1,7 +1,5 @@
 "use client";
-import { CarouselSize } from "@/components/carousel-list-items/carousel-list-items";
-
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./product.module.css";
 import Header from "@/components/header/header";
 import Image from "next/image";
@@ -10,23 +8,30 @@ import { ShoppingCart } from "lucide-react";
 import Footer from "@/components/footer/footer";
 
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import productApiRequest, { ProductDetail } from "@/apiRequests/products";
+import productApiRequest, {
+  Product,
+  ProductDetail,
+} from "@/apiRequests/products";
 import { CarouselDetail } from "@/components/generic/CarouselDetail";
 import cartApiRequest from "@/apiRequests/cart";
 import ArrowIcon from "@/components/background/Arrow";
+import { CarouselList } from "@/components/generic/CarouselList";
 
-export default function Product() {
+export default function ProductInfor() {
   const { id } = useParams();
   const [product, setProduct] = useState<ProductDetail | null>(null);
   const [images, setImages] = useState<string[]>([]);
   const [animating, setAnimating] = useState(false);
   const router = useRouter();
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState<string | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const storedToken = localStorage.getItem("accessToken");
-    if (storedToken) setToken(storedToken);
+    setToken(storedToken);
   }, []);
+
   useEffect(() => {
     if (id) {
       productApiRequest.getProductDetail(id as string).then((data) => {
@@ -41,12 +46,30 @@ export default function Product() {
       });
     }
   }, [id]);
-  const handleBackClick = () => {
-    if (window.history.length > 1) {
-      router.back();
-    } else {
-      router.replace("/products");
+
+  useEffect(() => {
+    if (product?.occasionId) {
+      const fetchProducts = async () => {
+        try {
+          const response = await productApiRequest.getRelateProducts({
+            OccasionId: product.occasionId,
+            MaxProducts: 10,
+          });
+
+          setProducts(response.extensions.data);
+        } catch (error) {
+          console.error("Error fetching related products:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchProducts();
     }
+  }, [product?.occasionId]);
+
+  const handleBackClick = () => {
+    router.replace("/products");
   };
 
   const handleAddToCart = async () => {
@@ -56,8 +79,6 @@ export default function Product() {
     }
 
     setAnimating(true);
-    console.log("Animation started:", animating);
-
     try {
       await cartApiRequest.addToCart(id as string, 1, token);
     } catch (error) {
@@ -99,44 +120,26 @@ export default function Product() {
             </p>
             <p className={styles.note}>Note: {product?.note}</p>
             <div className={styles.buttonsContainer}>
-              {/* <button className={styles.sizeButton}>One Size</button> */}
               <NumberCounter />
-              <div></div>
               <button className={styles.buyButton}>MUA NGAY</button>
               <button className={styles.cartButton} onClick={handleAddToCart}>
                 <span>THÊM VÀO GIỎ</span>
                 <ShoppingCart />
               </button>
-              {/* <Share2 className="w-10 h-10 text-green-500 mt-3" /> */}
             </div>
           </div>
         </div>
-        {/* <div className={styles.descriptionSection}>
-          <h2 className={styles.descriptionTitle}>{product?.name}</h2>
-          <p className={styles.descriptionText}>{product?.description}</p>
-          <Image
-            src="/grass.png"
-            alt=""
-            width={250}
-            height={450}
-            className={styles["grass"]}
-          />
-          <Image
-            src="/bush.png"
-            alt=""
-            width={200}
-            height={300}
-            className={styles["bush"]}
-          />
-        </div> */}
       </div>
+
       <div className={styles.relatedProductsSection}>
         <h1 className={styles.relatedTitle}>YOU MAY ALSO LIKE...</h1>
-        <CarouselSize />
+        {loading ? <p>Loading...</p> : <CarouselList products={products} />}
       </div>
+
       <div className={styles.customfooter}>
         <Footer />
       </div>
+
       {animating && product?.imageStream && (
         <div className={styles.flyingImageContainer}>
           <Image

@@ -14,18 +14,21 @@ interface CarouselSizeProps {
   products: Product[]; // ✅ Receive sorted products
 }
 
-export function CarouselSize({ products }: CarouselSizeProps) {
+export function CarouselList({ products }: CarouselSizeProps) {
   return (
     <div className="text-center">
       <Carousel
         opts={{ align: "start", loop: true }}
-        className="w-full max-w-lg mx-auto"
+        className="w-full max-w-6xl mx-auto"
       >
         <CarouselContent>
           {products.map((product) => (
-            <CarouselItem key={product.id} className="basis-full">
+            <CarouselItem key={product.id} className="basis-1/4">
               {/* ✅ Display product inside Carousel */}
-              <ProductItem product={product} />
+              <ProductItem
+                product={product}
+                className="text-white text-lg font-bold"
+              />
             </CarouselItem>
           ))}
         </CarouselContent>
