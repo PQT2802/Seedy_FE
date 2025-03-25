@@ -2,7 +2,7 @@
 
 import Header from "@/components/header/header";
 import * as React from "react";
-import { useRouter, useSearchParams } from "next/navigation"; // Thêm useSearchParams để lấy query
+import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -21,6 +21,7 @@ import {
 import styles from "./password.module.css";
 import authApiRequest from "@/apiRequests/auth";
 import Notice from "@/components/pop-up/notification";
+import { Suspense } from "react"; // Import Suspense
 
 // Schema xác thực form reset password
 const resetPasswordSchema = z
@@ -35,7 +36,8 @@ const resetPasswordSchema = z
     path: ["confirmPassword"],
   });
 
-export default function ForgetPassword() {
+// Separate component to use useSearchParams
+function ForgetPasswordContent() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -45,11 +47,11 @@ export default function ForgetPassword() {
     message: "",
   });
   const router = useRouter();
-  const searchParams = useSearchParams(); // Lấy query params từ URL
+  const searchParams = useSearchParams(); // Use inside Suspense
 
   // Lấy token và email từ URL
-  const token = searchParams.get("token");
-  const email = searchParams.get("email");
+  const token = searchParams?.get("token") ?? "";
+  const email = searchParams?.get("email") ?? "";
 
   // Khởi tạo form với react-hook-form
   const form = useForm<z.infer<typeof resetPasswordSchema>>({
@@ -73,7 +75,7 @@ export default function ForgetPassword() {
 
     setIsLoading(true);
     try {
-      const response = await authApiRequest.resetPassword({
+      await authApiRequest.resetPassword({
         Email: email,
         Token: token,
         NewPassword: values.password,
@@ -89,12 +91,6 @@ export default function ForgetPassword() {
       setTimeout(() => {
         router.push("/login");
       }, 2000);
-    } catch (err) {
-      setNotice({
-        isOpen: true,
-        type: "error",
-        message: "Failed to reset password. Please try again.",
-      });
     } finally {
       setIsLoading(false);
     }
@@ -210,5 +206,14 @@ export default function ForgetPassword() {
         </div>
       </div>
     </>
+  );
+}
+
+// Main component with Suspense boundary
+export default function ForgetPassword() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ForgetPasswordContent />
+    </Suspense>
   );
 }

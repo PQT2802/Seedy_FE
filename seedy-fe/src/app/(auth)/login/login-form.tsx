@@ -48,7 +48,7 @@ const formSchema = z.object({
 
 export default function LoginForm() {
   const [isLoading, setIsLoading] = React.useState(false);
-  const [error, setError] = React.useState("");
+
   const [showPassword, setShowPassword] = React.useState(false);
   const [showForgetPassword, setShowForgetPassword] = React.useState(false); // Trạng thái popup quên mật khẩu
   const [notice, setNotice] = React.useState({
@@ -78,7 +78,6 @@ export default function LoginForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    setError("");
 
     try {
       const response = await authApiRequest.login({
@@ -99,14 +98,13 @@ export default function LoginForm() {
       setTimeout(() => {
         router.push("/");
       }, 2000);
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "An unexpected error occurred"
-      );
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "An unexpected error occurred";
       setNotice({
         isOpen: true,
         type: "error",
-        message: "Login failed. Please try again.",
+        message: `Login failed: ${errorMessage}`,
       });
     } finally {
       setIsLoading(false);
@@ -120,7 +118,7 @@ export default function LoginForm() {
     setIsLoading(true);
     try {
       // Gọi API quên mật khẩu (cần thêm phương thức này vào authApiRequest)
-      const response = await authApiRequest.forgetPassword({
+      await authApiRequest.forgetPassword({
         Email: values.email,
       });
       setNotice({
@@ -129,12 +127,6 @@ export default function LoginForm() {
         message: "Reset password email sent successfully!",
       });
       setShowForgetPassword(false); // Đóng popup sau khi gửi thành công
-    } catch (err) {
-      setNotice({
-        isOpen: true,
-        type: "error",
-        message: "Failed to send reset password email. Please try again.",
-      });
     } finally {
       setIsLoading(false);
     }

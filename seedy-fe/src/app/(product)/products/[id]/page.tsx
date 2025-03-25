@@ -18,7 +18,8 @@ import ArrowIcon from "@/components/background/Arrow";
 import { CarouselList } from "@/components/generic/CarouselList";
 
 export default function ProductInfor() {
-  const { id } = useParams();
+  const params = useParams<{ id: string }>();
+  const id = params?.id;
   const [product, setProduct] = useState<ProductDetail | null>(null);
   const [images, setImages] = useState<string[]>([]);
   const [animating, setAnimating] = useState(false);
