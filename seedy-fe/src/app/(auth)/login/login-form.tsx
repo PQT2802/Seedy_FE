@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation"; // or "next/router" in older Next.js versions
+import { useRouter } from "next/navigation";
 import * as React from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -27,7 +27,11 @@ import {
 import styles from "./login.module.css";
 import authApiRequest from "@/apiRequests/auth";
 import Notice from "@/components/pop-up/notification";
-// Import the fixed API request functions
+
+// Thêm schema cho form quên mật khẩu
+const forgetPasswordSchema = z.object({
+  email: z.string().email("Invalid email address"),
+});
 
 const socialLoginOptions = [
   { icon: Apple, alt: "Apple login" },
@@ -46,11 +50,15 @@ export default function LoginForm() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
+  const [showForgetPassword, setShowForgetPassword] = React.useState(false); // Trạng thái popup quên mật khẩu
   const [notice, setNotice] = React.useState({
     isOpen: false,
     type: "",
     message: "",
   });
+  const router = useRouter();
+
+  // Form chính để đăng nhập
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -59,7 +67,15 @@ export default function LoginForm() {
       rememberMe: false,
     },
   });
-  const router = useRouter();
+
+  // Form cho quên mật khẩu
+  const forgetForm = useForm<z.infer<typeof forgetPasswordSchema>>({
+    resolver: zodResolver(forgetPasswordSchema),
+    defaultValues: {
+      email: "",
+    },
+  });
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     setError("");
@@ -70,13 +86,10 @@ export default function LoginForm() {
         Password: values.password,
       });
 
-      console.log(response);
-
       if (!response.extensions.data?.accessToken) {
         throw new Error("Login failed: Invalid response from server");
       }
 
-      // Store token
       localStorage.setItem("accessToken", response.extensions.data.accessToken);
       setNotice({
         isOpen: true,
@@ -95,7 +108,33 @@ export default function LoginForm() {
         type: "error",
         message: "Login failed. Please try again.",
       });
-      console.error("Login Error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  // Xử lý gửi yêu cầu quên mật khẩu
+  async function onForgetPasswordSubmit(
+    values: z.infer<typeof forgetPasswordSchema>
+  ) {
+    setIsLoading(true);
+    try {
+      // Gọi API quên mật khẩu (cần thêm phương thức này vào authApiRequest)
+      const response = await authApiRequest.forgetPassword({
+        Email: values.email,
+      });
+      setNotice({
+        isOpen: true,
+        type: "success",
+        message: "Reset password email sent successfully!",
+      });
+      setShowForgetPassword(false); // Đóng popup sau khi gửi thành công
+    } catch (err) {
+      setNotice({
+        isOpen: true,
+        type: "error",
+        message: "Failed to send reset password email. Please try again.",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -162,27 +201,36 @@ export default function LoginForm() {
                     )}
                   />
 
-                  {/* Remember Me */}
-                  <div className={styles.rememberContainer}>
-                    <FormField
-                      control={form.control}
-                      name="rememberMe"
-                      render={({ field }) => (
-                        <>
-                          <Checkbox
-                            id="remember"
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                          <label
-                            htmlFor="remember"
-                            className={styles.rememberLabel}
-                          >
-                            Remember me
-                          </label>
-                        </>
-                      )}
-                    />
+                  {/* Remember Me và Forgot Password */}
+                  <div className="flex justify-between items-center">
+                    <div className={styles.rememberContainer}>
+                      <FormField
+                        control={form.control}
+                        name="rememberMe"
+                        render={({ field }) => (
+                          <>
+                            <Checkbox
+                              id="remember"
+                              checked={field.value}
+                              onCheckedChange={field.onChange}
+                            />
+                            <label
+                              htmlFor="remember"
+                              className={styles.rememberLabel}
+                            >
+                              Remember me
+                            </label>
+                          </>
+                        )}
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      className="text-[#234014] font-bold underline"
+                      onClick={() => setShowForgetPassword(true)}
+                    >
+                      Forgot Password
+                    </button>
                   </div>
 
                   {/* Submit Button */}
@@ -199,7 +247,10 @@ export default function LoginForm() {
                   {/* Sign Up Link */}
                   <p className={styles.signUpText}>
                     <span className="text-[#234014]">No account yet?</span>{" "}
-                    <button className="font-bold text-[#4c6f29] underline">
+                    <button
+                      className="font-bold text-[#4c6f29] underline"
+                      onClick={() => router.push("/register")}
+                    >
                       Sign up
                     </button>
                   </p>
@@ -225,6 +276,59 @@ export default function LoginForm() {
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* Popup Forgot Password */}
+      {showForgetPassword && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <Card className={`${styles.card} max-w-md`}>
+            <CardContent className={styles.cardContent}>
+              <h1 className={styles.title}>FORGOT PASSWORD</h1>
+              <Form {...forgetForm}>
+                <form
+                  onSubmit={forgetForm.handleSubmit(onForgetPasswordSubmit)}
+                  className="space-y-6"
+                >
+                  <FormField
+                    control={forgetForm.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem className={styles.inputContainer}>
+                        <UserIcon className={styles.icon} />
+                        <FormControl>
+                          <Input
+                            className={styles.input}
+                            placeholder="Enter Your Email"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className={styles.buttonContainer}>
+                    <Button
+                      type="submit"
+                      className={styles.loginButton}
+                      disabled={isLoading}
+                    >
+                      {isLoading ? "Sending..." : "SEND RESET LINK"}
+                    </Button>
+                  </div>
+                  <div className={styles.buttonContainer}>
+                    <Button
+                      type="button"
+                      className={styles.loginButton}
+                      onClick={() => setShowForgetPassword(false)}
+                    >
+                      CANCEL
+                    </Button>
+                  </div>
+                </form>
+              </Form>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </>
   );
 }

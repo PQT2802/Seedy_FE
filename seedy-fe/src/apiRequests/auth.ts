@@ -32,6 +32,17 @@ const authApiRequest = {
       {},
       { headers: { Authorization: `Bearer ${sessionToken}` } }
     ),
+
+  // Phương thức forget password
+  forgetPassword: (body: { Email: string }) =>
+    http.post<MessageResType>("/api/Auth/forget-password", body),
+
+  // Phương thức reset password
+  resetPassword: (body: {
+    Email: string;
+    Token: string;
+    NewPassword: string;
+  }) => http.post<MessageResType>("/api/Auth/reset-password", body),
 };
 
 export default authApiRequest;
