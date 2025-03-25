@@ -31,14 +31,40 @@ const DashboardCharts = () => {
     fetchData();
   }, []);
 
+  // Calculate total revenue for each chart
+  const totalRevenueOverTime = data?.revenueOverTime
+    .slice(-days)
+    .reduce((sum, item) => sum + item.revenue, 0);
+  const totalSalesByCategory = data?.salesByCategory.reduce(
+    (sum, item) => sum + item.revenue,
+    0
+  );
+  const totalTopSellingCards = data?.topSellingCards
+    .slice(0, 5)
+    .reduce((sum, item) => sum + item.revenue, 0);
+
   const COLORS = ["#8884d8", "#82ca9d", "#ffc658", "#ff7300", "#ff0000"];
+
+  // Format number as currency (VND)
+  const formatCurrency = (value: number | undefined) =>
+    value !== undefined
+      ? new Intl.NumberFormat("vi-VN", {
+          style: "currency",
+          currency: "VND",
+        }).format(value)
+      : "N/A";
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-1 gap-4">
-      {/* Line Chart - Full Width */}
+      {/* Line Chart - Revenue Over Time */}
       <Card>
         <CardContent>
-          <h2 className="text-lg font-semibold">Revenue Over Time</h2>
+          <div className="flex justify-between items-center">
+            <h2 className="text-lg font-semibold">Revenue Over Time</h2>
+            <p className="text-xl font-bold">
+              Total: {formatCurrency(totalRevenueOverTime)}
+            </p>
+          </div>
           <div className="flex gap-2 mb-2">
             <Button
               onClick={() => setDays(15)}
@@ -75,6 +101,12 @@ const DashboardCharts = () => {
                     year: "numeric",
                   })
                 }
+                formatter={(value) =>
+                  new Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  }).format(value as number)
+                }
               />
               <Line
                 type="monotone"
@@ -89,10 +121,15 @@ const DashboardCharts = () => {
 
       {/* Pie Chart and Bar Chart in One Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Pie Chart */}
+        {/* Pie Chart - Sales by Category */}
         <Card>
           <CardContent>
-            <h2 className="text-lg font-semibold">Sales by Category</h2>
+            <div className="flex justify-between items-center">
+              <h2 className="text-lg font-semibold">Sales by Category</h2>
+              <p className="text-xl font-bold">
+                Total: {formatCurrency(totalSalesByCategory)}
+              </p>
+            </div>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
@@ -111,21 +148,40 @@ const DashboardCharts = () => {
                     />
                   ))}
                 </Pie>
-                <Tooltip />
+                <Tooltip
+                  formatter={(value) =>
+                    new Intl.NumberFormat("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }).format(value as number)
+                  }
+                />
               </PieChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
 
-        {/* Bar Chart */}
+        {/* Bar Chart - Top Selling Cards */}
         <Card>
           <CardContent>
-            <h2 className="text-lg font-semibold">Top Selling Cards</h2>
+            <div className="flex justify-between items-center">
+              <h2 className="text-lg font-semibold">Top Selling Cards</h2>
+              <p className="text-xl font-bold">
+                Total: {formatCurrency(totalTopSellingCards)}
+              </p>
+            </div>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={data?.topSellingCards.slice(0, 5)}>
                 <XAxis dataKey="cardName" stroke="#8884d8" />
                 <YAxis />
-                <Tooltip />
+                <Tooltip
+                  formatter={(value) =>
+                    new Intl.NumberFormat("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }).format(value as number)
+                  }
+                />
                 <Bar dataKey="revenue" fill="#82ca9d" />
               </BarChart>
             </ResponsiveContainer>
