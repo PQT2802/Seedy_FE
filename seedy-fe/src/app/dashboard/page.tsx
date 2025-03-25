@@ -1,4 +1,5 @@
-import { Revenue } from "@/components/dashboard/revenue-chart";
+import DashboardCharts from "@/components/dashboard/DashboardCharts";
+
 import StatisticsCards from "@/components/dashboard/statistics-cards";
 
 // app/dashboard/page.tsx
@@ -7,7 +8,7 @@ export default function DashboardPage() {
     <div className="p-6 space-y-6">
       <StatisticsCards />
       <div className="p-4 rounded-l">
-        <Revenue />
+        <DashboardCharts />
       </div>
     </div>
   );
