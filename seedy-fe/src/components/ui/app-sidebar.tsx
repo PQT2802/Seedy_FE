@@ -12,6 +12,7 @@ import {
   Truck,
   ChartArea,
   Users,
+  CreditCard,
 } from "lucide-react";
 
 import {
@@ -70,6 +71,11 @@ const data = {
       title: "Orders",
       url: "/dashboard/orders",
       icon: Truck,
+    },
+    {
+      title: "Payments",
+      url: "/dashboard/payments",
+      icon: CreditCard,
     },
   ],
   projects: [

@@ -12,15 +12,19 @@ export interface ProductDetail {
   id: string;
   name: string;
   price: number;
+  occasionName: string;
   productCategoryId: string;
   occasionId: string;
-  imageUrl: string;
+  imageStream: string;
   note: string;
   description: string;
+  productImageUrls: [];
 }
 
 const productApiRequest = {
   getAllProducts: () => http.get<Product[]>(`api/Product/all`),
+  getRelateProducts: (data: { OccasionId: string; MaxProducts: number }) =>
+    http.post<Product[]>(`api/Product/sorted`, data),
 
   getProductDetail: async (id: string): Promise<ProductDetail> => {
     const res = await http.get<{ extensions: { data: ProductDetail } }>(

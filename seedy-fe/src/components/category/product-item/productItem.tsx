@@ -6,12 +6,14 @@ import cartApiRequest from "@/apiRequests/cart";
 import { ShoppingCart } from "lucide-react";
 import ProductBackGround from "@/components/background/product-background";
 import Link from "next/link";
+import clsx from "clsx";
 
 interface ProductItemProps {
   product: Product;
+  className?: string;
 }
 
-export default function ProductItem({ product }: ProductItemProps) {
+export default function ProductItem({ product, className }: ProductItemProps) {
   const { id, name, price, imageUrl } = product;
   const [token, setToken] = useState("");
   const [animating, setAnimating] = useState(false);
@@ -46,7 +48,7 @@ export default function ProductItem({ product }: ProductItemProps) {
   };
 
   return (
-    <div className={styles.productCard}>
+    <div className={clsx(styles.productCard, className)}>
       <Link href={`/products/${id}`} passHref>
         <div className={styles.imageContainer}>
           <div className={styles.svgHighlight}>
@@ -65,8 +67,12 @@ export default function ProductItem({ product }: ProductItemProps) {
         </div>
       </Link>
 
-      <h3 className={styles.productName}>{name}</h3>
-      <p className={styles.productPrice}>{formatPrice(price)}</p>
+      <h3 className={clsx(styles.productName, className, "!text-inherit")}>
+        {name}
+      </h3>
+      <p className={(clsx(styles.productPrice, className), "!text-inherit")}>
+        {formatPrice(price)}
+      </p>
       <button className={styles.addToCartButton} onClick={handleAddToCart}>
         <span>Thêm vào giỏ</span>
         <ShoppingCart />

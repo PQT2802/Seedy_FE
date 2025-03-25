@@ -25,9 +25,10 @@ interface User {
   email: string;
   role: string;
 }
-interface Payment {
+export interface Payment {
   id: string;
   userId: string;
+  userName: string;
   email: string;
   transactionId: string;
   bankBrandName: string;
@@ -36,6 +37,29 @@ interface Payment {
   transactionContent: string;
   transactionDate: string;
   referenceNumber: string;
+  status: string;
+  paymentMethod: string;
+}
+
+export interface RevenueOverTime {
+  date: Date;
+  revenue: number;
+}
+
+export interface SalesCategory {
+  category: string;
+  revenue: number;
+}
+
+export interface TopSellingCard {
+  cardName: string;
+  revenue: number;
+}
+
+export interface DashboardRevenueDto {
+  revenueOverTime: RevenueOverTime[];
+  salesByCategory: SalesCategory[];
+  topSellingCards: TopSellingCard[];
 }
 
 const dashboardApiRequest = {
@@ -43,6 +67,7 @@ const dashboardApiRequest = {
   getProducts: () => http.get<Product[]>(`api/Admin/products`),
   getUsers: () => http.get<User[]>(`api/Admin/users`),
   getPayments: () => http.get<Payment[]>(`api/Admin/payments`),
+  getRevunes: () => http.get<DashboardRevenueDto>(`api/Admin/revenues`),
 };
 
 export default dashboardApiRequest;

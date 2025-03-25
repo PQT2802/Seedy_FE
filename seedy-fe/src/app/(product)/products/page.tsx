@@ -45,7 +45,8 @@ export default function Category() {
     const matchesPrice =
       product.price >= priceRange[0] && product.price <= priceRange[1];
     const matchesCategory =
-      selectedCategory === "ALL" || product.category === selectedCategory;
+      selectedCategory === "ALL" ||
+      product.category.toLocaleUpperCase() === selectedCategory;
     return matchesPrice && matchesCategory;
   });
 
@@ -65,10 +66,12 @@ export default function Category() {
 
   const categories = [
     { id: "ALL", label: "TẤT CẢ" },
-    { id: "PAPER", label: "PAPER" },
-    { id: "ENVELOPE", label: "ENVELOPE" },
-    { id: "ACCESSORIES", label: "ACCESSORIES" },
-    { id: "CUSTOMIZE", label: "CUSTOMIZE" },
+    { id: "POSTCARD", label: "THIỆP" },
+    { id: "PAPER", label: "GIẤY" },
+    { id: "ENVELOPE", label: "PHONG BÌ" },
+    { id: "STICKER", label: "NHÃN DÁN" },
+    { id: "SET", label: "BỘ SƯU TẬP" },
+    { id: "CUSTOMIZE", label: "THIẾT KẾ" },
   ];
 
   return (
@@ -87,7 +90,12 @@ export default function Category() {
           ))}
         </div>
 
-        <h1 className={styles.title}>TẤT CẢ</h1>
+        <h1 className={styles.title}>
+          {selectedCategory
+            ? categories.find((category) => category.id === selectedCategory)
+                ?.label
+            : "KHÔNG TÌM THẤY"}
+        </h1>
 
         <div className={styles.layout}>
           <aside className={styles.sidebar}>
@@ -112,7 +120,7 @@ export default function Category() {
                 <ProductItem key={product.id} product={product} />
               ))
             ) : (
-              <p>No products found.</p>
+              <p>Không tìm thấy sản phẩm</p>
             )}
           </div>
         </div>

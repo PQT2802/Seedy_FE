@@ -1,0 +1,43 @@
+.heroContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 50.1%;
+  height: 30rem;
+  overflow: visible; /* Ensure border isn't clipped */
+  padding: 1rem; /* Extra space to prevent cuts */
+}
+
+.heroBackground {
+  position: absolute;
+  inset: -10px; /* Expand to prevent clipping */
+  overflow: visible;
+}
+
+.heroImage {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  z-index: 0;
+}
+
+.heroBorder {
+  position: absolute;
+  inset: -10px; /* Expand the area to prevent clipping */
+  background-image: url("/homepage/hero-border.svg");
+  background-size: contain; /* Ensure it scales properly */
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 10;
+}
+
+.heroText {
+  position: relative;
+  z-index: 20;
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}

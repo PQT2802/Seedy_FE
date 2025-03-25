@@ -196,3 +196,13 @@
   transform: scale(1.1);
   transition: 0.2s ease-in-out;
 }
+.logo:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: 0.2s ease-in-out;
+}
+.icon:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: 0.2s ease-in-out;
+}
