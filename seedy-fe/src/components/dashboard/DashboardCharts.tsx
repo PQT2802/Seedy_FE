@@ -32,9 +32,25 @@ const DashboardCharts = () => {
   }, []);
 
   // Calculate total revenue for each chart
-  const totalRevenueOverTime = data?.revenueOverTime
-    .slice(-days)
-    .reduce((sum, item) => sum + item.revenue, 0);
+  const filteredData = data?.revenueOverTime.slice(-days) || [];
+
+  // 🔹 All-time totals
+  const totalRevenueAllTime =
+    data?.revenueOverTime.reduce((sum, item) => sum + item.revenue, 0) || 0;
+  const totalPaymentsAllTime =
+    data?.revenueOverTime.reduce((sum, item) => sum + item.totalPayment, 0) ||
+    0;
+
+  // 🔹 Totals for selected days
+  const totalRevenueFiltered = filteredData.reduce(
+    (sum, item) => sum + item.revenue,
+    0
+  );
+  const totalPaymentsFiltered = filteredData.reduce(
+    (sum, item) => sum + item.totalPayment,
+    0
+  );
+
   const totalSalesByCategory = data?.salesByCategory.reduce(
     (sum, item) => sum + item.revenue,
     0
@@ -59,12 +75,35 @@ const DashboardCharts = () => {
       {/* Line Chart - Revenue Over Time */}
       <Card>
         <CardContent>
-          <div className="flex justify-between items-center">
-            <h2 className="text-lg font-semibold">Revenue Over Time</h2>
-            <p className="text-xl font-bold">
-              Total: {formatCurrency(totalRevenueOverTime)}
-            </p>
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <h2 className="text-lg font-semibold">Total Revenue</h2>
+              <p className="text-md">
+                All Time:{" "}
+                <span className="font-bold">
+                  {formatCurrency(totalRevenueAllTime)}
+                </span>
+              </p>
+              <p className="text-md">
+                Last {days} Days:{" "}
+                <span className="font-bold">
+                  {formatCurrency(totalRevenueFiltered)}
+                </span>
+              </p>
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold">Total Payments</h2>
+              <p className="text-md">
+                All Time:{" "}
+                <span className="font-bold">{totalPaymentsAllTime}</span>
+              </p>
+              <p className="text-md">
+                Last {days} Days:{" "}
+                <span className="font-bold">{totalPaymentsFiltered}</span>
+              </p>
+            </div>
           </div>
+
           <div className="flex gap-2 mb-2">
             <Button
               onClick={() => setDays(15)}
@@ -79,8 +118,9 @@ const DashboardCharts = () => {
               30 Days
             </Button>
           </div>
+
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={data?.revenueOverTime.slice(-days)}>
+            <LineChart data={filteredData}>
               <XAxis
                 dataKey="date"
                 tickFormatter={(date) =>
@@ -101,18 +141,29 @@ const DashboardCharts = () => {
                     year: "numeric",
                   })
                 }
-                formatter={(value) =>
-                  new Intl.NumberFormat("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-                  }).format(value as number)
-                }
+                formatter={(value, name) => {
+                  if (name === "Revenue") {
+                    return new Intl.NumberFormat("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }).format(value as number);
+                  }
+                  return value; // No currency format for totalPayment
+                }}
               />
               <Line
                 type="monotone"
                 dataKey="revenue"
                 stroke="#8884d8"
                 strokeWidth={2}
+                name="Revenue"
+              />
+              <Line
+                type="monotone"
+                dataKey="totalPayment"
+                stroke="#82ca9d"
+                strokeWidth={2}
+                name="Total Payment"
               />
             </LineChart>
           </ResponsiveContainer>

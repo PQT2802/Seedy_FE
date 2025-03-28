@@ -14,11 +14,14 @@ export default function UserProfile() {
     phoneNumber: "N/A",
     address: "No address available",
     avatar: "/avatar.png",
+    role: "Customer",
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const router = useRouter();
-
+  const handleGoToDashboard = () => {
+    router.push("/dashboard"); // Adjust the path to your dashboard
+  };
   useEffect(() => {
     const fetchUserData = async () => {
       setLoading(true);
@@ -40,6 +43,7 @@ export default function UserProfile() {
           phoneNumber: data.phoneNumber || "N/A",
           address: data.address || "No address available",
           avatar: data.avatar || "/avatar.png",
+          role: data.roleName || "Customer",
         });
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -91,6 +95,16 @@ export default function UserProfile() {
               <p className={styles.tab} onClick={handleViewOrders}>
                 Your Order
               </p>
+
+              {/* Show button only if the user is an Admin */}
+              {userData.role === "Admin" && (
+                <button
+                  className={styles.dashboardButton}
+                  onClick={handleGoToDashboard}
+                >
+                  Go to Dashboard
+                </button>
+              )}
             </div>
           </div>
           {/* Right Section */}

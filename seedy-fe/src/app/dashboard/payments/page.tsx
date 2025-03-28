@@ -30,10 +30,8 @@ export default function PaymentsPage() {
 
   // **Filter & Sort Logic**
   const filteredPayments = payments
-    .filter(
-      (payment) =>
-        payment.userName.toLowerCase().includes(search.toLowerCase()) ||
-        payment.email.toLowerCase().includes(search.toLowerCase())
+    .filter((payment) =>
+      payment.email.toLowerCase().includes(search.toLowerCase())
     )
     .filter(
       (payment) => statusFilter === "all" || payment.status === statusFilter

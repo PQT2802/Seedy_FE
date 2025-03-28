@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { wolfer } from "@/lib/fonts";
 
 const NumberCounter = () => {
   const [count, setCount] = useState(1);

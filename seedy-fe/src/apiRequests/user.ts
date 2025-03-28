@@ -1,7 +1,7 @@
 import http from "@/lib/https";
 
 // Định nghĩa interface cho dữ liệu user từ API response
-interface UserData {
+export interface UserData {
   userId: string;
   userName: string;
   email: string;

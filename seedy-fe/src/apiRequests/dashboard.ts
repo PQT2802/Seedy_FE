@@ -44,6 +44,7 @@ export interface Payment {
 export interface RevenueOverTime {
   date: Date;
   revenue: number;
+  totalPayment: number;
 }
 
 export interface SalesCategory {
