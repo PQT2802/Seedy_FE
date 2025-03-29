@@ -50,14 +50,16 @@ function OrderContent() {
               />
             </div>
             <div className={styles.infoTabs}>
-              <p className={styles.tab}>Personal Information</p>
-              <p className={`${styles.tab} ${styles.activeTab}`}>Your Order</p>
+              <p className={styles.tab}>Thông tin cá nhân</p>
+              <p className={`${styles.tab} ${styles.activeTab}`}>
+                Các đơn đặt hàng
+              </p>
             </div>
           </div>
           {/* Right Section */}
           <div className="bg-white w-full">
             <div className="font-utmavo text-headerGreen text-5xl">
-              Your Order
+              Đơn hàng
             </div>
             {loading ? (
               <p>Loading orders...</p>

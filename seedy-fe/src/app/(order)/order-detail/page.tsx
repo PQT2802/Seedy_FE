@@ -77,7 +77,7 @@ function OrderDetailContent() {
             </div>
             <div className={styles.infoTabs}>
               <p className={styles.tab}>Personal Information</p>
-              <p className={`${styles.tab} ${styles.activeTab}`}>Your Order</p>
+              <p className={`${styles.tab} ${styles.activeTab}`}>ĐƠN HÀNG</p>
             </div>
           </div>
           {/* Right Section */}

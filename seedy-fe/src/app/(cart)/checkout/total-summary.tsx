@@ -135,10 +135,10 @@ export default function TotalSummary({
     <div className="flex flex-col mr-4 self-end mt-3.5 max-w-full text-xl text-black w-[318px]">
       <div className="flex gap-5 self-start">
         <div className="flex text-headerGreen flex-col items-start font-bold">
-          <div className="self-stretch">Shipping Fee</div>
-          <div className="mt-2">Discount</div>
-          <div className="mt-2.5">Total</div>
-          <div className="mt-3.5">Seeds</div>
+          <div className="self-stretch">Phí vận chuyển</div>
+          <div className="mt-2">Giảm giá</div>
+          <div className="mt-2.5">Tổng tiền</div>
+          <div className="mt-3.5">Điểm</div>
         </div>
         <div className="flex flex-col">
           <div className="flex flex-col pr-px pl-2.5">
@@ -153,7 +153,7 @@ export default function TotalSummary({
         </div>
       </div>
       <button className="px-8 py-2 mt-4 text-base font-bold rounded-md border-solid border-[3px] border-lime-950 max-md:px-5 max-md:mr-1">
-        Use Your Seeds To Discount
+        Sử dụng điểm để giảm giá
       </button>
 
       {/* ✅ Giữ nguyên cả hai nút */}
@@ -162,13 +162,13 @@ export default function TotalSummary({
           onClick={() => router.push("/shop")}
           className="px-2 rounded-lg border-solid border-[3px] border-lime-950 max-md:pr-5"
         >
-          Continue Shopping
+          Tiếp tục mua sắm
         </button>
         <button
           onClick={handlePurchase}
           className="px-4 flex justify-center items-center whitespace-nowrap rounded-lg border-solid border-[3px] border-lime-950 max-md:pr-5"
         >
-          Purchase
+          Đặt hàng
         </button>
       </div>
 
@@ -176,7 +176,7 @@ export default function TotalSummary({
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg text-center relative">
             <h3 className="text-xl font-bold text-black mb-3">
-              Scan the QR code to pay
+              Quét mã QR để thanh toán
             </h3>
             <Image
               src={qrCodeUrl}
@@ -185,9 +185,7 @@ export default function TotalSummary({
               alt="QR Code Payment"
               className="object-contain"
             />
-            <p className="text-sm mt-2 text-gray-600">
-              Checking payment status...
-            </p>
+            <p className="text-sm mt-2 text-gray-600">Kiểm tra thanh toán...</p>
             <button
               onClick={() => {
                 setShowQR(false);
@@ -195,7 +193,7 @@ export default function TotalSummary({
               }}
               className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg"
             >
-              Close
+              Đóng
             </button>
           </div>
         </div>

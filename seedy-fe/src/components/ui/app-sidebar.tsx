@@ -108,22 +108,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: ChartArea,
       },
       {
-        title: "Users",
+        title: "Người dùng",
         url: "/dashboard/users",
         icon: Users,
       },
       {
-        title: "Products",
+        title: "Sản phẩm",
         url: "/dashboard/products",
         icon: PackageSearch,
       },
       {
-        title: "Orders",
+        title: "Đơn hàng",
         url: "/dashboard/orders",
         icon: Truck,
       },
       {
-        title: "Payments",
+        title: "Thanh toán",
         url: "/dashboard/payments",
         icon: CreditCard,
       },

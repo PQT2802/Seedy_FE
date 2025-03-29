@@ -93,7 +93,7 @@ export default function LoginForm() {
       setNotice({
         isOpen: true,
         type: "success",
-        message: "Login successful!",
+        message: "Đăng nhập thành công!",
       });
       setTimeout(() => {
         router.push("/");
@@ -104,7 +104,7 @@ export default function LoginForm() {
       setNotice({
         isOpen: true,
         type: "error",
-        message: `Login failed: ${errorMessage}`,
+        message: `Đăng nhập thất bại: ${errorMessage}`,
       });
     } finally {
       setIsLoading(false);
@@ -124,7 +124,7 @@ export default function LoginForm() {
       setNotice({
         isOpen: true,
         type: "success",
-        message: "Reset password email sent successfully!",
+        message: "Gửi liên kết đặt lại mật khẩu thành công!",
       });
       setShowForgetPassword(false); // Đóng popup sau khi gửi thành công
     } finally {
@@ -144,7 +144,7 @@ export default function LoginForm() {
         <TabsContent value="account" className={styles.tabsContent}>
           <Card className={styles.card}>
             <CardContent className={styles.cardContent}>
-              <h1 className={styles.title}>LOGIN</h1>
+              <h1 className={styles.title}>ĐĂNG NHẬP</h1>
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
@@ -160,7 +160,7 @@ export default function LoginForm() {
                         <FormControl>
                           <Input
                             className={styles.input}
-                            placeholder="Enter Your Email"
+                            placeholder="Nhập email"
                             {...field}
                           />
                         </FormControl>
@@ -180,7 +180,7 @@ export default function LoginForm() {
                           <Input
                             type={showPassword ? "text" : "password"}
                             className={styles.input}
-                            placeholder="Enter Your Password"
+                            placeholder="Nhập mật khẩu"
                             {...field}
                           />
                         </FormControl>
@@ -210,7 +210,7 @@ export default function LoginForm() {
                               htmlFor="remember"
                               className={styles.rememberLabel}
                             >
-                              Remember me
+                              Lưu tài khoản
                             </label>
                           </>
                         )}
@@ -221,7 +221,7 @@ export default function LoginForm() {
                       className="text-[#234014] font-bold underline"
                       onClick={() => setShowForgetPassword(true)}
                     >
-                      Forgot Password
+                      Quên mật khẩu
                     </button>
                   </div>
 
@@ -232,7 +232,7 @@ export default function LoginForm() {
                       className={styles.loginButton}
                       disabled={isLoading}
                     >
-                      {isLoading ? "Logging in..." : "LOGIN"}
+                      {isLoading ? "Đăng nhập..." : "ĐĂNG NHẬP"}
                     </Button>
                   </div>
 
@@ -243,13 +243,13 @@ export default function LoginForm() {
                       className="font-bold text-[#4c6f29] underline"
                       onClick={() => router.push("/register")}
                     >
-                      Sign up
+                      Đăng ký
                     </button>
                   </p>
 
                   {/* Social Login */}
                   <div className={styles.socialLoginContainer}>
-                    <p className={styles.socialLoginText}>Or login with:</p>
+                    <p className={styles.socialLoginText}>Đăng nhập với:</p>
                     <div className="flex justify-center gap-6">
                       {socialLoginOptions.map((Social, index) => (
                         <button
@@ -274,7 +274,7 @@ export default function LoginForm() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <Card className={`${styles.card} max-w-md`}>
             <CardContent className={styles.cardContent}>
-              <h1 className={styles.title}>FORGOT PASSWORD</h1>
+              <h1 className={styles.title}>QUÊN MẬT KHẨU</h1>
               <Form {...forgetForm}>
                 <form
                   onSubmit={forgetForm.handleSubmit(onForgetPasswordSubmit)}
@@ -289,7 +289,7 @@ export default function LoginForm() {
                         <FormControl>
                           <Input
                             className={styles.input}
-                            placeholder="Enter Your Email"
+                            placeholder="Nhập Email"
                             {...field}
                           />
                         </FormControl>
@@ -303,7 +303,7 @@ export default function LoginForm() {
                       className={styles.loginButton}
                       disabled={isLoading}
                     >
-                      {isLoading ? "Sending..." : "SEND RESET LINK"}
+                      {isLoading ? "Sending..." : "GỬI LIÊN KẾT ĐẶT LẠI"}
                     </Button>
                   </div>
                   <div className={styles.buttonContainer}>
@@ -312,7 +312,7 @@ export default function LoginForm() {
                       className={styles.loginButton}
                       onClick={() => setShowForgetPassword(false)}
                     >
-                      CANCEL
+                      HỦY
                     </Button>
                   </div>
                 </form>

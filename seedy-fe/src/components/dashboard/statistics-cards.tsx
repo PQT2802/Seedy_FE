@@ -32,13 +32,13 @@ export default function StatisticsCards() {
   }, []);
 
   const statistics = [
-    { title: "Total Orders", count: orderCount, path: "/dashboard/orders" },
+    { title: "Tổng đơn hàng", count: orderCount, path: "/dashboard/orders" },
     {
-      title: "Total Products",
+      title: "Tống sản phẩm",
       count: productCount,
       path: "/dashboard/products",
     },
-    { title: "Total Users", count: userCount, path: "/dashboard/users" },
+    { title: "Tổng người dùng", count: userCount, path: "/dashboard/users" },
   ];
 
   return (

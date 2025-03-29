@@ -9,15 +9,18 @@ export default function page() {
       <div className={styles.mainContent}>
         <div className={styles.successBox}>
           <div className={styles.contentWrapper}>
-            <h1 className={styles.title}>Great News!</h1>
-            <p className={styles.orderComplete}>Your order is now complete</p>
+            <h1 className={styles.title}>Tuyệt vời!</h1>
+            <p className={styles.orderComplete}>
+              Đơn hàng của bạn đã được đặt thành thông
+            </p>
             <p className={styles.confirmationMessage}>
-              You will receive a confirmation email within the next 24 hours.
+              Bạn sẽ nhận được email xác nhận trong vòng 24 giờ tới..
             </p>
             <p className={styles.contactMessage}>
-              If you have any questions, please don’t hesitate to contact us.
+              Nếu bạn có bất kỳ câu hỏi nào, vui lòng đừng ngần ngại liên hệ với
+              chúng tôi.
             </p>
-            <button className={styles.continueButton}>CONTINUE SHOPPING</button>
+            <button className={styles.continueButton}>TIẾP TỤC</button>
           </div>
         </div>
       </div>

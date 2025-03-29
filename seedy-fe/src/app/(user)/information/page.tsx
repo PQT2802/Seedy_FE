@@ -28,7 +28,7 @@ export default function UserProfile() {
 
       const token = localStorage.getItem("accessToken");
       if (!token) {
-        setError("No authentication token found");
+        setError("KHÔNG TÌM THẤY NGƯỜI DÙNG");
         setLoading(false);
         return;
       }
@@ -90,10 +90,10 @@ export default function UserProfile() {
             </div>
             <div className={styles.infoTabs}>
               <p className={`${styles.tab} ${styles.activeTab}`}>
-                Personal Information
+                Thông tin người dùng
               </p>
               <p className={styles.tab} onClick={handleViewOrders}>
-                Your Order
+                ĐƠN ĐẶT HÀNG
               </p>
 
               {/* Show button only if the user is an Admin */}
@@ -102,7 +102,7 @@ export default function UserProfile() {
                   className={styles.dashboardButton}
                   onClick={handleGoToDashboard}
                 >
-                  Go to Dashboard
+                  ĐI ĐẾN DASHBOARD
                 </button>
               )}
             </div>
@@ -115,10 +115,10 @@ export default function UserProfile() {
               <p className={styles.error}>{error}</p>
             ) : (
               <>
-                <h2 className={styles.title}>Personal Information</h2>
+                <h2 className={styles.title}>Thông tin người dùng</h2>
                 <div className={styles.form}>
                   <div className={styles.fullWidth}>
-                    <label className={styles.label}>Full Name</label>
+                    <label className={styles.label}>Họ và tên</label>
                     <input
                       type="text"
                       className={styles.input}
@@ -127,7 +127,7 @@ export default function UserProfile() {
                     />
                   </div>
                   <div className={styles.fullWidth}>
-                    <label className={styles.label}>Phone Number</label>
+                    <label className={styles.label}>Số điện thoại</label>
                     <input
                       type="text"
                       className={styles.input}
@@ -145,7 +145,7 @@ export default function UserProfile() {
                     />
                   </div>
                   <div className={styles.fullWidth}>
-                    <label className={styles.label}>Home Address</label>
+                    <label className={styles.label}>Địa chỉ liên hệ</label>
                     <input
                       type="text"
                       className={styles.input}
@@ -158,7 +158,7 @@ export default function UserProfile() {
                       className={styles.logoutButton}
                       onClick={handleLogout}
                     >
-                      LOG OUT
+                      ĐĂNG XUẤT
                     </button>
                   </div>
                 </div>

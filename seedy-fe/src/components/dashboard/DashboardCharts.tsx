@@ -77,33 +77,32 @@ const DashboardCharts = () => {
         <CardContent>
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
-              <h2 className="text-lg font-semibold">Total Revenue</h2>
+              <h2 className="text-lg font-semibold">Tổng doanh thu</h2>
               <p className="text-md">
-                All Time:{" "}
+                Tổng cộng:{" "}
                 <span className="font-bold">
                   {formatCurrency(totalRevenueAllTime)}
                 </span>
               </p>
               <p className="text-md">
-                Last {days} Days:{" "}
+                Trong vòng {days} ngày:{" "}
                 <span className="font-bold">
                   {formatCurrency(totalRevenueFiltered)}
                 </span>
               </p>
             </div>
             <div>
-              <h2 className="text-lg font-semibold">Total Payments</h2>
+              <h2 className="text-lg font-semibold">Tổng thanh toán</h2>
               <p className="text-md">
-                All Time:{" "}
+                Tổng cộng:{" "}
                 <span className="font-bold">{totalPaymentsAllTime}</span>
               </p>
               <p className="text-md">
-                Last {days} Days:{" "}
+                Trong vòng {days} ngày:{" "}
                 <span className="font-bold">{totalPaymentsFiltered}</span>
               </p>
             </div>
           </div>
-
           <div className="flex gap-2 mb-2">
             <Button
               onClick={() => setDays(15)}
@@ -176,7 +175,7 @@ const DashboardCharts = () => {
         <Card>
           <CardContent>
             <div className="flex justify-between items-center">
-              <h2 className="text-lg font-semibold">Sales by Category</h2>
+              <h2 className="text-lg font-semibold">Doanh số theo doanh mục</h2>
               <p className="text-xl font-bold">
                 Total: {formatCurrency(totalSalesByCategory)}
               </p>
@@ -216,7 +215,7 @@ const DashboardCharts = () => {
         <Card>
           <CardContent>
             <div className="flex justify-between items-center">
-              <h2 className="text-lg font-semibold">Top Selling Cards</h2>
+              <h2 className="text-lg font-semibold">Thiệp bán chạy nhất</h2>
               <p className="text-xl font-bold">
                 Total: {formatCurrency(totalTopSellingCards)}
               </p>

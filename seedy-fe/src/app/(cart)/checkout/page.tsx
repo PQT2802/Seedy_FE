@@ -45,7 +45,7 @@ export default function Page() {
             <div className="flex flex-col w-2/5 max-md:ml-0 max-md:w-full">
               <div className="flex flex-col grow max-md:mt-10 max-md:max-w-full">
                 <h1 className="font-mantra text-headerGreen self-start text-6xl max-md:text-4xl">
-                  CHECK OUT
+                  THANH TOÁN
                 </h1>
                 <ShippingInformation
                   total={checkoutTotal}

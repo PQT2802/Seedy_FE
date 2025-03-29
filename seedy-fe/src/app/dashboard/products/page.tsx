@@ -20,10 +20,9 @@ export default function ProductsPage() {
       .getProducts()
       .then((res) => setProducts(res.extensions.data));
   }, []);
-  console.log(products);
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Products</h1>
+      <h1 className="text-2xl font-bold mb-4">Sản phẩm</h1>
       <GenericTable data={products} />
     </div>
   );

@@ -100,7 +100,6 @@ export default function RegisterForm() {
           : "2000-02-10T18:28:29.450Z",
       };
 
-      
       // Gọi API register thông qua authApiRequest
       const response = await authApiRequest.register(requestBody);
 
@@ -127,7 +126,7 @@ export default function RegisterForm() {
       <TabsContent value="account" className={styles.tabsContent}>
         <Card className={styles.card}>
           <CardContent className={styles.cardContent}>
-            <h1 className={styles.title}>CREATE YOUR ACCOUNT</h1>
+            <h1 className={styles.title}>TẠO TÀI KHOẢN</h1>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -143,7 +142,7 @@ export default function RegisterForm() {
                       <FormControl>
                         <Input
                           className={styles.input}
-                          placeholder="Username"
+                          placeholder="Tên người dùng"
                           {...field}
                         />
                       </FormControl>
@@ -161,7 +160,7 @@ export default function RegisterForm() {
                       <FormControl>
                         <Input
                           className={styles.input}
-                          placeholder="Full Name"
+                          placeholder="Họ và tên"
                           {...field}
                         />
                       </FormControl>
@@ -179,7 +178,7 @@ export default function RegisterForm() {
                       <FormControl>
                         <Input
                           className={styles.input}
-                          placeholder="Enter Your Email"
+                          placeholder="Email"
                           {...field}
                         />
                       </FormControl>
@@ -197,7 +196,7 @@ export default function RegisterForm() {
                       <FormControl>
                         <Input
                           className={styles.input}
-                          placeholder="Phone Number"
+                          placeholder="Số điện thoại"
                           {...field}
                         />
                       </FormControl>
@@ -215,7 +214,7 @@ export default function RegisterForm() {
                       <FormControl>
                         <Input
                           className={styles.input}
-                          placeholder="Address"
+                          placeholder="Địa chỉ"
                           {...field}
                         />
                       </FormControl>
@@ -234,7 +233,7 @@ export default function RegisterForm() {
                         <Input
                           type="date"
                           className={styles.input}
-                          placeholder="Date of Birth"
+                          placeholder="Ngày sinh"
                           {...field}
                         />
                       </FormControl>
@@ -253,7 +252,7 @@ export default function RegisterForm() {
                         <Input
                           type={showPassword ? "text" : "password"}
                           className={styles.input}
-                          placeholder="Enter Your Password"
+                          placeholder="Nhập mật khẩu"
                           {...field}
                         />
                       </FormControl>
@@ -276,7 +275,7 @@ export default function RegisterForm() {
                         <Input
                           type={showConfirmPassword ? "text" : "password"}
                           className={styles.input}
-                          placeholder="Confirm Your Password"
+                          placeholder="Nhập lại mật khẩu"
                           {...field}
                         />
                       </FormControl>
@@ -301,7 +300,7 @@ export default function RegisterForm() {
                     className={styles.registerButton}
                     disabled={isLoading}
                   >
-                    {isLoading ? "Registering..." : "REGISTER"}
+                    {isLoading ? "Tạo tài khoản ..." : "ĐĂNG KÝ"}
                   </Button>
                 </div>
 

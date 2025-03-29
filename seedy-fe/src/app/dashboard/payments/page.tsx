@@ -56,7 +56,7 @@ export default function PaymentsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Payments</h1>
+      <h1 className="text-2xl font-bold mb-4">Thanh toán</h1>
 
       {/* **Search & Filters** */}
       <div className="flex gap-4 mb-4">
@@ -73,9 +73,9 @@ export default function PaymentsPage() {
             <SelectValue placeholder="Filter by Status" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All</SelectItem>
-            <SelectItem value="Pending">Pending</SelectItem>
-            <SelectItem value="Completed">Completed</SelectItem>
+            <SelectItem value="all">Tất cả</SelectItem>
+            <SelectItem value="Pending">Đang xử lí</SelectItem>
+            <SelectItem value="Completed">Hoàn thành</SelectItem>
           </SelectContent>
         </Select>
 
@@ -85,7 +85,7 @@ export default function PaymentsPage() {
             <SelectValue placeholder="Filter by Payment Method" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All</SelectItem>
+            <SelectItem value="all">Tất cả</SelectItem>
             <SelectItem value="COD">COD</SelectItem>
             <SelectItem value="OnlineBanking">Online Banking</SelectItem>
           </SelectContent>
@@ -102,8 +102,8 @@ export default function PaymentsPage() {
             <SelectValue placeholder="Sort By" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="transactionDate">Transaction Date</SelectItem>
-            <SelectItem value="amount">Amount</SelectItem>
+            <SelectItem value="transactionDate">Ngày giao dịch</SelectItem>
+            <SelectItem value="amount">Số tiền</SelectItem>
           </SelectContent>
         </Select>
 

@@ -9,7 +9,6 @@ type CustomOptions = Omit<RequestInit, "method"> & {
 // Định nghĩa các status code lỗi phổ biến
 const BAD_REQUEST_STATUS = 400;
 const AUTHENTICATION_ERROR_STATUS = 401;
-const VALIDATION_ERROR_STATUS = 422;
 
 // Định nghĩa payload cho lỗi chung
 export type ErrorPayload = {
