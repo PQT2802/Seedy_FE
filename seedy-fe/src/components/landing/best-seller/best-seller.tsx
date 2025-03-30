@@ -15,7 +15,7 @@ export default function BestSeller() {
         />
         <div>
           <h1>SEEDY MAKE-PLANT BOX SET</h1>
-          <button>BUY NOW</button>
+          <button>MUA NGAY</button>
         </div>
       </div>
 
@@ -29,7 +29,7 @@ export default function BestSeller() {
         />
         <div>
           <h1>“WILD-TURE” STICKER SET</h1>
-          <button>BUY NOW</button>
+          <button>MUA NGAY</button>
         </div>
       </div>
     </div>

@@ -7,21 +7,20 @@ export default function About() {
       {/* Main Title */}
       <div className="text-center">
         {/* "What is" Text */}
-        <h1 className={`${styles.mainTitle}`}>What is</h1>
+        <h1 className={`${styles.mainTitle}`}>SEEDY</h1>
         {/* "Seedy" Text */}
-        <h1 className={`${styles.mainTitle} ${styles.seedyTitle}`}>Seedy</h1>
+        <h1 className={`${styles.mainTitle} ${styles.seedyTitle}`}>LÀ GÌ</h1>
       </div>
 
       {/* Description in the Middle-Right */}
       <p className={`${styles.middleDescription}`}>
-        Seedy delivers lasting value in a growing market for creative, green
-        experiences
+        Biến từng món quà nhỏ thành hành trình kết nối cảm xúc và thiên nhiên.
       </p>
 
       {/* Description in the Bottom-Left */}
       <p className={`${styles.bottomDescription}`}>
-        Where sustainability meets uniqueness. With eco-friendly, personalized
-        products and a solid strategy
+        Seedy là những chiếc thiệp biết “nảy mầm” – nơi yêu thương được trao đi
+        và mầm xanh được ươm lên
       </p>
     </div>
   );

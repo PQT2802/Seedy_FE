@@ -5,7 +5,7 @@ export default function Feedback() {
   return (
     <div className={`${styles.background}`}>
       <div className={`${styles.formContainer}`}>
-        <h1 className={`${styles.heading}`}>Let&apos;s Contact</h1>
+        <h1 className={`${styles.heading}`}>LIÊN HỆ </h1>
         <form className={`${styles.form}`}>
           <div className={`${styles.inputGroup}`}>
             <label htmlFor="name" className={`${styles.label}`}>

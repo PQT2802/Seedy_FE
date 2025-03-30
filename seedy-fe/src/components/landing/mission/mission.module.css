@@ -16,7 +16,7 @@
   left: 30vw;
   transform: translateX(-70%) translateY(-30%);
   color: black;
-  font-size: 8vw; /* Dynamically resizes */
+  font-size: 5vw; /* Dynamically resizes */
   font-family: "MantraRimba", sans-serif;
   text-align: center;
   max-width: 90%; /* Ensures text wraps properly */

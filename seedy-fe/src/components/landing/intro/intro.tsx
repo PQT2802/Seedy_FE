@@ -7,14 +7,13 @@ export default function Intro() {
     <div className={`${styles.background}`}>
       {/* Text Section */}
       <div className={`${styles["text-section"]}`}>
-        <h1 className={`${styles.title}`}>Nature Embraces Your Stories</h1>
+        <h1 className={`${styles.title}`}>Gửi yêu thương,Ươm mầm xanh</h1>
         <p className={`${styles.description}`}>
-          We redefine creativity with recycling: for each Seedy notebook
-          isn&apos;t just for jotting down ideas, it&apos;s a testament to
-          environmental protection and uniqueness in every writing and drawing
-          experience.
+          Seedy là những chiếc thiệp biết “nảy mầm” – nơi yêu thương được trao
+          đi và mầm xanh được ươm lên, biến từng món quà nhỏ thành hành trình
+          kết nối cảm xúc và thiên nhiên.
         </p>
-        <button className={`${styles.button}`}>LET’S EXPLORE</button>
+        <button className={`${styles.button}`}>TÌM HIỂU THÊM</button>
       </div>
 
       {/* Image Section */}

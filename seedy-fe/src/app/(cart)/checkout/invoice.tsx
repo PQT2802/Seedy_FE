@@ -21,7 +21,7 @@ function InvoiceItem({ imageSrc, title, price, amount }: any) {
       <div className="flex flex-col text-white items-start self-start text-lg ">
         <div className="self-stretch text-xl">{title}</div>
         <div className="mt-1 font-bold">{price}</div>
-        <div className="mt-3.5">Amount: {amount}</div>
+        <div className="mt-3.5">Số tiền: {amount}</div>
       </div>
     </div>
   );

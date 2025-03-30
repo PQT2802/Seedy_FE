@@ -175,17 +175,17 @@ export default function ShippingInformation({
   return (
     <div className="flex flex-col px-5 pt-5 pb-11 mt-11 text-xl bg-lime-700 rounded-2xl max-md:px-5 max-md:mt-10 max-md:max-w-full">
       <h2 className="mr-8 text-5xl text-white max-md:mr-2.5 max-md:text-4xl">
-        Shipping Information
+        Thông tin giao hàng
       </h2>
       <form>
         <label htmlFor="fullName" className="sr-only">
-          Full Name
+          Họ và tên
         </label>
         <input
           id="fullName"
           type="text"
           className="px-5 py-4 mt-4 text-headerGreen bg-white rounded-2xl w-full"
-          placeholder="Full Name"
+          placeholder="Họ và tên"
           value={formData.fullName}
           onChange={handleInputChange}
         />
@@ -203,31 +203,31 @@ export default function ShippingInformation({
         />
 
         <label htmlFor="phoneNumber" className="sr-only">
-          Phone Number
+          Số điện thoại liên hệ
         </label>
         <input
           id="phoneNumber"
           type="tel"
           className="px-5 py-4 mt-2 bg-white rounded-2xl w-full"
-          placeholder="Phone Number"
+          placeholder="Số điện thoại"
           value={formData.phoneNumber}
           onChange={handleInputChange}
         />
 
         <label htmlFor="address" className="sr-only">
-          Address
+          Địa chỉ
         </label>
         <input
           id="address"
           type="text"
           className="px-5 py-4 mt-2 whitespace-nowrap bg-white rounded-2xl w-full"
-          placeholder="Address"
+          placeholder="Địa chỉ"
           value={formData.address}
           onChange={handleInputChange}
         />
 
         <label htmlFor="provinceId" className="sr-only">
-          Province
+          Tỉnh/Thành phố
         </label>
         <select
           id="provinceId"
@@ -235,7 +235,7 @@ export default function ShippingInformation({
           value={formData.provinceId || ""}
           onChange={handleInputChange}
         >
-          <option value="">Select Province</option>
+          <option value="">Tỉnh/Thành phố</option>
           {provinces.map((province) => (
             <option key={province.provinceId} value={province.provinceId}>
               {province.provinceName}
@@ -244,7 +244,7 @@ export default function ShippingInformation({
         </select>
 
         <label htmlFor="districtId" className="sr-only">
-          District
+          Quận
         </label>
         <select
           id="districtId"
@@ -253,7 +253,7 @@ export default function ShippingInformation({
           onChange={handleInputChange}
           disabled={!formData.provinceId}
         >
-          <option value="">Select District</option>
+          <option value="">Quận</option>
           {districts.map((district) => (
             <option key={district.districtId} value={district.districtId}>
               {district.districtName}
@@ -262,7 +262,7 @@ export default function ShippingInformation({
         </select>
 
         <label htmlFor="wardId" className="sr-only">
-          Ward
+          Phường
         </label>
         <select
           id="wardId"
@@ -271,7 +271,7 @@ export default function ShippingInformation({
           onChange={handleInputChange}
           disabled={!formData.districtId}
         >
-          <option value="">Select Ward</option>
+          <option value="">Phường</option>
           {wards.map((ward) => (
             <option key={ward.wardId} value={ward.wardId}>
               {ward.wardName}
@@ -284,7 +284,7 @@ export default function ShippingInformation({
           className="px-5 py-2 mt-4 bg-white rounded-xl w-full"
           onClick={handleCalculateShipping}
         >
-          Calculate Shipping Fee
+          Chi phí vận chuyển
         </button>
 
         {services.length > 0 && (
